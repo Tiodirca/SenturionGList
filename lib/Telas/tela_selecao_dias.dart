@@ -46,6 +46,7 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
       tipoEscala = Textos.btnCooperador;
     }
   }
+
   // metodo para pegar os itens que foram selecionados no check box
   pegarItens() {
     for (var element in itens) {
@@ -112,7 +113,6 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
                         child: Container(
                           padding: const EdgeInsets.only(top: 10.0),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 Textos.legLista,
@@ -120,8 +120,7 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
                                 style: const TextStyle(
                                     fontSize: 18, color: Colors.black),
                               ),
-                              Container(
-                                  padding: const EdgeInsets.only(top: 10.0),
+                              SizedBox(
                                   height: alturaTela * 0.4,
                                   width: larguraTela,
                                   child: ListView(

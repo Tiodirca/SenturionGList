@@ -248,14 +248,14 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                                                       width: 1,
                                                       color: Colors.white),
                                                   borderRadius:
-                                                      BorderRadius.circular(10),
+                                                      BorderRadius.circular(20),
                                                 ),
                                                 errorBorder: OutlineInputBorder(
                                                   borderSide: const BorderSide(
                                                       width: 2,
                                                       color: Colors.red),
                                                   borderRadius:
-                                                      BorderRadius.circular(10),
+                                                      BorderRadius.circular(20),
                                                 ),
                                                 focusedErrorBorder:
                                                     OutlineInputBorder(
@@ -263,7 +263,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                                                       width: 1,
                                                       color: Colors.white),
                                                   borderRadius:
-                                                      BorderRadius.circular(5),
+                                                      BorderRadius.circular(20),
                                                 ),
                                                 //definindo estilo do textfied ao ser clicado
                                                 focusedBorder:
@@ -272,7 +272,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                                                       width: 1,
                                                       color: Colors.white),
                                                   borderRadius:
-                                                      BorderRadius.circular(5),
+                                                      BorderRadius.circular(15),
                                                 )),
                                           ),
                                         )),
