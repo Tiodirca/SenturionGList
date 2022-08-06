@@ -3,10 +3,12 @@ class Constantes {
   static const rotaTelaCadastroPessoas = "/telaCadastroPessoas";
   static const rotaTelaCadastroLocalTrabalho = "/telaCadastroLocalTrabalho";
   static const rotaTelaSelecaoDias = "/selecaoDias";
+  static const rotaTelaSelecaoIntervalo = "/selecaoIntervalo";
 
   static const parametroGenero = "generoParametro";
   static const parametroListaPessoas = "listaPessoas";
   static const parametroListaLocal = "listaLocal";
+  static const parametroListaDias = "listaDias";
 
   static const tipoIconeHome = "home";
   static const tipoIconeLista = "lista";

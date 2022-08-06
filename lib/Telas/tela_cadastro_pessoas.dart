@@ -11,10 +11,10 @@ import '../Widget/barra_navegacao.dart';
 import '../Widget/fundo_tela_widget.dart';
 
 class TelaCadastroPessoas extends StatefulWidget {
-  const TelaCadastroPessoas({Key? key, required this.generoPessoa})
+  const TelaCadastroPessoas({Key? key, required this.genero})
       : super(key: key);
 
-  final bool generoPessoa;
+  final bool genero;
 
   @override
   State<TelaCadastroPessoas> createState() => _TelaCadastroPessoasState();
@@ -44,7 +44,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
     // verificando qual a opcao selecionada na tela inicial
     // caso seja verdadeiro corresponde ao genero feminino
     // e falso corresponde ao genero masculino
-    if (widget.generoPessoa) {
+    if (widget.genero) {
       tipoEscala = Textos.btnCooperadoras;
       valorGenero = 1;
     } else {
@@ -78,8 +78,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
         if (value.isNotEmpty) {
           // removendo itens da lista conforme os valores contidos nos parametros passados
           pessoas.removeWhere((item) =>
-              (item.genero == true && widget.generoPessoa == false) ||
-              item.genero == false && widget.generoPessoa == true);
+              (item.genero == true && widget.genero == false) ||
+              item.genero == false && widget.genero == true);
           // verificando se a lista nao esta vazia
           if (pessoas.isNotEmpty) {
             adicionarItensCheckBox();
@@ -130,6 +130,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
         });
   }
 
+  // metodo para pegar os itens que foram selecionados no check box
   pegarItensPessoas() {
     for (var element in itensCheckBox) {
       if (element.checked == true) {
@@ -139,12 +140,13 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
   }
 
   Widget checkBoxPersonalizado(CheckBoxModel checkBoxModel) => CheckboxListTile(
-        activeColor: PaletaCores.corAdtl,
-        checkColor: Colors.white,
+        activeColor: PaletaCores.corAzul,
+        checkColor: PaletaCores.corAdtlLetras,
         secondary: SizedBox(
             width: 30,
             height: 30,
             child: FloatingActionButton(
+              heroTag: "btnExcluir",
               backgroundColor: Colors.redAccent,
               child: const Icon(Icons.close, size: 20),
               onPressed: () {
@@ -174,21 +176,9 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
         },
         child: Scaffold(
           appBar: AppBar(
-            actionsIconTheme: const IconThemeData(
-              size: 30,
-            ),
             title: Text(Textos.nomeTelaCadastroPessoas,
                 textAlign: TextAlign.center),
-            actions: [
-              Container(
-                margin: const EdgeInsets.only(right: 10.0),
-                width: larguraTela * 0.3,
-                child: Text(Textos.txtTipoEscala + tipoEscala,
-                    textAlign: TextAlign.end,
-                    style: const TextStyle(fontSize: 16)),
-              ),
-            ],
-            backgroundColor: PaletaCores.corAzul,
+            backgroundColor: PaletaCores.corAdtl,
             elevation: 0,
           ),
           body: GestureDetector(
@@ -201,17 +191,34 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                 height: alturaTela - alturaBarraStatus - alturaAppBar - 120,
                 child: Stack(
                   children: [
+                    // o ultimo parametro e o tamanho do container do BUTTON NAVIGATION BAR
                     FundoTela(
-                        altura:
-                        alturaTela - alturaBarraStatus - alturaAppBar - 120),
+                        altura: alturaTela -
+                            alturaBarraStatus -
+                            alturaAppBar -
+                            120),
                     Positioned(
                         child: Column(
-                          children: [
-                            Expanded(
-                                flex: 1,
-                                child: SizedBox(
-                                  width: larguraTela,
-                                  child: Row(
+                      children: [
+                        Expanded(
+                            flex: 1,
+                            child: Container(
+                              padding: const EdgeInsets.only(top: 20.0),
+                              width: larguraTela,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    Textos.descricaoCadastroPessoas,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Container(
@@ -229,46 +236,62 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                                               keyboardType: TextInputType.text,
                                               validator: (value) {
                                                 if (value!.isEmpty) {
-                                                  return Textos.erroTextFieldVazio;
+                                                  return Textos
+                                                      .erroTextFieldVazio;
                                                 }
                                                 return null;
                                               },
                                               controller: _controllerNomePessoa,
                                               decoration: InputDecoration(
                                                   labelText:
-                                                  Textos.labelTextCadPessoa,
+                                                      Textos.labelTextCadPessoa,
                                                   fillColor: Colors.white,
                                                   labelStyle: const TextStyle(
                                                     color: Colors.white,
                                                   ),
-                                                  enabledBorder: OutlineInputBorder(
-                                                    borderSide: const BorderSide(
-                                                        width: 1,
-                                                        color: Colors.white),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                            width: 1,
+                                                            color:
+                                                                Colors.white),
                                                     borderRadius:
-                                                    BorderRadius.circular(10),
+                                                        BorderRadius.circular(
+                                                            10),
                                                   ),
-                                                  errorBorder: OutlineInputBorder(
-                                                    borderSide: const BorderSide(
-                                                        width: 2, color: Colors.red),
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                            width: 2,
+                                                            color: Colors.red),
                                                     borderRadius:
-                                                    BorderRadius.circular(10),
+                                                        BorderRadius.circular(
+                                                            10),
                                                   ),
                                                   focusedErrorBorder:
-                                                  OutlineInputBorder(
-                                                    borderSide: const BorderSide(
-                                                        width: 1,
-                                                        color: Colors.white),
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                            width: 1,
+                                                            color:
+                                                                Colors.white),
                                                     borderRadius:
-                                                    BorderRadius.circular(5),
+                                                        BorderRadius.circular(
+                                                            5),
                                                   ),
                                                   //definindo estilo do textfied ao ser clicado
-                                                  focusedBorder: OutlineInputBorder(
-                                                    borderSide: const BorderSide(
-                                                        width: 1,
-                                                        color: Colors.white),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                            width: 1,
+                                                            color:
+                                                                Colors.white),
                                                     borderRadius:
-                                                    BorderRadius.circular(5),
+                                                        BorderRadius.circular(
+                                                            5),
                                                   )),
                                             ),
                                           )),
@@ -277,8 +300,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                                         width: 150,
                                         child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                            side:
-                                            const BorderSide(color: Colors.black),
+                                            side: const BorderSide(
+                                                color: Colors.black),
                                             primary: Colors.white,
                                             elevation: 5,
                                             shadowColor: Colors.white,
@@ -292,8 +315,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                                               inserirDados();
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(SnackBar(
-                                                  content: Text(
-                                                      Textos.sucessoAddBanco)));
+                                                      content: Text(Textos
+                                                          .sucessoAddBanco)));
                                             } else {}
                                           },
                                           child: Text(
@@ -308,57 +331,60 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                                       )
                                     ],
                                   ),
-                                )),
-                            Expanded(
-                                flex: 2,
-                                child: Container(
-                                    padding: const EdgeInsets.only(top: 10.0),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          Textos.legLista,
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                              fontSize: 18, color: Colors.black),
-                                        ),
-                                        LayoutBuilder(
-                                          builder: (context, constraints) {
-                                            if (retornoListaVazia) {
-                                              return SizedBox(
-                                                height: 200,
-                                                child: Center(
-                                                  child: Text(
-                                                    Textos.txtListaVazia,
-                                                    style: const TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 20,
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            } else {
-                                              return Container(
-                                                  padding: const EdgeInsets.only(
-                                                      top: 10.0),
-                                                  height: alturaTela*0.4,
-                                                  width: larguraTela,
-                                                  child: ListView(
-                                                    children: [
-                                                      ...itensCheckBox
-                                                          .map((e) =>
-                                                          checkBoxPersonalizado(
-                                                            e,
-                                                          ))
-                                                          .toList()
-                                                    ],
-                                                  ));
-                                            }
-                                          },
-                                        )
-                                      ],
-                                    ),))
-                          ],
-                        ))
+                                ],
+                              ),
+                            )),
+                        Expanded(
+                            flex: 2,
+                            child: Container(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    Textos.legLista,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                        fontSize: 18, color: Colors.black),
+                                  ),
+                                  LayoutBuilder(
+                                    builder: (context, constraints) {
+                                      if (retornoListaVazia) {
+                                        return SizedBox(
+                                          height: 200,
+                                          child: Center(
+                                            child: Text(
+                                              Textos.txtListaVazia,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        return Container(
+                                            padding: const EdgeInsets.only(
+                                                top: 10.0),
+                                            height: alturaTela * 0.4,
+                                            width: larguraTela * 0.9,
+                                            child: ListView(
+                                              children: [
+                                                ...itensCheckBox
+                                                    .map((e) =>
+                                                        checkBoxPersonalizado(
+                                                          e,
+                                                        ))
+                                                    .toList()
+                                              ],
+                                            ));
+                                      }
+                                    },
+                                  )
+                                ],
+                              ),
+                            ))
+                      ],
+                    ))
                   ],
                 ),
               ),
@@ -369,28 +395,44 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: FloatingActionButton(
-                    backgroundColor: PaletaCores.corVerdeCiano,
-                    onPressed: () {
-                      pegarItensPessoas();
-                      if (listaPessoasSelecionados.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text(Textos.erroSemSelecaoCheck)));
-                      } else {
-                        var dados = {};
-                        dados[Constantes.parametroGenero] = widget.generoPessoa;
-                        dados[Constantes.parametroListaPessoas] =
-                            listaPessoasSelecionados;
-                        Navigator.pushReplacementNamed(
-                            context, Constantes.rotaTelaCadastroLocalTrabalho,
-                            arguments: dados);
-                      }
-                    },
-                    child: const Icon(Icons.arrow_forward, size: 30),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: larguraTela * 0.3,
+                    ),
+                    SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: FloatingActionButton(
+                        backgroundColor: PaletaCores.corVerdeCiano,
+                        onPressed: () {
+                          pegarItensPessoas();
+                          if (listaPessoasSelecionados.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(Textos.erroSemSelecaoCheck)));
+                          } else {
+                            var dados = {};
+                            dados[Constantes.parametroGenero] =
+                                widget.genero;
+                            dados[Constantes.parametroListaPessoas] =
+                                listaPessoasSelecionados;
+                            Navigator.pushReplacementNamed(context,
+                                Constantes.rotaTelaCadastroLocalTrabalho,
+                                arguments: dados);
+                          }
+                        },
+                        child: const Icon(Icons.arrow_forward, size: 30),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      width: larguraTela * 0.3,
+                      child: Text(Textos.txtTipoEscala + tipoEscala,
+                          textAlign: TextAlign.end,
+                          style: const TextStyle(fontSize: 15)),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 10,

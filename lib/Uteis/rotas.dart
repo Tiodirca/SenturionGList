@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:senturionglist/Telas/tela_selecao_dias.dart';
 import 'package:senturionglist/Telas/tela_cadastro_local_trabalho.dart';
+import 'package:senturionglist/Telas/tela_selecao_intervalo.dart';
 
 import '../Telas/tela_cadastro_pessoas.dart';
 import '../Telas/tela_inicial.dart';
@@ -21,7 +22,7 @@ class Rotas {
         if (args is bool) {
           return MaterialPageRoute(
             builder: (_) => TelaCadastroPessoas(
-              generoPessoa: args,
+              genero: args,
             ),
           );
         } else {
@@ -31,8 +32,8 @@ class Rotas {
         if (args is Map) {
           return MaterialPageRoute(
             builder: (_) => TelaCadastroLocalTrabalho(
-              generoPessoa: args[Constantes.parametroGenero],
-              itensPessoa: args[Constantes.parametroListaPessoas],
+              genero: args[Constantes.parametroGenero],
+              listaPessoas: args[Constantes.parametroListaPessoas],
             ),
           );
         } else {
@@ -45,6 +46,19 @@ class Rotas {
               genero: args[Constantes.parametroGenero],
               listaPessoas: args[Constantes.parametroListaPessoas],
               listaLocal: args[Constantes.parametroListaLocal],
+            ),
+          );
+        } else {
+          return erroRota(settings);
+        }
+      case Constantes.rotaTelaSelecaoIntervalo:
+        if (args is Map) {
+          return MaterialPageRoute(
+            builder: (_) => TelaSelecaoIntervalo(
+              genero: args[Constantes.parametroGenero],
+              listaPessoas: args[Constantes.parametroListaPessoas],
+              listaLocal: args[Constantes.parametroListaLocal],
+              listaDias: args[Constantes.parametroListaDias],
             ),
           );
         } else {

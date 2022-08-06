@@ -3,32 +3,39 @@ class Textos {
   static String btnCooperador = "Cooperadores";
   static String btnCooperadoras = "Cooperadoras";
 
-  static String radioBtnCooperadoras = "Cooperadoras";
-  static String radioBtnCooperadores = "Cooperadores";
-  static String txtTipoEscala = "Escala de ";
-
   // TELA INICIAL
   static String legSelecaoTipoEscala =
       "Selecione qual tipo de escala deseja criar";
 
-  static String nomeTelaSelecaoDias = "Seleção Dias";
-  static String txtLegSelecaoDias = "Selecione os dias que haverá escala";
-
   // TELA CADASTRO PESSOAS E CADASTRO DE LOCAL DE TRABALHO
-  static String nomeTelaCadastroPessoas = "Cadastro/Listagem de pessoas";
+  static String nomeTelaCadastroPessoas = "Cadastro/Lista de pessoas";
   static String nomeTelaCadastroLocalTrabalho =
-      "Cadastro/Listagem de local de trabalho";
-  static String legCadastroPessoas =
+      "Cadastro/Lista local de trabalho";
+  static String descricaoCadastroPessoas =
       "Digite o nome da pessoa que deseja adicionar a lista";
-  static String legCadastroLocalTrabalho =
+  static String descricaoCadastroLocalTrabalho =
       "Digite o nome dos locais de trabalho que deseja adicionar a lista";
   static String labelTextCadPessoa = "Nome da pessoa";
-  static String labelTextCadLocalTrabalho = "Nome do local de trabalho";
+  static String labelTextCadLocalTrabalho = "Nome do local";
+
+  // TELA SELECAO DIAS
+  static String nomeTelaSelecaoDias = "Seleção Dias";
+  static String descricaoTelaSelecaoDias =
+      "Selecione os dias que haverá escala";
+
+  // TELA SELECAO INTERVALO
+  static String nomeTelaSelecaoIntervalo = "Seleção de Intervalo";
+  static String descricaoTelaSelecaoIntervalo =
+      "Selecione a data inicial onde começara a escala e a data final.";
+  static String labelDataInicial = "Data Inicial";
+  static String labelDataFinal = "Data Final";
 
   // GERAIS
   static String txtListaVazia = "Sua lista esta vazia";
   static String legLista = "Selecione um ou mais itens da lista abaixo";
+  static String txtTipoEscala = "Escala de ";
 
+  // ALERTS
   static String legAlertExclusao = "Deseja realmente excluir este item ?";
 
   // ERROS E SUCESSO
@@ -39,6 +46,7 @@ class Textos {
   static String sucessoExluirItemBanco =
       "Sucesso ao excluir item da base de dados";
 
+  // DIAS DA SEMANA
   static String diaSegunda = "Segunda-Feira";
   static String diaTerca = "Terça-Feira";
   static String diaQuarta = "Quarta-Feira";
@@ -46,5 +54,4 @@ class Textos {
   static String diaSexta = "Sexta-Feira";
   static String diaSabado = "Sábado";
   static String diaDomingo = "Domingo";
-
 }

@@ -29,7 +29,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  moor: ^4.6.1+1
+  # para o data picker
+  flutter_localizations:
+    sdk: flutter
+  # necessarios para rodar o SQL LITE no desktop e dispositivos moveis
   sqflite_common_ffi: ^2.1.1+1
   sqflite: ^2.0.3+1
   sqlite3_flutter_libs: ^0.5.9

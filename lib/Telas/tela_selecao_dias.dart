@@ -24,18 +24,18 @@ class TelaSelecaoDias extends StatefulWidget {
   State<TelaSelecaoDias> createState() => _TelaSelecaoDiasState();
 }
 
-final List<CheckBoxModel> itens = [
-  CheckBoxModel(texto: Textos.diaSegunda),
-  CheckBoxModel(texto: Textos.diaTerca),
-  CheckBoxModel(texto: Textos.diaQuarta),
-  CheckBoxModel(texto: Textos.diaQuinta),
-  CheckBoxModel(texto: Textos.diaSexta),
-  CheckBoxModel(texto: Textos.diaSabado),
-  CheckBoxModel(texto: Textos.diaDomingo),
-];
-
 class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
   String tipoEscala = "";
+  List<String> listaDias = [];
+  final List<CheckBoxModel> itens = [
+    CheckBoxModel(texto: Textos.diaSegunda),
+    CheckBoxModel(texto: Textos.diaTerca),
+    CheckBoxModel(texto: Textos.diaQuarta),
+    CheckBoxModel(texto: Textos.diaQuinta),
+    CheckBoxModel(texto: Textos.diaSexta),
+    CheckBoxModel(texto: Textos.diaSabado),
+    CheckBoxModel(texto: Textos.diaDomingo),
+  ];
 
   @override
   void initState() {
@@ -46,11 +46,21 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
       tipoEscala = Textos.btnCooperador;
     }
   }
+  // metodo para pegar os itens que foram selecionados no check box
+  pegarItens() {
+    for (var element in itens) {
+      if (element.checked == true) {
+        listaDias.add(element.texto);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     double alturaTela = MediaQuery.of(context).size.height;
     double larguraTela = MediaQuery.of(context).size.width;
+    double alturaBarraStatus = MediaQuery.of(context).padding.top;
+    double alturaAppBar = AppBar().preferredSize.height;
     return WillPopScope(
         onWillPop: () async {
           var dados = {};
@@ -68,74 +78,114 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
             ),
             title:
                 Text(Textos.nomeTelaSelecaoDias, textAlign: TextAlign.center),
-            actions: [
-              Container(
-                margin: const EdgeInsets.only(right: 10.0),
-                width: larguraTela * 0.3,
-                child: Text(Textos.txtTipoEscala + tipoEscala,
-                    textAlign: TextAlign.end,
-                    style: const TextStyle(fontSize: 16)),
-              ),
-            ],
-            backgroundColor: PaletaCores.corAzul,
+            backgroundColor: PaletaCores.corAdtl,
             elevation: 0,
           ),
-          body: Container(
-              height: alturaTela,
-              width: larguraTela,
-              color: PaletaCores.corAzul,
-              child: Stack(
-                children: [
-                  FundoTela(altura: alturaTela,),
-                  Positioned(
-                      child: Container(
-                        width: larguraTela,
-                        height: alturaTela,
-                        child: Center(
+          body: SizedBox(
+            width: larguraTela,
+            height: alturaTela - alturaBarraStatus - alturaAppBar - 120,
+            child: Stack(
+              children: [
+                FundoTela(
+                    altura:
+                        alturaTela - alturaBarraStatus - alturaAppBar - 120),
+                Positioned(
+                    child: Column(
+                  children: [
+                    Expanded(
+                        flex: 1,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              Textos.descricaoTelaSelecaoDias,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          ],
+                        )),
+                    Expanded(
+                        flex: 2,
+                        child: Container(
+                          padding: const EdgeInsets.only(top: 10.0),
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                Textos.legSelecaoTipoEscala,
+                                Textos.legLista,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
-                                    fontSize: 18, color: Colors.white),
+                                    fontSize: 18, color: Colors.black),
                               ),
-                              Center(
-                                child: Container(
-                                    padding:
-                                    const EdgeInsets.only(top: 10.0),
-                                    height: 400,
-                                    width: larguraTela ,
-                                    child: ListView(
-                                      children: [
-                                        ...itens
-                                            .map((e) => CheckboxWidget(
-                                          item: e,
-                                        ))
-                                            .toList()
-                                      ],
-                                    )),
-                              )
+                              Container(
+                                  padding: const EdgeInsets.only(top: 10.0),
+                                  height: alturaTela * 0.4,
+                                  width: larguraTela,
+                                  child: ListView(
+                                    children: [
+                                      ...itens
+                                          .map((e) => CheckboxWidget(
+                                                item: e,
+                                              ))
+                                          .toList()
+                                    ],
+                                  ))
                             ],
                           ),
-                        )
-                      )
-                  ),
-                ],
-              )),
+                        )),
+                  ],
+                ))
+              ],
+            ),
+          ),
           bottomNavigationBar: SizedBox(
             height: 120,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: FloatingActionButton(
-                    backgroundColor: PaletaCores.corVerdeCiano,
-                    onPressed: () {},
-                    child: const Icon(Icons.arrow_forward, size: 30),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: larguraTela * 0.3,
+                    ),
+                    SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: FloatingActionButton(
+                        backgroundColor: PaletaCores.corVerdeCiano,
+                        onPressed: () {
+                          pegarItens();
+                          if (listaDias.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(Textos.erroSemSelecaoCheck)));
+                          } else {
+                            var dados = {};
+                            dados[Constantes.parametroGenero] = widget.genero;
+                            dados[Constantes.parametroListaPessoas] =
+                                widget.listaLocal;
+                            dados[Constantes.parametroListaLocal] =
+                                widget.listaLocal;
+                            dados[Constantes.parametroListaDias] = listaDias;
+                            Navigator.pushReplacementNamed(
+                                context, Constantes.rotaTelaSelecaoIntervalo,
+                                arguments: dados);
+                          }
+                        },
+                        child: const Icon(Icons.arrow_forward, size: 30),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      width: larguraTela * 0.3,
+                      child: Text(Textos.txtTipoEscala + tipoEscala,
+                          textAlign: TextAlign.end,
+                          style: const TextStyle(fontSize: 15)),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 10,

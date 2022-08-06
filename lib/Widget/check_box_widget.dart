@@ -19,8 +19,8 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
       activeColor: PaletaCores.corAdtl,
       checkColor: PaletaCores.corAdtlLetras,
       title: Text(widget.item.texto,
-          style: const TextStyle(color: PaletaCores.corAmarela)),
-      side: const BorderSide(width: 2, color: Colors.white),
+          style: const TextStyle(color: Colors.black)),
+      side: const BorderSide(width: 2, color: Colors.black),
       value: widget.item.checked,
       onChanged: (value) {
         setState(() {
