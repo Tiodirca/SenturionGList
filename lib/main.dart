@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:senturionglist/Uteis/paleta_cores.dart';
 import 'Uteis/constantes.dart';
 import 'Uteis/rotas.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(const MyApp());
-
 }
 
 class MyApp extends StatelessWidget {
@@ -14,10 +14,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: PaletaCores.corAdtl,
+        fontFamily: 'Comic',
       ),
       //definicoes usadas no date picker
       localizationsDelegates: const [

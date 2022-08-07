@@ -17,7 +17,7 @@ class Rotas {
 
     switch (settings.name) {
       case Constantes.rotaTelaInicial:
-        return MaterialPageRoute(builder: (_) => const TelaInicial());
+        return MaterialPageRoute(builder: (_) =>  const TelaInicial());
       case Constantes.rotaTelaCadastroPessoas:
         if (args is bool) {
           return MaterialPageRoute(

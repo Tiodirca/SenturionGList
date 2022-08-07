@@ -95,7 +95,6 @@ class TelaInicial extends StatelessWidget {
               )),
           bottomNavigationBar:
               const SizedBox(height: 60, child: BarraNavegacao()),
-          backgroundColor: Colors.white,
         ));
   }
 }

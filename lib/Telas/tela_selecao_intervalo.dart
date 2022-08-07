@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../Uteis/Constantes.dart';
 import '../Uteis/Textos.dart';
+import '../Uteis/estilo.dart';
 import '../Uteis/paleta_cores.dart';
 import '../Widget/barra_navegacao.dart';
 import '../Widget/fundo_tela_widget.dart';
@@ -25,6 +26,7 @@ class TelaSelecaoIntervalo extends StatefulWidget {
 }
 
 class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
+  Estilo estilo = Estilo();
   String tipoEscala = "";
   DateTime dataInicial = DateTime.now();
   DateTime dataFinal = DateTime.now();
@@ -119,20 +121,8 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
           style: const TextStyle(color: Colors.white),
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
-              hintStyle: const TextStyle(color: Colors.white),
-              hintText: '${data.day}/${data.month}/${data.year}',
-              fillColor: Colors.white,
-              labelStyle: const TextStyle(
-                color: Colors.white,
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(width: 1, color: Colors.white),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(width: 1, color: Colors.white),
-                borderRadius: BorderRadius.circular(20),
-              )),
+            hintText: '${data.day}/${data.month}/${data.year}',
+          ),
         ),
       );
 
@@ -143,167 +133,168 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
     double alturaBarraStatus = MediaQuery.of(context).padding.top;
     double alturaAppBar = AppBar().preferredSize.height;
 
-    return WillPopScope(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(Textos.nomeTelaSelecaoIntervalo,
-              textAlign: TextAlign.center),
-          backgroundColor: PaletaCores.corAdtl,
-          elevation: 0,
-        ),
-        body: SingleChildScrollView(
-          child: SizedBox(
-            width: larguraTela,
-            height: alturaTela -
-                alturaBarraStatus -
-                alturaAppBar -
-                alturaNavigationBar,
-            child: Stack(
-              children: [
-                // o ultimo parametro e o tamanho do container do BUTTON NAVIGATION BAR
-                FundoTela(
-                    altura: alturaTela -
-                        alturaBarraStatus -
-                        alturaAppBar -
-                        alturaNavigationBar),
-                Positioned(
-                    child: Column(
-                  children: [
-                    Expanded(
-                        flex: 1,
-                        child: Container(
-                          padding: const EdgeInsets.only(
-                              top: 20.0, right: 10.0, left: 10.0),
-                          width: larguraTela,
-                          child: Wrap(
-                            alignment: WrapAlignment.spaceAround,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.only(bottom: 10.0),
-                                width: larguraTela,
-                                child: Text(
-                                  Textos.descricaoTelaSelecaoIntervalo,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    Textos.labelDataInicial,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                        fontSize: 16, color: Colors.white),
-                                  ),
-                                  textFieldDatas(larguraTela,
-                                      Textos.labelDataInicial, dataInicial),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    Textos.labelDataFinal,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                        fontSize: 16, color: Colors.white),
-                                  ),
-                                  textFieldDatas(larguraTela,
-                                      Textos.labelDataFinal, dataFinal),
-                                ],
-                              )
-                            ],
-                          ),
-                        )),
-                    Expanded(
-                        flex: 2,
-                        child: Container(
-                          padding: const EdgeInsets.only(
-                              top: 10.0, right: 10.0, left: 10.0),
-                          child: Column(
-                            children: [
-                              Text(
-                                Textos.descricaoListaSelecaoIntervalo,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                    fontSize: 18, color: Colors.black),
-                              ),
-                              Container(
-                                  padding: const EdgeInsets.only(top: 10.0),
-                                  height: alturaTela * 0.4,
-                                  width: larguraTela,
-                                  child: ListView(
-                                    children: [
-                                      ...listaDatasFinal
-                                          .map((e) => Text(
-                                                e,
-                                                textAlign: TextAlign.center,
-                                                style: const TextStyle(
-                                                  fontSize: 18,
-                                                ),
-                                              ))
-                                          .toList()
-                                    ],
-                                  ))
-                            ],
-                          ),
-                        ))
-                  ],
-                )),
-              ],
+    return Theme(
+        data: estilo.estiloGeral,
+        child: WillPopScope(
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(Textos.nomeTelaSelecaoIntervalo,
+                  textAlign: TextAlign.center),
             ),
-          ),
-        ),
-        bottomNavigationBar: SizedBox(
-          height: alturaNavigationBar,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            body: SingleChildScrollView(
+              child: SizedBox(
+                width: larguraTela,
+                height: alturaTela -
+                    alturaBarraStatus -
+                    alturaAppBar -
+                    alturaNavigationBar,
+                child: Stack(
+                  children: [
+                    // o ultimo parametro e o tamanho do container do BUTTON NAVIGATION BAR
+                    FundoTela(
+                        altura: alturaTela -
+                            alturaBarraStatus -
+                            alturaAppBar -
+                            alturaNavigationBar),
+                    Positioned(
+                        child: Column(
+                      children: [
+                        Expanded(
+                            flex: 1,
+                            child: Container(
+                              padding: const EdgeInsets.only(
+                                  top: 20.0, right: 10.0, left: 10.0),
+                              width: larguraTela,
+                              child: Wrap(
+                                alignment: WrapAlignment.spaceAround,
+                                children: [
+                                  Container(
+                                    padding:
+                                        const EdgeInsets.only(bottom: 10.0),
+                                    width: larguraTela,
+                                    child: Text(
+                                      Textos.descricaoTelaSelecaoIntervalo,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        Textos.labelDataInicial,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                            fontSize: 16, color: Colors.white),
+                                      ),
+                                      textFieldDatas(larguraTela,
+                                          Textos.labelDataInicial, dataInicial),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        Textos.labelDataFinal,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                            fontSize: 16, color: Colors.white),
+                                      ),
+                                      textFieldDatas(larguraTela,
+                                          Textos.labelDataFinal, dataFinal),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            )),
+                        Expanded(
+                            flex: 2,
+                            child: Container(
+                              padding: const EdgeInsets.only(
+                                  top: 10.0, right: 10.0, left: 10.0),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    Textos.descricaoListaSelecaoIntervalo,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                        fontSize: 18, color: Colors.black),
+                                  ),
+                                  Container(
+                                      padding: const EdgeInsets.only(top: 10.0),
+                                      height: alturaTela * 0.4,
+                                      width: larguraTela,
+                                      child: ListView(
+                                        children: [
+                                          ...listaDatasFinal
+                                              .map((e) => Text(
+                                                    e,
+                                                    textAlign: TextAlign.center,
+                                                    style: const TextStyle(
+                                                      fontSize: 18,
+                                                    ),
+                                                  ))
+                                              .toList()
+                                        ],
+                                      ))
+                                ],
+                              ),
+                            ))
+                      ],
+                    )),
+                  ],
+                ),
+              ),
+            ),
+            bottomNavigationBar: SizedBox(
+              height: alturaNavigationBar,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(
-                    width: larguraTela * 0.3,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: larguraTela * 0.3,
+                      ),
+                      SizedBox(
+                        width: 45,
+                        height: 45,
+                        child: FloatingActionButton(
+                          backgroundColor: PaletaCores.corVerdeCiano,
+                          onPressed: () {},
+                          child: const Icon(Icons.arrow_forward, size: 40),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(right: 10.0),
+                        width: larguraTela * 0.3,
+                        child: Text(Textos.txtTipoEscala + tipoEscala,
+                            textAlign: TextAlign.end,
+                            style: const TextStyle(fontSize: 15)),
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    width: 45,
-                    height: 45,
-                    child: FloatingActionButton(
-                      backgroundColor: PaletaCores.corVerdeCiano,
-                      onPressed: () {},
-                      child: const Icon(Icons.arrow_forward, size: 40),
-                    ),
+                  const SizedBox(
+                    height: 5,
                   ),
-                  Container(
-                    padding: const EdgeInsets.only(right: 10.0),
-                    width: larguraTela * 0.3,
-                    child: Text(Textos.txtTipoEscala + tipoEscala,
-                        textAlign: TextAlign.end,
-                        style: const TextStyle(fontSize: 15)),
-                  ),
+                  const BarraNavegacao()
                 ],
               ),
-              const SizedBox(
-                height: 5,
-              ),
-              const BarraNavegacao()
-            ],
+            ),
           ),
-        ),
-        backgroundColor: Colors.white,
-      ),
-      onWillPop: () async {
-        var dados = {};
-        dados[Constantes.parametroGenero] = widget.genero;
-        dados[Constantes.parametroListaPessoas] = widget.listaPessoas;
-        dados[Constantes.parametroListaLocal] = widget.listaLocal;
-        Navigator.pushReplacementNamed(context, Constantes.rotaTelaSelecaoDias,
-            arguments: dados);
+          onWillPop: () async {
+            var dados = {};
+            dados[Constantes.parametroGenero] = widget.genero;
+            dados[Constantes.parametroListaPessoas] = widget.listaPessoas;
+            dados[Constantes.parametroListaLocal] = widget.listaLocal;
+            Navigator.pushReplacementNamed(
+                context, Constantes.rotaTelaSelecaoDias,
+                arguments: dados);
 
-        return false;
-      },
-    );
+            return false;
+          },
+        ));
   }
 }

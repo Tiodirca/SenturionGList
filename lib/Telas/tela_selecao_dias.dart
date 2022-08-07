@@ -4,6 +4,7 @@ import 'package:senturionglist/Uteis/Textos.dart';
 import 'package:senturionglist/Widget/check_box_widget.dart';
 
 import '../Modelo/check_box_modelo.dart';
+import '../Uteis/estilo.dart';
 import '../Uteis/paleta_cores.dart';
 import '../Widget/barra_navegacao.dart';
 import '../Widget/fundo_tela_widget.dart';
@@ -25,6 +26,7 @@ class TelaSelecaoDias extends StatefulWidget {
 }
 
 class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
+  Estilo estilo = Estilo();
   String tipoEscala = "";
   List<String> listaDias = [];
   double alturaNavigationBar = 120.0;
@@ -63,7 +65,7 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
     double larguraTela = MediaQuery.of(context).size.width;
     double alturaBarraStatus = MediaQuery.of(context).padding.top;
     double alturaAppBar = AppBar().preferredSize.height;
-    return WillPopScope(
+    return Theme(data: estilo.estiloGeral, child: WillPopScope(
         onWillPop: () async {
           var dados = {};
           dados[Constantes.parametroGenero] = widget.genero;
@@ -76,9 +78,7 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
         child: Scaffold(
           appBar: AppBar(
             title:
-                Text(Textos.nomeTelaSelecaoDias, textAlign: TextAlign.center),
-            backgroundColor: PaletaCores.corAdtl,
-            elevation: 0,
+            Text(Textos.nomeTelaSelecaoDias, textAlign: TextAlign.center),
           ),
           body: SizedBox(
             width: larguraTela,
@@ -87,54 +87,54 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
               children: [
                 FundoTela(
                     altura:
-                        alturaTela - alturaBarraStatus - alturaAppBar - alturaNavigationBar),
+                    alturaTela - alturaBarraStatus - alturaAppBar - alturaNavigationBar),
                 Positioned(
                     child: Column(
-                  children: [
-                    Expanded(
-                        flex: 1,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              Textos.descricaoTelaSelecaoDias,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                          ],
-                        )),
-                    Expanded(
-                        flex: 2,
-                        child: Container(
-                          padding: const EdgeInsets.only(top: 10.0),
-                          child: Column(
-                            children: [
-                              Text(
-                                Textos.legLista,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                    fontSize: 18, color: Colors.black),
+                      children: [
+                        Expanded(
+                            flex: 1,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  Textos.descricaoTelaSelecaoDias,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                              ],
+                            )),
+                        Expanded(
+                            flex: 2,
+                            child: Container(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    Textos.legLista,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                        fontSize: 18, color: Colors.black),
+                                  ),
+                                  SizedBox(
+                                      height: alturaTela * 0.4,
+                                      width: larguraTela,
+                                      child: ListView(
+                                        children: [
+                                          ...itens
+                                              .map((e) => CheckboxWidget(
+                                            item: e,
+                                          ))
+                                              .toList()
+                                        ],
+                                      ))
+                                ],
                               ),
-                              SizedBox(
-                                  height: alturaTela * 0.4,
-                                  width: larguraTela,
-                                  child: ListView(
-                                    children: [
-                                      ...itens
-                                          .map((e) => CheckboxWidget(
-                                                item: e,
-                                              ))
-                                          .toList()
-                                    ],
-                                  ))
-                            ],
-                          ),
-                        )),
-                  ],
-                ))
+                            )),
+                      ],
+                    ))
               ],
             ),
           ),
@@ -191,7 +191,6 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
               ],
             ),
           ),
-          backgroundColor: Colors.white,
-        ));
+        )));
   }
 }
