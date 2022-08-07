@@ -26,10 +26,10 @@ class Textos {
   // TELA SELECAO INTERVALO
   static String nomeTelaSelecaoIntervalo = "Seleção de Intervalo";
   static String descricaoTelaSelecaoIntervalo =
-      "Selecione a data inicial onde começara a escala e a data final.";
+      "Selecione a data inicial onde começará a escala e a data final.";
   static String labelDataInicial = "Data Inicial";
   static String labelDataFinal = "Data Final";
-  static String descricaoListaSelecaoIntervalo = "Confira a baixo as datas que irão compor a escala";
+  static String descricaoListaSelecaoIntervalo = "Confira abaixo as datas que irão compor a escala";
 
   // GERAIS
   static String txtListaVazia = "Sua lista esta vazia";

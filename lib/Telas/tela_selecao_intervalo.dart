@@ -40,7 +40,6 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
     } else {
       tipoEscala = Textos.btnCooperador;
     }
-    print(widget.listaDias);
   }
 
   pegarDatasIntervalo() {
@@ -57,10 +56,10 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
       // definindo que a variavel vai receber ela mesma com a adicao de parametro de duracao
       datasDiferenca = datasDiferenca.add(const Duration(days: 1));
     }
-    converterData();
+    listarDatas();
   }
 
-  converterData() {
+  listarDatas() {
     String diaEscala = "";
     // pegando todos os itens da lista
     for (int interacao = 0;
@@ -68,7 +67,6 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
         interacao++) {
       String data = DateFormat("dd/MM/yyyy EEEE", "pt_BR")
           .format(listaDatasAuxiliar[interacao]);
-
       // pegando a lista de dias selecionados na tela de selecao dias
       for (int i = 0; i < widget.listaDias.length; i++) {
         diaEscala = widget.listaDias[i];
@@ -78,7 +76,6 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
         }
       }
     }
-    print(listaDatasFinal);
   }
 
   Widget textFieldDatas(double largura, String label, DateTime data) =>
@@ -111,11 +108,11 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
               if (label.contains(Textos.labelDataInicial)) {
                 dataInicial = novaData;
               } else {
-                listaDatasAuxiliar = [];
-                listaDatasFinal = [];
                 dataFinal = novaData;
-                pegarDatasIntervalo();
               }
+              listaDatasAuxiliar = [];
+              listaDatasFinal = [];
+              pegarDatasIntervalo();
             });
           },
           readOnly: true,
@@ -132,7 +129,6 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
                 borderSide: const BorderSide(width: 1, color: Colors.white),
                 borderRadius: BorderRadius.circular(20),
               ),
-              //definindo estilo do textfied ao ser clicado
               focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(width: 1, color: Colors.white),
                 borderRadius: BorderRadius.circular(20),
@@ -158,13 +154,18 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
         body: SingleChildScrollView(
           child: SizedBox(
             width: larguraTela,
-            height: alturaTela - alturaBarraStatus - alturaAppBar - alturaNavigationBar,
+            height: alturaTela -
+                alturaBarraStatus -
+                alturaAppBar -
+                alturaNavigationBar,
             child: Stack(
               children: [
                 // o ultimo parametro e o tamanho do container do BUTTON NAVIGATION BAR
                 FundoTela(
-                    altura:
-                        alturaTela - alturaBarraStatus - alturaAppBar - alturaNavigationBar),
+                    altura: alturaTela -
+                        alturaBarraStatus -
+                        alturaAppBar -
+                        alturaNavigationBar),
                 Positioned(
                     child: Column(
                   children: [
@@ -219,7 +220,8 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
                     Expanded(
                         flex: 2,
                         child: Container(
-                          padding: const EdgeInsets.only(top: 10.0),
+                          padding: const EdgeInsets.only(
+                              top: 10.0, right: 10.0, left: 10.0),
                           child: Column(
                             children: [
                               Text(
@@ -229,7 +231,7 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
                                     fontSize: 18, color: Colors.black),
                               ),
                               Container(
-                                padding: const EdgeInsets.only(top: 10.0),
+                                  padding: const EdgeInsets.only(top: 10.0),
                                   height: alturaTela * 0.4,
                                   width: larguraTela,
                                   child: ListView(
