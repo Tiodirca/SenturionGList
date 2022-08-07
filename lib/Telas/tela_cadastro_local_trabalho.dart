@@ -27,6 +27,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
   int idItem = 0;
   bool retornoListaVazia = false;
   String tipoEscala = "";
+  double alturaNavigationBar = 120.0;
   List<LocalTrabalho> localTrabalho = [];
   List<String> localSelecionados = [];
   final List<CheckBoxModel> itensCheckBox = [];
@@ -183,13 +184,13 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
             child: SingleChildScrollView(
                 child: SizedBox(
               width: larguraTela,
-              height: alturaTela - alturaBarraStatus - alturaAppBar - 120,
+              height: alturaTela - alturaBarraStatus - alturaAppBar - alturaNavigationBar,
               child: Stack(
                 children: [
                   // o ultimo parametro e o tamanho do container do BUTTON NAVIGATION BAR
                   FundoTela(
                       altura:
-                          alturaTela - alturaBarraStatus - alturaAppBar - 120),
+                          alturaTela - alturaBarraStatus - alturaAppBar - alturaNavigationBar),
                   Positioned(
                       child: Column(
                     children: [
@@ -371,7 +372,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
             )),
           ),
           bottomNavigationBar: SizedBox(
-            height: 120,
+            height: alturaNavigationBar,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

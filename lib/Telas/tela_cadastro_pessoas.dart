@@ -27,6 +27,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
   String tipoEscala = "";
   List<Pessoa> pessoas = [];
   List<String> listaPessoasSelecionados = [];
+  double alturaNavigationBar = 120.0;
   final List<CheckBoxModel> itensCheckBox = [];
   final TextEditingController _controllerNomePessoa =
       TextEditingController(text: "");
@@ -188,7 +189,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
             child: SingleChildScrollView(
               child: SizedBox(
                 width: larguraTela,
-                height: alturaTela - alturaBarraStatus - alturaAppBar - 120,
+                height: alturaTela - alturaBarraStatus - alturaAppBar - alturaNavigationBar,
                 child: Stack(
                   children: [
                     // o ultimo parametro e o tamanho do container do BUTTON NAVIGATION BAR
@@ -196,7 +197,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                         altura: alturaTela -
                             alturaBarraStatus -
                             alturaAppBar -
-                            120),
+                            alturaNavigationBar),
                     Positioned(
                         child: Column(
                       children: [
@@ -391,7 +392,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
             ),
           ),
           bottomNavigationBar: SizedBox(
-            height: 120,
+            height: alturaNavigationBar,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

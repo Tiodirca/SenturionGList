@@ -29,6 +29,7 @@ class Textos {
       "Selecione a data inicial onde começara a escala e a data final.";
   static String labelDataInicial = "Data Inicial";
   static String labelDataFinal = "Data Final";
+  static String descricaoListaSelecaoIntervalo = "Confira a baixo as datas que irão compor a escala";
 
   // GERAIS
   static String txtListaVazia = "Sua lista esta vazia";
@@ -47,11 +48,11 @@ class Textos {
       "Sucesso ao excluir item da base de dados";
 
   // DIAS DA SEMANA
-  static String diaSegunda = "Segunda-Feira";
-  static String diaTerca = "Terça-Feira";
-  static String diaQuarta = "Quarta-Feira";
-  static String diaQuinta = "Quinta-Feira";
-  static String diaSexta = "Sexta-Feira";
-  static String diaSabado = "Sábado";
-  static String diaDomingo = "Domingo";
+  static String diaSegunda = "segunda-feira";
+  static String diaTerca = "terça-feira";
+  static String diaQuarta = "quarta-feira";
+  static String diaQuinta = "quinta-feira";
+  static String diaSexta = "sexta-feira";
+  static String diaSabado = "sábado";
+  static String diaDomingo = "domingo";
 }

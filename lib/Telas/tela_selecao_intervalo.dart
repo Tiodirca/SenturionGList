@@ -5,6 +5,7 @@ import '../Uteis/Textos.dart';
 import '../Uteis/paleta_cores.dart';
 import '../Widget/barra_navegacao.dart';
 import '../Widget/fundo_tela_widget.dart';
+import 'package:intl/intl.dart';
 
 class TelaSelecaoIntervalo extends StatefulWidget {
   const TelaSelecaoIntervalo(
@@ -27,6 +28,9 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
   String tipoEscala = "";
   DateTime dataInicial = DateTime.now();
   DateTime dataFinal = DateTime.now();
+  List<String> listaDatasFinal = [];
+  List<DateTime> listaDatasAuxiliar = [];
+  double alturaNavigationBar = 120.0;
 
   @override
   void initState() {
@@ -36,6 +40,45 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
     } else {
       tipoEscala = Textos.btnCooperador;
     }
+    print(widget.listaDias);
+  }
+
+  pegarDatasIntervalo() {
+    DateTime datasDiferenca = dataInicial;
+    dynamic diferencaDias = dataInicial.difference(dataFinal).inDays;
+    //verificando se a variavel recebeu um valor negativo
+    if (diferencaDias.toString().contains("-")) {
+      // passando para positivo
+      diferencaDias = -(diferencaDias);
+    }
+    //pegando todas as datas
+    for (int interacao = 0; interacao <= diferencaDias; interacao++) {
+      listaDatasAuxiliar.add(datasDiferenca);
+      // definindo que a variavel vai receber ela mesma com a adicao de parametro de duracao
+      datasDiferenca = datasDiferenca.add(const Duration(days: 1));
+    }
+    converterData();
+  }
+
+  converterData() {
+    String diaEscala = "";
+    // pegando todos os itens da lista
+    for (int interacao = 0;
+        interacao < listaDatasAuxiliar.length;
+        interacao++) {
+      String data = DateFormat("dd/MM/yyyy EEEE", "pt_BR")
+          .format(listaDatasAuxiliar[interacao]);
+
+      // pegando a lista de dias selecionados na tela de selecao dias
+      for (int i = 0; i < widget.listaDias.length; i++) {
+        diaEscala = widget.listaDias[i];
+        // verificando se a variavel contem o valor contido no index da lista
+        if (data.contains(diaEscala)) {
+          listaDatasFinal.add(data); //adicionando variavel a uma lista
+        }
+      }
+    }
+    print(listaDatasFinal);
   }
 
   Widget textFieldDatas(double largura, String label, DateTime data) =>
@@ -68,7 +111,10 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
               if (label.contains(Textos.labelDataInicial)) {
                 dataInicial = novaData;
               } else {
+                listaDatasAuxiliar = [];
+                listaDatasFinal = [];
                 dataFinal = novaData;
+                pegarDatasIntervalo();
               }
             });
           },
@@ -112,13 +158,13 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
         body: SingleChildScrollView(
           child: SizedBox(
             width: larguraTela,
-            height: alturaTela - alturaBarraStatus - alturaAppBar - 120,
+            height: alturaTela - alturaBarraStatus - alturaAppBar - alturaNavigationBar,
             child: Stack(
               children: [
                 // o ultimo parametro e o tamanho do container do BUTTON NAVIGATION BAR
                 FundoTela(
                     altura:
-                        alturaTela - alturaBarraStatus - alturaAppBar - 120),
+                        alturaTela - alturaBarraStatus - alturaAppBar - alturaNavigationBar),
                 Positioned(
                     child: Column(
                   children: [
@@ -177,11 +223,28 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
                           child: Column(
                             children: [
                               Text(
-                                Textos.legLista,
+                                Textos.descricaoListaSelecaoIntervalo,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                     fontSize: 18, color: Colors.black),
                               ),
+                              Container(
+                                padding: const EdgeInsets.only(top: 10.0),
+                                  height: alturaTela * 0.4,
+                                  width: larguraTela,
+                                  child: ListView(
+                                    children: [
+                                      ...listaDatasFinal
+                                          .map((e) => Text(
+                                                e,
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                  fontSize: 18,
+                                                ),
+                                              ))
+                                          .toList()
+                                    ],
+                                  ))
                             ],
                           ),
                         ))
@@ -192,7 +255,7 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
           ),
         ),
         bottomNavigationBar: SizedBox(
-          height: 120,
+          height: alturaNavigationBar,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -203,12 +266,12 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
                     width: larguraTela * 0.3,
                   ),
                   SizedBox(
-                    width: 40,
-                    height: 40,
+                    width: 45,
+                    height: 45,
                     child: FloatingActionButton(
                       backgroundColor: PaletaCores.corVerdeCiano,
                       onPressed: () {},
-                      child: const Icon(Icons.arrow_forward, size: 30),
+                      child: const Icon(Icons.arrow_forward, size: 40),
                     ),
                   ),
                   Container(
@@ -221,12 +284,13 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
                 ],
               ),
               const SizedBox(
-                height: 10,
+                height: 5,
               ),
               const BarraNavegacao()
             ],
           ),
         ),
+        backgroundColor: Colors.white,
       ),
       onWillPop: () async {
         var dados = {};

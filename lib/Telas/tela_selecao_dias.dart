@@ -27,6 +27,7 @@ class TelaSelecaoDias extends StatefulWidget {
 class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
   String tipoEscala = "";
   List<String> listaDias = [];
+  double alturaNavigationBar = 120.0;
   final List<CheckBoxModel> itens = [
     CheckBoxModel(texto: Textos.diaSegunda),
     CheckBoxModel(texto: Textos.diaTerca),
@@ -74,9 +75,6 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
         },
         child: Scaffold(
           appBar: AppBar(
-            actionsIconTheme: const IconThemeData(
-              size: 30,
-            ),
             title:
                 Text(Textos.nomeTelaSelecaoDias, textAlign: TextAlign.center),
             backgroundColor: PaletaCores.corAdtl,
@@ -84,12 +82,12 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
           ),
           body: SizedBox(
             width: larguraTela,
-            height: alturaTela - alturaBarraStatus - alturaAppBar - 120,
+            height: alturaTela - alturaBarraStatus - alturaAppBar - alturaNavigationBar,
             child: Stack(
               children: [
                 FundoTela(
                     altura:
-                        alturaTela - alturaBarraStatus - alturaAppBar - 120),
+                        alturaTela - alturaBarraStatus - alturaAppBar - alturaNavigationBar),
                 Positioned(
                     child: Column(
                   children: [
@@ -141,7 +139,7 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
             ),
           ),
           bottomNavigationBar: SizedBox(
-            height: 120,
+            height: alturaNavigationBar,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -152,8 +150,8 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
                       width: larguraTela * 0.3,
                     ),
                     SizedBox(
-                      width: 40,
-                      height: 40,
+                      width: 45,
+                      height: 45,
                       child: FloatingActionButton(
                         backgroundColor: PaletaCores.corVerdeCiano,
                         onPressed: () {
@@ -174,7 +172,7 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
                                 arguments: dados);
                           }
                         },
-                        child: const Icon(Icons.arrow_forward, size: 30),
+                        child: const Icon(Icons.arrow_forward, size: 40),
                       ),
                     ),
                     Container(
@@ -187,7 +185,7 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
                   ],
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 const BarraNavegacao()
               ],
