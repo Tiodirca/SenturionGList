@@ -18,7 +18,6 @@ class BancoDeDados {
 
   static final BancoDeDados instance = BancoDeDados._privateConstructor();
 
-  // tem somente uma referência ao banco de dados
   static Database? _database;
 
   Future<Database?> get database async {
@@ -54,6 +53,13 @@ class BancoDeDados {
           CREATE TABLE $tabelaLocalTrabalho(
             $columnId INTEGER PRIMARY KEY,
             $columnLocal TEXT NOT NULL)
+          ''');
+  }
+
+  // metodo para criar tabela de listagem de forma dinamica
+  Future<void> criarTabela(String querySQL, String tabela) async {
+    return await _database!.execute('''
+          CREATE TABLE $tabela($querySQL)
           ''');
   }
 
