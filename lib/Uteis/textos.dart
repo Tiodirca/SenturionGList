@@ -19,22 +19,34 @@ class Textos {
   static String labelTextCadLocalTrabalho = "Nome do local";
 
   // TELA SELECAO DIAS
-  static String nomeTelaSelecaoDias = "Seleção Dias";
+  static String nomeTelaSelecaoDias = "Seleção dias da Semana";
   static String descricaoTelaSelecaoDias =
-      "Selecione os dias que haverá escala";
+      "Selecione os dias da semana que haverá trabalho.somente os dias "
+      "selecionados nesta tela serão listados na proxima etapa";
 
   // TELA SELECAO INTERVALO
-  static String nomeTelaSelecaoIntervalo = "Seleção de Intervalo";
+  static String nomeTelaSelecaoIntervalo = "Seleção tempo de Trabalho";
   static String descricaoTelaSelecaoIntervalo =
-      "Selecione a data inicial onde começará a escala e a data final.";
+      "Selecione quantos dias do mês que haverá trabalho. "
+      "começando pela data inicial e terminando com a data final,serão listados somente "
+      "os dias selecionados na etapa anterior";
   static String labelDataInicial = "Data Inicial";
   static String labelDataFinal = "Data Final";
-  static String descricaoListaSelecaoIntervalo = "Confira abaixo as datas que irão compor a escala";
+  static String descricaoListaSelecaoIntervalo =
+      "Confira abaixo os dias que irão compor o periodo da escala com base na data inicial e "
+      " data final informada acima e na etapa anterior";
 
   // GERAIS
   static String txtListaVazia = "Sua lista esta vazia";
   static String legLista = "Selecione um ou mais itens da lista abaixo";
   static String txtTipoEscala = "Escala de ";
+
+  // TELA LISTAGEM
+  static String nomeTelaListagem = "Lista de escala";
+  static String decricaoTelaListagem =
+      "Aqui você pode conferir a escala gerada. revise-a antes de "
+      "gerar o arquivo em PDF,se necessario edite ela conforme precisar";
+  static String legListaGerada = "Lista gerada";
 
   // ALERTS
   static String legAlertExclusao = "Deseja realmente excluir este item ?";

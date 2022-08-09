@@ -55,6 +55,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
       tipoEscala = Textos.btnCooperador;
       valorGenero = 0;
     }
+    localSelecionados.add("Data");
   }
 
   // metodo para inserir os dados no banco de dados
@@ -122,7 +123,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                   child: const Text("Cancelar")),
               TextButton(
                   onPressed: () {
-                    bancoDados.excluir(id, Constantes.bancoTabelaPessoa);
+                    bancoDados.excluir(id, Constantes.bancoTabelaLocalTrabalho);
                     consultarTarefas();
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(Textos.sucessoExluirItemBanco)));
@@ -148,6 +149,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
               },
             )),
         title: Text(checkBoxModel.texto),
+        side: const BorderSide(width: 2, color: Colors.black),
         value: checkBoxModel.checked,
         onChanged: (value) {
           setState(() {
@@ -345,9 +347,10 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                           width: larguraTela * 0.3,
                         ),
                         SizedBox(
-                          width: 40,
-                          height: 40,
+                          width: 45,
+                          height: 45,
                           child: FloatingActionButton(
+                            heroTag: "btnAvancarCadLocal",
                             backgroundColor: PaletaCores.corVerdeCiano,
                             onPressed: () {
                               pegarItensLocal();
@@ -369,7 +372,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                                     arguments: dados);
                               }
                             },
-                            child: const Icon(Icons.arrow_forward, size: 30),
+                            child: const Icon(Icons.arrow_forward, size: 40),
                           ),
                         ),
                         Container(
@@ -382,7 +385,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                       ],
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
                     const BarraNavegacao()
                   ],

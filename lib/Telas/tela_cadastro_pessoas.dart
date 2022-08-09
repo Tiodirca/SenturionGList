@@ -157,6 +157,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
             )),
         title: Text(checkBoxModel.texto),
         value: checkBoxModel.checked,
+        side: const BorderSide(width: 2, color: Colors.black),
         onChanged: (value) {
           setState(() {
             checkBoxModel.checked = value!;
@@ -252,8 +253,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                                                   controller:
                                                       _controllerNomePessoa,
                                                   decoration: InputDecoration(
-                                                      labelText: Textos
-                                                          .labelTextCadPessoa,
+                                                    labelText: Textos
+                                                        .labelTextCadPessoa,
                                                   ),
                                                 ),
                                               )),
@@ -355,9 +356,10 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                           width: larguraTela * 0.3,
                         ),
                         SizedBox(
-                          width: 40,
-                          height: 40,
+                          width: 45,
+                          height: 45,
                           child: FloatingActionButton(
+                            heroTag: "btnAvancarCadPessoas",
                             backgroundColor: PaletaCores.corVerdeCiano,
                             onPressed: () {
                               pegarItensPessoas();
@@ -377,7 +379,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                                     arguments: dados);
                               }
                             },
-                            child: const Icon(Icons.arrow_forward, size: 30),
+                            child: const Icon(Icons.arrow_forward, size: 40),
                           ),
                         ),
                         Container(
@@ -390,7 +392,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                       ],
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
                     const BarraNavegacao()
                   ],

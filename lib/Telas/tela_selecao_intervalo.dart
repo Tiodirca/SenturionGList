@@ -44,6 +44,8 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
     }
   }
 
+  // metodo para pegar as datas que irao conter o
+  // intervalo de dias que serao trabalhados na escala
   pegarDatasIntervalo() {
     DateTime datasDiferenca = dataInicial;
     dynamic diferencaDias = dataInicial.difference(dataFinal).inDays;
@@ -59,8 +61,11 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
       datasDiferenca = datasDiferenca.add(const Duration(days: 1));
     }
     listarDatas();
+    print(listaDatasAuxiliar.toString());
   }
 
+  // metodo para listar as datas formatando elas para o formato que
+  // contenha da data em numeros e o dia da semana
   listarDatas() {
     String diaEscala = "";
     // pegando todos os itens da lista
@@ -80,6 +85,7 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
     }
   }
 
+  // widget dos text fields
   Widget textFieldDatas(double largura, String label, DateTime data) =>
       Container(
         padding:
@@ -150,7 +156,8 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
                     alturaNavigationBar,
                 child: Stack(
                   children: [
-                    // o ultimo parametro e o tamanho do container do BUTTON NAVIGATION BAR
+                    // o ultimo parametro e o tamanho do
+                    // container do BUTTON NAVIGATION BAR
                     FundoTela(
                         altura: alturaTela -
                             alturaBarraStatus -
@@ -163,7 +170,7 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
                             flex: 1,
                             child: Container(
                               padding: const EdgeInsets.only(
-                                  top: 20.0, right: 10.0, left: 10.0),
+                                  top: 10.0, right: 10.0, left: 10.0),
                               width: larguraTela,
                               child: Wrap(
                                 alignment: WrapAlignment.spaceAround,
@@ -228,11 +235,33 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
                                       child: ListView(
                                         children: [
                                           ...listaDatasFinal
-                                              .map((e) => Text(
-                                                    e,
-                                                    textAlign: TextAlign.center,
-                                                    style: const TextStyle(
-                                                      fontSize: 18,
+                                              .map((e) => Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            bottom: 10.0),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        const Icon(
+                                                            Icons.date_range),
+                                                        const SizedBox(
+                                                          width: 10.0,
+                                                        ),
+                                                        SizedBox(
+                                                          width: 250,
+                                                          child: Text(
+                                                            e,
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style:
+                                                                const TextStyle(
+                                                              fontSize: 18,
+                                                            ),
+                                                          ),
+                                                        )
+                                                      ],
                                                     ),
                                                   ))
                                               .toList()
@@ -255,21 +284,43 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        width: larguraTela * 0.3,
-                      ),
+                      SizedBox(
+                          width: larguraTela * 0.4,
+                          height: 45,
+                          child: SingleChildScrollView(
+                            child: Text(
+                              "Dias da Semana :${widget.listaDias.toString().replaceAll("[", "").replaceAll("]", "")}",
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  fontSize: 15, color: Colors.black),
+                            ),
+                          )),
                       SizedBox(
                         width: 45,
                         height: 45,
                         child: FloatingActionButton(
+                          heroTag: "btnAvancarSelecaoIntervalo",
                           backgroundColor: PaletaCores.corVerdeCiano,
-                          onPressed: () {},
+                          onPressed: () {
+                            var dados = {};
+                            dados[Constantes.parametroGenero] = widget.genero;
+                            dados[Constantes.parametroListaPessoas] =
+                                widget.listaPessoas;
+                            dados[Constantes.parametroListaLocal] =
+                                widget.listaLocal;
+                            dados[Constantes.parametroListaPeriodo] =
+                                listaDatasFinal;
+                            Navigator.pushReplacementNamed(
+                                context, Constantes.rotaTelaListagem,
+                                arguments: dados);
+                          },
                           child: const Icon(Icons.arrow_forward, size: 40),
                         ),
                       ),
                       Container(
                         padding: const EdgeInsets.only(right: 10.0),
-                        width: larguraTela * 0.3,
+                        height: 45,
+                        width: larguraTela * 0.4,
                         child: Text(Textos.txtTipoEscala + tipoEscala,
                             textAlign: TextAlign.end,
                             style: const TextStyle(fontSize: 15)),

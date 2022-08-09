@@ -96,14 +96,17 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  Textos.descricaoTelaSelecaoDias,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
+                                Container(
+                                  margin: const EdgeInsets.only(left: 10.0,right: 10.0),
+                                  child: Text(
+                                    Textos.descricaoTelaSelecaoDias,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                )
                               ],
                             )),
                         Expanded(
@@ -153,6 +156,7 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
                       width: 45,
                       height: 45,
                       child: FloatingActionButton(
+                        heroTag: "btnAvancarSelecaoDias",
                         backgroundColor: PaletaCores.corVerdeCiano,
                         onPressed: () {
                           pegarItens();
@@ -163,7 +167,7 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
                             var dados = {};
                             dados[Constantes.parametroGenero] = widget.genero;
                             dados[Constantes.parametroListaPessoas] =
-                                widget.listaLocal;
+                                widget.listaPessoas;
                             dados[Constantes.parametroListaLocal] =
                                 widget.listaLocal;
                             dados[Constantes.parametroListaDias] = listaDias;

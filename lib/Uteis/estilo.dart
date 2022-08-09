@@ -10,15 +10,15 @@ class Estilo {
       inputDecorationTheme: InputDecorationTheme(
           hintStyle: const TextStyle(color: Colors.white),
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 1, color: Colors.white),
+            borderSide: const BorderSide(width: 2, color: Colors.white),
             borderRadius: BorderRadius.circular(15),
           ),
           focusedErrorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 1, color: Colors.white),
+            borderSide: const BorderSide(width: 2, color: Colors.white),
             borderRadius: BorderRadius.circular(20),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(width: 1, color: Colors.white),
+            borderSide: const BorderSide(width: 2, color: Colors.white),
             borderRadius: BorderRadius.circular(20),
           ),
           errorBorder: OutlineInputBorder(

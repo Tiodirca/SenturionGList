@@ -4,11 +4,13 @@ class Constantes {
   static const rotaTelaCadastroLocalTrabalho = "/telaCadastroLocalTrabalho";
   static const rotaTelaSelecaoDias = "/selecaoDias";
   static const rotaTelaSelecaoIntervalo = "/selecaoIntervalo";
+  static const rotaTelaListagem = "/telaListagem";
 
   static const parametroGenero = "generoParametro";
   static const parametroListaPessoas = "listaPessoas";
   static const parametroListaLocal = "listaLocal";
   static const parametroListaDias = "listaDias";
+  static const parametroListaPeriodo = "listaPeriodo";
 
   static const tipoIconeHome = "home";
   static const tipoIconeLista = "lista";
