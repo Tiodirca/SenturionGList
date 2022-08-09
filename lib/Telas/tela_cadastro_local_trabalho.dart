@@ -204,7 +204,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                           Expanded(
                               flex: 1,
                               child: Container(
-                                padding: const EdgeInsets.only(top: 20.0),
+                                padding: const EdgeInsets.only(top: 10.0),
                                 width: larguraTela,
                                 child: Column(
                                   children: [
@@ -213,7 +213,6 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(
                                           fontSize: 18,
-                                          fontWeight: FontWeight.bold,
                                           color: Colors.white),
                                     ),
                                     const SizedBox(

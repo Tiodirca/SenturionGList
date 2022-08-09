@@ -48,12 +48,13 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
   // intervalo de dias que serao trabalhados na escala
   pegarDatasIntervalo() {
     DateTime datasDiferenca = dataInicial;
-    dynamic diferencaDias = dataInicial.difference(dataFinal).inDays;
+    dynamic diferencaDias = datasDiferenca.difference(dataFinal).inDays;
     //verificando se a variavel recebeu um valor negativo
     if (diferencaDias.toString().contains("-")) {
       // passando para positivo
       diferencaDias = -(diferencaDias);
     }
+    print(diferencaDias);
     //pegando todas as datas
     for (int interacao = 0; interacao <= diferencaDias; interacao++) {
       listaDatasAuxiliar.add(datasDiferenca);
@@ -181,11 +182,9 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
                                     width: larguraTela,
                                     child: Text(
                                       Textos.descricaoTelaSelecaoIntervalo,
-                                      textAlign: TextAlign.center,
+                                      textAlign: TextAlign.justify,
                                       style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
+                                          fontSize: 18, color: Colors.white),
                                     ),
                                   ),
                                   Column(
@@ -222,15 +221,19 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
                                   top: 10.0, right: 10.0, left: 10.0),
                               child: Column(
                                 children: [
-                                  Text(
-                                    Textos.descricaoListaSelecaoIntervalo,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                        fontSize: 18, color: Colors.black),
+                                  Container(
+                                    margin: const EdgeInsets.only(
+                                        left: 10.0, right: 10.0),
+                                    child: Text(
+                                      Textos.descricaoListaSelecaoIntervalo,
+                                      textAlign: TextAlign.justify,
+                                      style: const TextStyle(
+                                          fontSize: 18, color: Colors.black),
+                                    ),
                                   ),
                                   Container(
                                       padding: const EdgeInsets.only(top: 10.0),
-                                      height: alturaTela * 0.4,
+                                      height: alturaTela * 0.35,
                                       width: larguraTela,
                                       child: ListView(
                                         children: [

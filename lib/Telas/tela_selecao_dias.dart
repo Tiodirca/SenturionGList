@@ -94,16 +94,14 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
                         Expanded(
                             flex: 1,
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
-                                  margin: const EdgeInsets.only(left: 10.0,right: 10.0),
+                                  margin: const EdgeInsets.only(top: 10.0,left: 10.0,right: 10.0),
                                   child: Text(
                                     Textos.descricaoTelaSelecaoDias,
-                                    textAlign: TextAlign.center,
+                                    textAlign: TextAlign.justify,
                                     style: const TextStyle(
                                         fontSize: 18,
-                                        fontWeight: FontWeight.bold,
                                         color: Colors.white),
                                   ),
                                 )

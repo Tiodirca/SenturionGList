@@ -5,7 +5,15 @@ class Estilo {
   ThemeData get estiloGeral => ThemeData(
       primaryColor: PaletaCores.corAdtl,
       fontFamily: 'Comic',
-      appBarTheme: const AppBarTheme(color: PaletaCores.corAdtl, elevation: 0),
+      appBarTheme: const AppBarTheme(
+        color: PaletaCores.corAdtl,
+        elevation: 0,
+        titleTextStyle: TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Comic'),
+      ),
       scaffoldBackgroundColor: Colors.white,
       inputDecorationTheme: InputDecorationTheme(
           hintStyle: const TextStyle(color: Colors.white),

@@ -67,13 +67,15 @@ class TelaInicial extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  Textos.legSelecaoTipoEscala,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 20.0,left: 20.0),
+                                  child: Text(
+                                    Textos.legSelecaoTipoEscala,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.white),
+                                  ),
                                 ),
                                 SizedBox(
                                   height: alturaTela * 0.5,

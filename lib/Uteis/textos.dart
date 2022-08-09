@@ -21,20 +21,19 @@ class Textos {
   // TELA SELECAO DIAS
   static String nomeTelaSelecaoDias = "Seleção dias da Semana";
   static String descricaoTelaSelecaoDias =
-      "Selecione os dias da semana que haverá trabalho.somente os dias "
+      "Selecione os dias da semana que haverá trabalho. somente os dias "
       "selecionados nesta tela serão listados na proxima etapa";
 
   // TELA SELECAO INTERVALO
   static String nomeTelaSelecaoIntervalo = "Seleção tempo de Trabalho";
   static String descricaoTelaSelecaoIntervalo =
       "Selecione quantos dias do mês que haverá trabalho. "
-      "começando pela data inicial e terminando com a data final,serão listados somente "
-      "os dias selecionados na etapa anterior";
+      "começando pela data inicial e terminando com a data final";
   static String labelDataInicial = "Data Inicial";
   static String labelDataFinal = "Data Final";
   static String descricaoListaSelecaoIntervalo =
-      "Confira abaixo os dias que irão compor o periodo da escala com base na data inicial e "
-      " data final informada acima e na etapa anterior";
+      "Confira abaixo os dias que irão compor a escala com base na data inicial e "
+      " data final, serão listados somente os dias da semana selecionados na etapa anterior";
 
   // GERAIS
   static String txtListaVazia = "Sua lista esta vazia";
