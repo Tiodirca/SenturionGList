@@ -1,21 +1,26 @@
 class Constantes {
+  // constantes de rotas
   static const rotaTelaInicial = "/telaInicial";
   static const rotaTelaCadastroPessoas = "/telaCadastroPessoas";
   static const rotaTelaCadastroLocalTrabalho = "/telaCadastroLocalTrabalho";
   static const rotaTelaSelecaoDias = "/selecaoDias";
   static const rotaTelaSelecaoIntervalo = "/selecaoIntervalo";
   static const rotaTelaListagem = "/telaListagem";
+  static const rotaTelaGerarEscala = "/telaGerarEscala";
 
+  // constantes de parametros passados de uma tela para outra
   static const parametroGenero = "generoParametro";
   static const parametroListaPessoas = "listaPessoas";
   static const parametroListaLocal = "listaLocal";
   static const parametroListaDias = "listaDias";
   static const parametroListaPeriodo = "listaPeriodo";
 
+  // constantes dos icones exibidos na barra de navegacao
   static const tipoIconeHome = "home";
   static const tipoIconeLista = "lista";
   static const tipoIconeConfiguracao = "configuracao";
 
+  // constantes usadas no banco de dados
   static const bancoNomeBanco = "escalas";
   static const bancoTabelaPessoa = "pessoas";
   static const bancoTabelaLocalTrabalho = "localTrabalho";

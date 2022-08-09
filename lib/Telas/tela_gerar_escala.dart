@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:senturionglist/Uteis/Servicos/banco_de_dados.dart';
 
 import '../Uteis/Textos.dart';
 import '../Uteis/estilo.dart';
@@ -8,8 +10,8 @@ import '../Uteis/paleta_cores.dart';
 import '../Widget/barra_navegacao.dart';
 import '../Widget/fundo_tela_widget.dart';
 
-class TelaListagem extends StatefulWidget {
-  const TelaListagem(
+class TelaGerarEscala extends StatefulWidget {
+  const TelaGerarEscala(
       {Key? key,
       required this.genero,
       required this.listaLocal,
@@ -23,11 +25,14 @@ class TelaListagem extends StatefulWidget {
   final List<String> listaPeriodo;
 
   @override
-  State<TelaListagem> createState() => _TelaListagemState();
+  State<TelaGerarEscala> createState() => _TelaGerarEscalaState();
 }
 
-class _TelaListagemState extends State<TelaListagem> {
+class _TelaGerarEscalaState extends State<TelaGerarEscala> {
   Estilo estilo = Estilo();
+
+  // referencia classe para gerenciar o banco de dados
+  final bancoDados = BancoDeDados.instance;
   String tipoEscala = "";
   double alturaNavigationBar = 120.0;
 
@@ -39,7 +44,54 @@ class _TelaListagemState extends State<TelaListagem> {
     } else {
       tipoEscala = Textos.btnCooperador;
     }
+    String querySQL = "";
+    String teste = "";
+    // formando query para criar tabela com base na lista passada
+    widget.listaLocal
+        .map(
+          (e) => querySQL = "$querySQL $e TEXT NOT NULL,",
+        )
+        .toList();
+
+    int tamanho = querySQL.length;
+    print(querySQL.substring(0, tamanho - 1));
+    String tabela = "teste";
+    //bancoDados.criarTabela(querySQL, tabela);
+
+    // teste();
+    // Timer(const Duration(seconds: 10), () {
+    //   consulta();
+    // });
+
+    for (int i = 0; i < widget.listaPeriodo.length; i++) {
+      Random random = Random();
+      Map<String,dynamic> linha = {};
+      widget.listaLocal
+          .map(
+            (e){
+              int randomNumber = random.nextInt(widget.listaPessoas.length);
+              linha[e] = widget.listaPessoas[randomNumber];
+            },
+      )
+          .toList();
+      print(linha);
+    }
   }
+
+  // teste() async {
+  //   Map<String, dynamic> linha = {
+  //     'altura': "_controllerNomePessoa.text",
+  //     'largura': "valorGenero"
+  //   };
+  //   await bancoDados.inserir(linha, "teste");
+  // }
+  //
+  // consulta() async {
+  //   final registros = await bancoDados.consultarLinhas("teste");
+  //   for (var linha in registros) {
+  //     print(linha);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -85,8 +137,7 @@ class _TelaListagemState extends State<TelaListagem> {
                                     Textos.decricaoTelaListagem,
                                     textAlign: TextAlign.justify,
                                     style: const TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white),
+                                        fontSize: 18, color: Colors.white),
                                   ),
                                 ],
                               ),

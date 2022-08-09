@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:senturionglist/Telas/tela_listagem.dart';
+import 'package:senturionglist/Telas/tela_gerar_escala.dart';
 import 'package:senturionglist/Telas/tela_selecao_dias.dart';
 import 'package:senturionglist/Telas/tela_cadastro_local_trabalho.dart';
 import 'package:senturionglist/Telas/tela_selecao_intervalo.dart';
@@ -65,10 +65,10 @@ class Rotas {
         } else {
           return erroRota(settings);
         }
-      case Constantes.rotaTelaListagem:
+      case Constantes.rotaTelaGerarEscala:
         if (args is Map) {
           return MaterialPageRoute(
-            builder: (_) => TelaListagem(
+            builder: (_) => TelaGerarEscala(
               genero: args[Constantes.parametroGenero],
               listaPessoas: args[Constantes.parametroListaPessoas],
               listaLocal: args[Constantes.parametroListaLocal],
