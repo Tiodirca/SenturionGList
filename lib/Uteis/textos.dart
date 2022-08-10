@@ -35,10 +35,11 @@ class Textos {
       "Confira abaixo os dias que irão compor a escala com base na data inicial e "
       " data final, serão listados somente os dias da semana selecionados na etapa anterior";
 
-  // GERAIS
-  static String txtListaVazia = "Sua lista esta vazia";
-  static String legLista = "Selecione um ou mais itens da lista abaixo";
-  static String txtTipoEscala = "Escala de ";
+  // TELA GERAR ESCALA
+  static String nomeTelaGerarEscala = "Gerar Escala";
+  static String decricaoTelaGerarEscala =
+      "Digite o nome que a escala terá";
+  static String labelNomeEscala = "Nome da escala";
 
   // TELA LISTAGEM
   static String nomeTelaListagem = "Lista de escala";
@@ -46,6 +47,11 @@ class Textos {
       "Aqui você pode conferir a escala gerada. revise-a antes de "
       "gerar o arquivo em PDF,se necessario edite ela conforme precisar";
   static String legListaGerada = "Lista gerada";
+
+  // GERAIS
+  static String txtListaVazia = "Sua lista esta vazia";
+  static String legLista = "Selecione um ou mais itens da lista abaixo";
+  static String txtTipoEscala = "Escala de ";
 
   // ALERTS
   static String legAlertExclusao = "Deseja realmente excluir este item ?";

@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:senturionglist/Uteis/Servicos/banco_de_dados.dart';
 
+import '../Uteis/Constantes.dart';
 import '../Uteis/Textos.dart';
 import '../Uteis/estilo.dart';
 import '../Uteis/paleta_cores.dart';
@@ -261,12 +262,15 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
           ),
           onWillPop: () async {
             var dados = {};
-            //dados[Constantes.parametroGenero] = widget.genero;
-            //dados[Constantes.parametroListaPessoas] = widget.listaPessoas;
-            //dados[Constantes.parametroListaLocal] = widget.listaLocal;
-            //Navigator.pushReplacementNamed(
-            //    context, Constantes.rotaTelaSelecaoDias,
-            //    arguments: dados);
+            // dados[Constantes.parametroGenero] = widget.genero;
+            // dados[Constantes.parametroListaPessoas] =
+            //     widget.listaPessoas;
+            // dados[Constantes.parametroListaLocal] =
+            //     widget.listaLocal;
+            // dados[Constantes.parametroListaDias] = widget;
+            // Navigator.pushReplacementNamed(
+            //     context, Constantes.rotaTelaSelecaoIntervalo,
+            //     arguments: dados);
             return false;
           },
         ));

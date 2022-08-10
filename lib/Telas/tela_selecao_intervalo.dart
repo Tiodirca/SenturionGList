@@ -49,8 +49,9 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
   pegarDatasIntervalo() {
     DateTime datasDiferenca = dataInicial;
     //
-    dynamic diferencaDias =
-        datasDiferenca.difference(dataFinal.add(const Duration(days: 1))).inDays;
+    dynamic diferencaDias = datasDiferenca
+        .difference(dataFinal.add(const Duration(days: 1)))
+        .inDays;
     //verificando se a variavel recebeu um valor negativo
     if (diferencaDias.toString().contains("-")) {
       // passando para positivo
@@ -140,6 +141,11 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
     double alturaBarraStatus = MediaQuery.of(context).padding.top;
     double alturaAppBar = AppBar().preferredSize.height;
 
+    // o ultimo parametro e o tamanho do
+    // container do BUTTON NAVIGATION BAR
+    double alturaGeral =
+        alturaTela - alturaBarraStatus - alturaAppBar - alturaNavigationBar;
+
     return Theme(
         data: estilo.estiloGeral,
         child: WillPopScope(
@@ -151,128 +157,128 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
             body: SingleChildScrollView(
               child: SizedBox(
                 width: larguraTela,
-                height: alturaTela -
-                    alturaBarraStatus -
-                    alturaAppBar -
-                    alturaNavigationBar,
+                height: alturaGeral,
                 child: Stack(
                   children: [
-                    // o ultimo parametro e o tamanho do
-                    // container do BUTTON NAVIGATION BAR
-                    FundoTela(
-                        altura: alturaTela -
-                            alturaBarraStatus -
-                            alturaAppBar -
-                            alturaNavigationBar),
+                    FundoTela(altura: alturaGeral),
                     Positioned(
                         child: Column(
                       children: [
                         Expanded(
                             flex: 1,
                             child: Container(
-                              padding: const EdgeInsets.only(
-                                  top: 10.0, right: 10.0, left: 10.0),
-                              width: larguraTela,
-                              child: Wrap(
-                                alignment: WrapAlignment.spaceAround,
-                                children: [
-                                  Container(
-                                    padding:
-                                        const EdgeInsets.only(bottom: 10.0),
-                                    width: larguraTela,
-                                    child: Text(
-                                      Textos.descricaoTelaSelecaoIntervalo,
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                          fontSize: 18, color: Colors.white),
-                                    ),
-                                  ),
-                                  Column(
+                                padding: const EdgeInsets.only(
+                                    top: 10.0, right: 10.0, left: 10.0),
+                                width: larguraTela,
+                                child: SingleChildScrollView(
+                                  child: Wrap(
+                                    alignment: WrapAlignment.spaceAround,
                                     children: [
-                                      Text(
-                                        Textos.labelDataInicial,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                            fontSize: 16, color: Colors.white),
+                                      Container(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 10.0),
+                                        width: larguraTela,
+                                        child: Text(
+                                          Textos.descricaoTelaSelecaoIntervalo,
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.white),
+                                        ),
                                       ),
-                                      textFieldDatas(larguraTela,
-                                          Textos.labelDataInicial, dataInicial),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            Textos.labelDataInicial,
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.white),
+                                          ),
+                                          textFieldDatas(
+                                              larguraTela,
+                                              Textos.labelDataInicial,
+                                              dataInicial),
+                                        ],
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            Textos.labelDataFinal,
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.white),
+                                          ),
+                                          textFieldDatas(larguraTela,
+                                              Textos.labelDataFinal, dataFinal),
+                                        ],
+                                      )
                                     ],
                                   ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        Textos.labelDataFinal,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                            fontSize: 16, color: Colors.white),
-                                      ),
-                                      textFieldDatas(larguraTela,
-                                          Textos.labelDataFinal, dataFinal),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            )),
+                                ))),
                         Expanded(
                             flex: 2,
                             child: Container(
-                              padding: const EdgeInsets.only(
-                                  top: 10.0, right: 10.0, left: 10.0),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 20.0, right: 20.0),
-                                    child: Text(
-                                      Textos.descricaoListaSelecaoIntervalo,
-                                      textAlign: TextAlign.justify,
-                                      style: const TextStyle(
-                                          fontSize: 18, color: Colors.black),
-                                    ),
-                                  ),
-                                  Container(
-                                      padding: const EdgeInsets.only(top: 10.0),
-                                      height: alturaTela * 0.35,
-                                      width: larguraTela,
-                                      child: ListView(
-                                        children: [
-                                          ...listaDatasFinal
-                                              .map((e) => Container(
-                                                    margin:
-                                                        const EdgeInsets.only(
-                                                            bottom: 10.0),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        const Icon(
-                                                            Icons.date_range),
-                                                        const SizedBox(
-                                                          width: 10.0,
-                                                        ),
-                                                        SizedBox(
-                                                          width: 250,
-                                                          child: Text(
-                                                            e,
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style:
-                                                                const TextStyle(
-                                                              fontSize: 18,
+                                padding: const EdgeInsets.only(
+                                    top: 10.0, right: 10.0, left: 10.0),
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        margin: const EdgeInsets.only(
+                                            left: 20.0, right: 20.0),
+                                        child: Text(
+                                          Textos.descricaoListaSelecaoIntervalo,
+                                          textAlign: TextAlign.justify,
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.black),
+                                        ),
+                                      ),
+                                      Container(
+                                          padding:
+                                              const EdgeInsets.only(top: 10.0),
+                                          height: alturaTela * 0.35,
+                                          width: larguraTela,
+                                          child: ListView(
+                                            children: [
+                                              ...listaDatasFinal
+                                                  .map((e) => Container(
+                                                        margin: const EdgeInsets
+                                                            .only(bottom: 10.0),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            const Icon(Icons
+                                                                .date_range),
+                                                            const SizedBox(
+                                                              width: 10.0,
                                                             ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ))
-                                              .toList()
-                                        ],
-                                      ))
-                                ],
-                              ),
-                            ))
+                                                            SizedBox(
+                                                              width: 250,
+                                                              child: Text(
+                                                                e,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontSize: 18,
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ))
+                                                  .toList()
+                                            ],
+                                          ))
+                                    ],
+                                  ),
+                                )))
                       ],
                     )),
                   ],
@@ -282,7 +288,6 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
             bottomNavigationBar: SizedBox(
               height: alturaNavigationBar,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
