@@ -55,7 +55,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
       tipoEscala = Textos.btnCooperador;
       valorGenero = 0;
     }
-    localSelecionados.add("Data");
+    localSelecionados.add(Textos.localData);
+    localSelecionados.add(Textos.localHoraTroca);
   }
 
   // metodo para inserir os dados no banco de dados
@@ -189,7 +190,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                   height: alturaTela -
                       alturaBarraStatus -
                       alturaAppBar -
-                      alturaNavigationBar,
+                      Constantes.alturaNavigationBar,
                   child: Stack(
                     children: [
                       // o ultimo parametro e o tamanho do container do BUTTON NAVIGATION BAR
@@ -197,7 +198,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                           altura: alturaTela -
                               alturaBarraStatus -
                               alturaAppBar -
-                              alturaNavigationBar),
+                              Constantes.alturaNavigationBar),
                       Positioned(
                           child: Column(
                         children: [
@@ -335,7 +336,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                 )),
               ),
               bottomNavigationBar: SizedBox(
-                height: alturaNavigationBar,
+                height: Constantes.alturaNavigationBar,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -346,8 +347,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                           width: larguraTela * 0.3,
                         ),
                         SizedBox(
-                          width: 45,
-                          height: 45,
+                          width: 60,
+                          height: 60,
                           child: FloatingActionButton(
                             heroTag: "btnAvancarCadLocal",
                             backgroundColor: PaletaCores.corVerdeCiano,
@@ -386,7 +387,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                     const SizedBox(
                       height: 5,
                     ),
-                    const BarraNavegacao()
+                    const SizedBox(height: 60, child: BarraNavegacao()),
                   ],
                 ),
               ),

@@ -19,26 +19,34 @@ class Textos {
   static String labelTextCadLocalTrabalho = "Nome do local";
 
   // TELA SELECAO DIAS
-  static String nomeTelaSelecaoDias = "Seleção dias da Semana";
+  static String nomeTelaSelecaoDias = "Seleção dias da semana";
   static String descricaoTelaSelecaoDias =
       "Selecione os dias da semana que haverá trabalho. somente os dias "
       "selecionados nesta tela serão listados na proxima etapa";
 
   // TELA SELECAO INTERVALO
-  static String nomeTelaSelecaoIntervalo = "Seleção tempo de Trabalho";
-  static String descricaoTelaSelecaoIntervalo =
-      "Selecione quantos dias do mês que haverá trabalho. "
+  static String nomeTelaSelecaoPeriodo = "Seleção periodo/tempo de Trabalho";
+  static String descricaoTelaSelecaoPeriodo =
+      "Selecione um periodo de quantos dias haverá trabalho. "
       "começando pela data inicial e terminando com a data final";
   static String labelDataInicial = "Data Inicial";
   static String labelDataFinal = "Data Final";
-  static String descricaoListaSelecaoIntervalo =
+  static String descricaoListaSelecaoPeriodo =
       "Confira abaixo os dias que irão compor a escala com base na data inicial e "
       " data final, serão listados somente os dias da semana selecionados na etapa anterior";
 
   // TELA GERAR ESCALA
-  static String nomeTelaGerarEscala = "Gerar Escala";
+  static String nomeTelaGerarEscala = "Gerar escala";
   static String decricaoTelaGerarEscala =
-      "Digite o nome que a escala terá";
+      "Defina um nome para a escala que irá ser gerada";
+
+  // TELA GERAR ESCALA CONFIG ESCALA
+  static String descricaoNomesConjuntos =
+      "Agrupar pessoas para quando ser gerado a escala "
+      "elas estarem juntas na mesma data";
+  static String selecaoNomePessoas = "Selecione o nome das pessoas";
+  static String selecaoNomeDiasSemana =
+      "Selecione os dias";
   static String labelNomeEscala = "Nome da escala";
 
   // TELA LISTAGEM
@@ -52,12 +60,15 @@ class Textos {
   static String txtListaVazia = "Sua lista esta vazia";
   static String legLista = "Selecione um ou mais itens da lista abaixo";
   static String txtTipoEscala = "Escala de ";
+  static String txtTelaCarregamento = "Aguarde Carregando";
 
   // ALERTS
   static String legAlertExclusao = "Deseja realmente excluir este item ?";
 
   // ERROS E SUCESSO
   static String erroTextFieldVazio = "Preencha o campo antes";
+  static String erroSemIntervalo =
+      "Defina um periodo de dias que terá a escala";
   static String erroSemSelecaoCheck =
       "Selecione pelo menos um item da lista. clicando encima dos nomes";
   static String sucessoAddBanco = "Sucesso ao adicionar item a base de dados";
@@ -72,4 +83,7 @@ class Textos {
   static String diaSexta = "sexta-feira";
   static String diaSabado = "sábado";
   static String diaDomingo = "domingo";
+
+  static String localData = "Data";
+  static String localHoraTroca = "Horario de Troca";
 }

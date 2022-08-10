@@ -1,10 +1,12 @@
 class Constantes {
+  static const alturaNavigationBar = 130.0;
+
   // constantes de rotas
   static const rotaTelaInicial = "/telaInicial";
   static const rotaTelaCadastroPessoas = "/telaCadastroPessoas";
   static const rotaTelaCadastroLocalTrabalho = "/telaCadastroLocalTrabalho";
   static const rotaTelaSelecaoDias = "/selecaoDias";
-  static const rotaTelaSelecaoIntervalo = "/selecaoIntervalo";
+  static const rotaTelaSelecaoPeriodo = "/selecaoIntervalo";
   static const rotaTelaListagem = "/telaListagem";
   static const rotaTelaGerarEscala = "/telaGerarEscala";
 

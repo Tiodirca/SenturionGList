@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../Uteis/Constantes.dart';
-import '../Uteis/Textos.dart';
+import '../Uteis/constantes.dart';
 import '../Uteis/estilo.dart';
 import '../Uteis/paleta_cores.dart';
+import '../Uteis/textos.dart';
 import '../Widget/barra_navegacao.dart';
 import '../Widget/fundo_tela_widget.dart';
 import 'package:intl/intl.dart';
 
-class TelaSelecaoIntervalo extends StatefulWidget {
-  const TelaSelecaoIntervalo(
+class TelaSelecaoPeriodo extends StatefulWidget {
+  const TelaSelecaoPeriodo(
       {Key? key,
       required this.genero,
       required this.listaLocal,
@@ -22,10 +22,10 @@ class TelaSelecaoIntervalo extends StatefulWidget {
   final List<String> listaDias;
 
   @override
-  State<TelaSelecaoIntervalo> createState() => _TelaSelecaoIntervaloState();
+  State<TelaSelecaoPeriodo> createState() => _TelaSelecaoPeriodoState();
 }
 
-class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
+class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
   Estilo estilo = Estilo();
   String tipoEscala = "";
   DateTime dataInicial = DateTime.now();
@@ -144,15 +144,14 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
     // o ultimo parametro e o tamanho do
     // container do BUTTON NAVIGATION BAR
     double alturaGeral =
-        alturaTela - alturaBarraStatus - alturaAppBar - alturaNavigationBar;
+        alturaTela - alturaBarraStatus - alturaAppBar - Constantes.alturaNavigationBar;
 
     return Theme(
         data: estilo.estiloGeral,
         child: WillPopScope(
           child: Scaffold(
             appBar: AppBar(
-              title: Text(Textos.nomeTelaSelecaoIntervalo,
-                  textAlign: TextAlign.center),
+              title: Text(Textos.nomeTelaSelecaoPeriodo),
             ),
             body: SingleChildScrollView(
               child: SizedBox(
@@ -179,7 +178,7 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
                                             const EdgeInsets.only(bottom: 10.0),
                                         width: larguraTela,
                                         child: Text(
-                                          Textos.descricaoTelaSelecaoIntervalo,
+                                          Textos.descricaoTelaSelecaoPeriodo,
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(
                                               fontSize: 18,
@@ -229,7 +228,7 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
                                         margin: const EdgeInsets.only(
                                             left: 20.0, right: 20.0),
                                         child: Text(
-                                          Textos.descricaoListaSelecaoIntervalo,
+                                          Textos.descricaoListaSelecaoPeriodo,
                                           textAlign: TextAlign.justify,
                                           style: const TextStyle(
                                               fontSize: 18,
@@ -286,7 +285,7 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
               ),
             ),
             bottomNavigationBar: SizedBox(
-              height: alturaNavigationBar,
+              height: Constantes.alturaNavigationBar,
               child: Column(
                 children: [
                   Row(
@@ -304,23 +303,32 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
                             ),
                           )),
                       SizedBox(
-                        width: 45,
-                        height: 45,
+                        width: 60,
+                        height: 60,
                         child: FloatingActionButton(
                           heroTag: "btnAvancarSelecaoIntervalo",
                           backgroundColor: PaletaCores.corVerdeCiano,
                           onPressed: () {
-                            var dados = {};
-                            dados[Constantes.parametroGenero] = widget.genero;
-                            dados[Constantes.parametroListaPessoas] =
-                                widget.listaPessoas;
-                            dados[Constantes.parametroListaLocal] =
-                                widget.listaLocal;
-                            dados[Constantes.parametroListaPeriodo] =
-                                listaDatasFinal;
-                            Navigator.pushReplacementNamed(
-                                context, Constantes.rotaTelaListagem,
-                                arguments: dados);
+                            if (listaDatasFinal.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content:
+                                          Text(Textos.erroSemIntervalo)));
+                            } else {
+                              var dados = {};
+                              dados[Constantes.parametroGenero] = widget.genero;
+                              dados[Constantes.parametroListaPessoas] =
+                                  widget.listaPessoas;
+                              dados[Constantes.parametroListaLocal] =
+                                  widget.listaLocal;
+                              dados[Constantes.parametroListaDias] =
+                                  widget.listaDias;
+                              dados[Constantes.parametroListaPeriodo] =
+                                  listaDatasFinal;
+                              Navigator.pushReplacementNamed(
+                                  context, Constantes.rotaTelaGerarEscala,
+                                  arguments: dados);
+                            }
                           },
                           child: const Icon(Icons.arrow_forward, size: 40),
                         ),
@@ -338,7 +346,7 @@ class _TelaSelecaoIntervaloState extends State<TelaSelecaoIntervalo> {
                   const SizedBox(
                     height: 5,
                   ),
-                  const BarraNavegacao()
+                  const SizedBox(height: 60, child: BarraNavegacao()),
                 ],
               ),
             ),

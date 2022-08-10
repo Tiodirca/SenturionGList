@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:senturionglist/Uteis/Constantes.dart';
-import 'package:senturionglist/Uteis/Textos.dart';
-import 'package:senturionglist/Widget/check_box_widget.dart';
 
 import '../Modelo/check_box_modelo.dart';
+import '../Uteis/Textos.dart';
+import '../Uteis/constantes.dart';
 import '../Uteis/estilo.dart';
 import '../Uteis/paleta_cores.dart';
 import '../Widget/barra_navegacao.dart';
+import '../Widget/check_box_widget.dart';
 import '../Widget/fundo_tela_widget.dart';
 
-class TelaSelecaoDias extends StatefulWidget {
-  const TelaSelecaoDias(
+class TelaSelecaoDiasSemana extends StatefulWidget {
+  const TelaSelecaoDiasSemana(
       {Key? key,
       required this.genero,
       required this.listaLocal,
@@ -22,14 +22,13 @@ class TelaSelecaoDias extends StatefulWidget {
   final List<String> listaLocal;
 
   @override
-  State<TelaSelecaoDias> createState() => _TelaSelecaoDiasState();
+  State<TelaSelecaoDiasSemana> createState() => _TelaSelecaoDiasSemanaState();
 }
 
-class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
+class _TelaSelecaoDiasSemanaState extends State<TelaSelecaoDiasSemana> {
   Estilo estilo = Estilo();
   String tipoEscala = "";
   List<String> listaDias = [];
-  double alturaNavigationBar = 120.0;
   final List<CheckBoxModel> itens = [
     CheckBoxModel(texto: Textos.diaSegunda),
     CheckBoxModel(texto: Textos.diaTerca),
@@ -82,12 +81,12 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
           ),
           body: SizedBox(
             width: larguraTela,
-            height: alturaTela - alturaBarraStatus - alturaAppBar - alturaNavigationBar,
+            height: alturaTela - alturaBarraStatus - alturaAppBar -  Constantes.alturaNavigationBar,
             child: Stack(
               children: [
                 FundoTela(
                     altura:
-                    alturaTela - alturaBarraStatus - alturaAppBar - alturaNavigationBar),
+                    alturaTela - alturaBarraStatus - alturaAppBar -  Constantes.alturaNavigationBar),
                 Positioned(
                     child: Column(
                       children: [
@@ -140,7 +139,7 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
             ),
           ),
           bottomNavigationBar: SizedBox(
-            height: alturaNavigationBar,
+            height:  Constantes.alturaNavigationBar,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -151,8 +150,8 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
                       width: larguraTela * 0.3,
                     ),
                     SizedBox(
-                      width: 45,
-                      height: 45,
+                      width: 60,
+                      height: 60,
                       child: FloatingActionButton(
                         heroTag: "btnAvancarSelecaoDias",
                         backgroundColor: PaletaCores.corVerdeCiano,
@@ -170,7 +169,7 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
                                 widget.listaLocal;
                             dados[Constantes.parametroListaDias] = listaDias;
                             Navigator.pushReplacementNamed(
-                                context, Constantes.rotaTelaSelecaoIntervalo,
+                                context, Constantes.rotaTelaSelecaoPeriodo,
                                 arguments: dados);
                           }
                         },
@@ -189,7 +188,7 @@ class _TelaSelecaoDiasState extends State<TelaSelecaoDias> {
                 const SizedBox(
                   height: 5,
                 ),
-                const BarraNavegacao()
+                const SizedBox(height: 60, child: BarraNavegacao()),
               ],
             ),
           ),

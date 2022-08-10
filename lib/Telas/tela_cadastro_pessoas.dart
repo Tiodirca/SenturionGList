@@ -195,7 +195,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                     height: alturaTela -
                         alturaBarraStatus -
                         alturaAppBar -
-                        alturaNavigationBar,
+                        Constantes.alturaNavigationBar,
                     child: Stack(
                       children: [
                         // o ultimo parametro e o tamanho do container do BUTTON NAVIGATION BAR
@@ -203,7 +203,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                             altura: alturaTela -
                                 alturaBarraStatus -
                                 alturaAppBar -
-                                alturaNavigationBar),
+                                Constantes.alturaNavigationBar),
                         Positioned(
                             child: Column(
                           children: [
@@ -270,7 +270,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                                                       .showSnackBar(SnackBar(
                                                           content: Text(Textos
                                                               .sucessoAddBanco)));
-                                                } else {}
+                                                }
                                               },
                                               child: Text(
                                                 Textos.btnCadastrar,
@@ -343,8 +343,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                   ),
                 ),
               ),
-              bottomNavigationBar: SizedBox(
-                height: alturaNavigationBar,
+              bottomNavigationBar: Container(
+                height: Constantes.alturaNavigationBar,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -355,8 +355,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                           width: larguraTela * 0.3,
                         ),
                         SizedBox(
-                          width: 45,
-                          height: 45,
+                          width: 60,
+                          height: 60,
                           child: FloatingActionButton(
                             heroTag: "btnAvancarCadPessoas",
                             backgroundColor: PaletaCores.corVerdeCiano,
@@ -393,7 +393,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                     const SizedBox(
                       height: 5,
                     ),
-                    const BarraNavegacao()
+                    const SizedBox(height: 60, child: BarraNavegacao()),
                   ],
                 ),
               ),

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:senturionglist/Telas/tela_gerar_escala.dart';
-import 'package:senturionglist/Telas/tela_selecao_dias.dart';
+import 'package:senturionglist/Telas/tela_selecao_dias_semana.dart';
 import 'package:senturionglist/Telas/tela_cadastro_local_trabalho.dart';
-import 'package:senturionglist/Telas/tela_selecao_intervalo.dart';
+import 'package:senturionglist/Telas/tela_selecao_periodo.dart';
 
 import '../Telas/tela_cadastro_pessoas.dart';
 import '../Telas/tela_inicial.dart';
@@ -43,7 +43,7 @@ class Rotas {
       case Constantes.rotaTelaSelecaoDias:
         if (args is Map) {
           return MaterialPageRoute(
-            builder: (_) => TelaSelecaoDias(
+            builder: (_) => TelaSelecaoDiasSemana(
               genero: args[Constantes.parametroGenero],
               listaPessoas: args[Constantes.parametroListaPessoas],
               listaLocal: args[Constantes.parametroListaLocal],
@@ -52,10 +52,10 @@ class Rotas {
         } else {
           return erroRota(settings);
         }
-      case Constantes.rotaTelaSelecaoIntervalo:
+      case Constantes.rotaTelaSelecaoPeriodo:
         if (args is Map) {
           return MaterialPageRoute(
-            builder: (_) => TelaSelecaoIntervalo(
+            builder: (_) => TelaSelecaoPeriodo(
               genero: args[Constantes.parametroGenero],
               listaPessoas: args[Constantes.parametroListaPessoas],
               listaLocal: args[Constantes.parametroListaLocal],
@@ -72,6 +72,7 @@ class Rotas {
               genero: args[Constantes.parametroGenero],
               listaPessoas: args[Constantes.parametroListaPessoas],
               listaLocal: args[Constantes.parametroListaLocal],
+              listaDias: args[Constantes.parametroListaDias],
               listaPeriodo: args[Constantes.parametroListaPeriodo],
             ),
           );
