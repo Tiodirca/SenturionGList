@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../Modelo/check_box_modelo.dart';
-import '../Uteis/Textos.dart';
 import '../Uteis/constantes.dart';
 import '../Uteis/estilo.dart';
 import '../Uteis/paleta_cores.dart';
+import '../Uteis/textos.dart';
 import '../Widget/barra_navegacao.dart';
 import '../Widget/check_box_widget.dart';
 import '../Widget/fundo_tela_widget.dart';

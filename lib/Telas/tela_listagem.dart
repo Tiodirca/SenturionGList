@@ -4,9 +4,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:senturionglist/Uteis/Servicos/banco_de_dados.dart';
 
-import '../Uteis/Textos.dart';
 import '../Uteis/estilo.dart';
 import '../Uteis/paleta_cores.dart';
+import '../Uteis/textos.dart';
 import '../Widget/barra_navegacao.dart';
 import '../Widget/fundo_tela_widget.dart';
 
