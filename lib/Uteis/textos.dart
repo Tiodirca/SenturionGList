@@ -2,6 +2,8 @@ class Textos {
   static String btnCadastrar = "Cadastrar";
   static String btnCooperador = "Cooperadores";
   static String btnCooperadoras = "Cooperadoras";
+  static String btnGerar = "Gerar";
+  static String btnUsarEscala = "Usar";
 
   // TELA INICIAL
   static String legSelecaoTipoEscala =
@@ -24,7 +26,7 @@ class Textos {
       "Selecione os dias da semana que haverá trabalho. somente os dias "
       "selecionados nesta tela serão listados na proxima etapa";
 
-  // TELA SELECAO INTERVALO
+  // TELA SELECAO PERIODO
   static String nomeTelaSelecaoPeriodo = "Seleção periodo/tempo de Trabalho";
   static String descricaoTelaSelecaoPeriodo =
       "Selecione um periodo de quantos dias haverá trabalho. "
@@ -58,8 +60,9 @@ class Textos {
 
   // TELA SELECAO ESCALA
   static String nomeTelaSelecaoEscala = "Seleção de escala";
-  static String descricaoTelaSelecaoEscala = "Selecione uma escala para poder visualiza-la";
-  static String descricaoListaEscala = "Utilize a lista abaixo para selecionar uma escala";
+  static String descricaoTelaSelecaoEscala = "Utilize a lista abaixo e selecione uma escala para poder visualiza-la";
+  static String legListaEscala = "Utilize a lista abaixo para selecionar uma escala";
+  static String txtEscalaSelecionada = "Escala selecionada:";
 
   // GERAIS
   static String txtListaVazia = "Sua lista esta vazia";

@@ -66,46 +66,57 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
     widget.listaPeriodo
         .map((e) => itensListaCheckDias.add(CheckBoxModel(texto: e)))
         .toList();
-    // formando string que contem a query sql utilizada para criar a tabela no banco de dados
+    // formando string que contem a query sql
+    // utilizada para criar a tabela no banco de dados
     widget.listaLocal.map(
       (item) {
         querySQL = "$querySQL${item.replaceAll(" ", "")} TEXT NOT NULL,";
       },
     ).toList();
 
+    // pegando o tamanho da string
     int tamanhoQuery = querySQL.length;
+    // subtraindo o ultimo index da string
     querySQL = querySQL.substring(0, tamanhoQuery - 1);
-    print(querySQL);
-    String tabela = "teste";
-    //bancoDados.criarTabela(querySQL, tabela);
-
-    // teste();
-    // Timer(const Duration(seconds: 10), () {
-    //   consulta();
-    // });
-    //inserir();
   }
 
+  // metodo para inserir dados na tabela criada
   inserir() async {
+    // pegando cada elemento do periodo selecionado
     for (int i = 0; i < widget.listaPeriodo.length; i++) {
+      //instanciando variavel
       Random random = Random();
+      // criando map temporario
       Map<String, dynamic> linha = {};
+      // pegando a lista e fazendo um map adicionando informacoes
       widget.listaLocal.map(
-        (e) {
-         linha[Textos.localData] = widget.listaPeriodo[i];
+        (item) {
+          // passando a data como primeiro elemento
+          linha[Textos.localData] = widget.listaPeriodo[i];
+          // verificando se cada data na lista contem os seguintes parametros
+          // para setar valor para o segundo elemento do map
           if (widget.listaPeriodo[i].contains(Textos.diaQuarta) ||
               widget.listaPeriodo[i].contains(Textos.diaSexta)) {
             linha[Textos.localHoraTroca.replaceAll(" ", "")] = "19:00 ás 20:00";
           } else {
             linha[Textos.localHoraTroca.replaceAll(" ", "")] = "18:00 às 19:00";
           }
-          int randomNumber = random.nextInt(widget.listaPessoas.length);
-          linha[e.replaceAll(" ", "")] = widget.listaPessoas[randomNumber];
+          // definindo que a variavel vai receber um index aleatorio da lista
+          int numeroRandomico = random.nextInt(widget.listaPessoas.length);
+          // adicionando no map um valor contido no index da lista de pessoas
+          // a cada item contido na lista de locais
+          linha[item.replaceAll(" ", "")] =
+              widget.listaPessoas[numeroRandomico];
         },
       ).toList();
-      bancoDados.inserir(linha, _controllerNomeEscala.text);
+      // chamando metodo
+      bancoDados.inserir(
+          linha, _controllerNomeEscala.text.replaceAll(" ", "_"));
       print(linha);
     }
+    Timer(const Duration(seconds: 3), () {
+      Navigator.pushReplacementNamed(context, Constantes.rotaTelaSelecaoEscala);
+    });
   }
 
   // teste() async {
@@ -424,9 +435,12 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                         .validate()) {
                                       setState(() {
                                         telaCarregar = true;
+                                        // chamando metodo para criar tabela passando
+                                        // query contendo os campo e o nome da tabela
                                         bancoDados.criarTabela(
                                             querySQL,
-                                            _controllerNomeEscala.text);
+                                            _controllerNomeEscala.text
+                                                .replaceAll(" ", "_"));
                                         Timer(const Duration(seconds: 2), () {
                                           inserir();
                                         });
@@ -437,8 +451,8 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                                   Textos.sucessoAddBanco)));
                                     }
                                   },
-                                  child: const Text("Gerar",
-                                      style: TextStyle(
+                                  child: Text(Textos.btnGerar,
+                                      style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold)),
                                 ),
