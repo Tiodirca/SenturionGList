@@ -9,6 +9,7 @@ class Constantes {
   static const rotaTelaSelecaoPeriodo = "/selecaoIntervalo";
   static const rotaTelaListagem = "/telaListagem";
   static const rotaTelaGerarEscala = "/telaGerarEscala";
+  static const rotaTelaSelecaoEscala = "/telaSelecaoEscala";
 
   // constantes de parametros passados de uma tela para outra
   static const parametroGenero = "generoParametro";

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:senturionglist/Telas/tela_gerar_escala.dart';
 import 'package:senturionglist/Telas/tela_selecao_dias_semana.dart';
 import 'package:senturionglist/Telas/tela_cadastro_local_trabalho.dart';
+import 'package:senturionglist/Telas/tela_selecao_escala.dart';
 import 'package:senturionglist/Telas/tela_selecao_periodo.dart';
 
 import '../Telas/tela_cadastro_pessoas.dart';
@@ -19,6 +20,8 @@ class Rotas {
     switch (settings.name) {
       case Constantes.rotaTelaInicial:
         return MaterialPageRoute(builder: (_) =>  const TelaInicial());
+      case Constantes.rotaTelaSelecaoEscala:
+        return MaterialPageRoute(builder: (_) =>  const TelaSelecaoEscala());
       case Constantes.rotaTelaCadastroPessoas:
         if (args is bool) {
           return MaterialPageRoute(

@@ -56,6 +56,11 @@ class Textos {
       "gerar o arquivo em PDF,se necessario edite ela conforme precisar";
   static String legListaGerada = "Lista gerada";
 
+  // TELA SELECAO ESCALA
+  static String nomeTelaSelecaoEscala = "Seleção de escala";
+  static String descricaoTelaSelecaoEscala = "Selecione uma escala para poder visualiza-la";
+  static String descricaoListaEscala = "Utilize a lista abaixo para selecionar uma escala";
+
   // GERAIS
   static String txtListaVazia = "Sua lista esta vazia";
   static String legLista = "Selecione um ou mais itens da lista abaixo";

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:senturionglist/Uteis/Servicos/banco_de_dados.dart';
@@ -66,16 +67,15 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
         .map((e) => itensListaCheckDias.add(CheckBoxModel(texto: e)))
         .toList();
     // formando string que contem a query sql utilizada para criar a tabela no banco de dados
-    widget.listaLocal
-        .map(
-          (item) {
-            querySQL = "$querySQL${item.replaceAll(" ","")} TEXT NOT NULL,";
-          },
-        )
-        .toList();
+    widget.listaLocal.map(
+      (item) {
+        querySQL = "$querySQL${item.replaceAll(" ", "")} TEXT NOT NULL,";
+      },
+    ).toList();
 
-    int tamanho = querySQL.length;
-    print(querySQL.substring(0, tamanho - 1));
+    int tamanhoQuery = querySQL.length;
+    querySQL = querySQL.substring(0, tamanhoQuery - 1);
+    print(querySQL);
     String tabela = "teste";
     //bancoDados.criarTabela(querySQL, tabela);
 
@@ -83,20 +83,27 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
     // Timer(const Duration(seconds: 10), () {
     //   consulta();
     // });
-
-
+    //inserir();
   }
 
-  inserir() async{
+  inserir() async {
     for (int i = 0; i < widget.listaPeriodo.length; i++) {
       Random random = Random();
       Map<String, dynamic> linha = {};
       widget.listaLocal.map(
-            (e) {
+        (e) {
+         linha[Textos.localData] = widget.listaPeriodo[i];
+          if (widget.listaPeriodo[i].contains(Textos.diaQuarta) ||
+              widget.listaPeriodo[i].contains(Textos.diaSexta)) {
+            linha[Textos.localHoraTroca.replaceAll(" ", "")] = "19:00 ás 20:00";
+          } else {
+            linha[Textos.localHoraTroca.replaceAll(" ", "")] = "18:00 às 19:00";
+          }
           int randomNumber = random.nextInt(widget.listaPessoas.length);
-          linha[e.replaceAll(" ","")] = widget.listaPessoas[randomNumber];
+          linha[e.replaceAll(" ", "")] = widget.listaPessoas[randomNumber];
         },
       ).toList();
+      bancoDados.inserir(linha, _controllerNomeEscala.text);
       print(linha);
     }
   }
@@ -417,6 +424,12 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                         .validate()) {
                                       setState(() {
                                         telaCarregar = true;
+                                        bancoDados.criarTabela(
+                                            querySQL,
+                                            _controllerNomeEscala.text);
+                                        Timer(const Duration(seconds: 2), () {
+                                          inserir();
+                                        });
                                       });
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
