@@ -63,6 +63,11 @@ class BancoDeDados {
           ''');
   }
 
+  Future<List<Map<String, Object?>>> consultaTabela() async {
+    Database? db = await instance.database;
+    return await db!.rawQuery("SELECT * FROM sqlite_master WHERE type='table'");
+  }
+
   // métodos auxiliares
   // metodo para inserir dados no banco
   // uma linha e inserida onde cada chave
