@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:senturionglist/Uteis/Servicos/banco_de_dados.dart';
 
@@ -40,8 +39,10 @@ class _TelaListagemState extends State<TelaListagem> {
     await Consulta.consultarTabelaSelecionada(widget.nomeTabela).then((value) {
       setState(() {
         itens = value;
+
       });
     });
+    print(itens);
   }
 
   @override
@@ -139,12 +140,33 @@ class _TelaListagemState extends State<TelaListagem> {
                                                     (item) => DataRow(cells: [
                                                       ...item.values.map(
                                                         (e) {
-                                                          return DataCell(SizedBox(
-                                                              width: 190,
-                                                              child: Text(e,
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center)));
+                                                          return DataCell(
+                                                              Container(
+                                                            width: 190,
+                                                            height: 100,
+                                                            child:
+                                                                LayoutBuilder(
+                                                              builder: (context,
+                                                                  constraints) {
+                                                                if (!e.toString().contains("editar")) {
+                                                                  return SizedBox(
+                                                                      width:
+                                                                          190,
+                                                                      child: Text(
+                                                                          e,
+                                                                          textAlign:
+                                                                              TextAlign.center));
+                                                                } else {
+                                                                  return const SizedBox(
+                                                                      width:
+                                                                          190,
+                                                                      child: Icon(
+                                                                          Icons
+                                                                              .edit));
+                                                                }
+                                                              },
+                                                            ),
+                                                          ));
                                                         },
                                                       )
                                                     ]),

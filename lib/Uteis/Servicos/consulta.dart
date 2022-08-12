@@ -49,6 +49,7 @@ class Consulta {
     List<Map<String, dynamic>> lista = [];
     for (var linha in registros) {
       lista.add(linha);
+
     }
     return lista;
   }
