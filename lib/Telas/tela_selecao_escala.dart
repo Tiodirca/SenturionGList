@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../Modelo/TabelaModelo.dart';
 import '../Uteis/Servicos/banco_de_dados.dart';
 import '../Uteis/constantes.dart';
 import '../Uteis/estilo.dart';
@@ -23,10 +22,7 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
   bool exibirConfirmacaoEscala = false;
   String nomeItemDrop = "";
   String tabelaSelecionada = "";
-  late List<TabelaModelo> tabelas;
-
-  var nomeTabelas;
-
+  late List<String> tabelas;
   // referencia classe para gerenciar o banco de dados
   final bancoDados = BancoDeDados.instance;
 
@@ -41,14 +37,14 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
     final tabelasRecuperadas = await bancoDados.consultaTabela();
     setState(() {
       for (var linha in tabelasRecuperadas) {
-        nomeTabelas = linha['name'];
-        nomeItemDrop = nomeTabelas;
-        tabelas.add(TabelaModelo(nomeTabela: nomeTabelas));
+       var nomeTabelas = linha['name'];
+        nomeItemDrop = nomeTabelas.toString();
+        tabelas.add(nomeTabelas.toString());
         tabelas.removeWhere((element) =>
-            element.nomeTabela
+            element
                 .toString()
                 .contains(Constantes.bancoTabelaLocalTrabalho) ||
-            element.nomeTabela
+            element
                 .toString()
                 .contains(Constantes.bancoTabelaPessoa));
       }
@@ -117,8 +113,8 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                                       items: tabelas
                                           .map((item) =>
                                               DropdownMenuItem<String>(
-                                                value: item.nomeTabela,
-                                                child: Text(item.nomeTabela
+                                                value: item,
+                                                child: Text(item
                                                     .replaceAll(
                                                         RegExp(r'_'), ' ')),
                                               ))
@@ -182,7 +178,10 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                           height: 60,
                           child: FloatingActionButton(
                             backgroundColor: PaletaCores.corVerdeCiano,
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushReplacementNamed(
+                                  context, Constantes.rotaTelaListagem,arguments: tabelaSelecionada);
+                            },
                             child: Text(Textos.btnUsarEscala,
                                 style: const TextStyle(
                                     fontSize: 18, fontWeight: FontWeight.bold)),

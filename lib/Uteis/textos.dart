@@ -3,6 +3,7 @@ class Textos {
   static String btnCooperador = "Cooperadores";
   static String btnCooperadoras = "Cooperadoras";
   static String btnGerar = "Gerar";
+  static String btnGerarPDF = "Gerar PDF";
   static String btnUsarEscala = "Usar";
 
   // TELA INICIAL
@@ -47,8 +48,7 @@ class Textos {
       "Agrupar pessoas para quando ser gerado a escala "
       "elas estarem juntas na mesma data";
   static String selecaoNomePessoas = "Selecione o nome das pessoas";
-  static String selecaoNomeDiasSemana =
-      "Selecione os dias";
+  static String selecaoNomeDiasSemana = "Selecione os dias";
   static String labelNomeEscala = "Nome da escala";
 
   // TELA LISTAGEM
@@ -56,12 +56,14 @@ class Textos {
   static String decricaoTelaListagem =
       "Aqui você pode conferir a escala gerada. revise-a antes de "
       "gerar o arquivo em PDF,se necessario edite ela conforme precisar";
-  static String legListaGerada = "Lista gerada";
+  static String legListaGerada = "Lista de escala com todos os elementos";
 
   // TELA SELECAO ESCALA
   static String nomeTelaSelecaoEscala = "Seleção de escala";
-  static String descricaoTelaSelecaoEscala = "Utilize a lista abaixo e selecione uma escala para poder visualiza-la";
-  static String legListaEscala = "Utilize a lista abaixo para selecionar uma escala";
+  static String descricaoTelaSelecaoEscala =
+      "Utilize a lista abaixo e selecione uma escala para poder visualiza-la";
+  static String legListaEscala =
+      "Utilize a lista abaixo para selecionar uma escala";
   static String txtEscalaSelecionada = "Escala selecionada:";
 
   // GERAIS
@@ -77,6 +79,8 @@ class Textos {
   static String erroTextFieldVazio = "Preencha o campo antes";
   static String erroSemIntervalo =
       "Defina um periodo de dias que terá a escala";
+  static String erroTabelaExistente =
+      "Defina outro nome para a escala. já existe uma escala este nome";
   static String erroSemSelecaoCheck =
       "Selecione pelo menos um item da lista. clicando encima dos nomes";
   static String sucessoAddBanco = "Sucesso ao adicionar item a base de dados";

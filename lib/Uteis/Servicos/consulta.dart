@@ -28,14 +28,27 @@ class Consulta {
     }
     return lista;
   }
+
   //metodo para realizar a consulta no banco de dados
-  static Future<List<LocalTrabalho>> consultarBancoLocalTrabalho(String tabela) async {
+  static Future<List<LocalTrabalho>> consultarBancoLocalTrabalho(
+      String tabela) async {
     final registros = await bancoDados.consultarLinhas(tabela);
     List<LocalTrabalho> lista = [];
     for (var linha in registros) {
       lista.add(LocalTrabalho(
           id: linha[Constantes.columnId],
           nomeLocal: linha[Constantes.columnLocal]));
+    }
+    return lista;
+  }
+
+  //metodo para realizar a consulta no banco de dados
+  static Future<List<Map<String, dynamic>>> consultarTabelaSelecionada(
+      String tabela) async {
+    final registros = await bancoDados.consultarLinhas(tabela);
+    List<Map<String, dynamic>> lista = [];
+    for (var linha in registros) {
+      lista.add(linha);
     }
     return lista;
   }

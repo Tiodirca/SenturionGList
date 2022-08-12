@@ -42,6 +42,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
   int valorRadioButton = 0;
   bool configEscala = false;
   bool telaCarregar = false;
+  bool nomeTabelaExiste = false;
   String querySQL = "";
   final TextEditingController _controllerNomeEscala =
       TextEditingController(text: "");
@@ -149,6 +150,33 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
             configEscala = true;
           });
           break;
+      }
+    });
+  }
+
+  // metodo para consultar se existe alguma tabela com
+  // o mesmo nome que o usuario esta criando
+  consultaTabelasExistentes() async {
+    final tabelasRecuperadas = await bancoDados.consultaTabela();
+    setState(() {
+      for (var linha in tabelasRecuperadas) {
+        var tabela = linha['name'];
+        if (_controllerNomeEscala.text.replaceAll(" ", "_") == tabela) {
+          nomeTabelaExiste = true;
+        }
+      }
+      if (nomeTabelaExiste) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(Textos.erroTabelaExistente)));
+      } else {
+        telaCarregar = true;
+        bancoDados.criarTabela(
+            querySQL, _controllerNomeEscala.text.replaceAll(" ", "_"));
+        Timer(const Duration(seconds: 2), () {
+          inserir();
+        });
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(Textos.sucessoAddBanco)));
       }
     });
   }
@@ -434,21 +462,11 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                     if (_chaveFormulario.currentState!
                                         .validate()) {
                                       setState(() {
-                                        telaCarregar = true;
                                         // chamando metodo para criar tabela passando
                                         // query contendo os campo e o nome da tabela
-                                        bancoDados.criarTabela(
-                                            querySQL,
-                                            _controllerNomeEscala.text
-                                                .replaceAll(" ", "_"));
-                                        Timer(const Duration(seconds: 2), () {
-                                          inserir();
-                                        });
+                                        nomeTabelaExiste = false;
+                                        consultaTabelasExistentes();
                                       });
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                              content: Text(
-                                                  Textos.sucessoAddBanco)));
                                     }
                                   },
                                   child: Text(Textos.btnGerar,

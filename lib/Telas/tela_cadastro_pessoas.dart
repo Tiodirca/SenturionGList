@@ -42,7 +42,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
   @override
   void initState() {
     super.initState();
-    consultarTarefas();
+    consultarPessoas();
     // verificando qual a opcao selecionada na tela inicial
     // caso seja verdadeiro corresponde ao genero feminino
     // e falso corresponde ao genero masculino
@@ -63,11 +63,11 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
       BancoDeDados.columnPessoaGenero: valorGenero
     };
     await bancoDados.inserir(linha, Constantes.bancoTabelaPessoa);
-    consultarTarefas();
+    consultarPessoas();
   }
 
   // metodo responsavel por chamar metodo para fazer consulta ao banco de dados
-  consultarTarefas() async {
+  consultarPessoas() async {
     // limpando listas
     itensCheckBox.clear();
     pessoas.clear();
@@ -121,7 +121,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
               TextButton(
                   onPressed: () {
                     bancoDados.excluir(id, Constantes.bancoTabelaPessoa);
-                    consultarTarefas();
+                    consultarPessoas();
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(Textos.sucessoExluirItemBanco)));
                     Navigator.pop(context, false);
