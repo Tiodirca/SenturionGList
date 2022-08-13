@@ -58,6 +58,8 @@ class Textos {
   static String legListaEscala =
       "Utilize a lista abaixo para selecionar uma escala";
   static String txtEscalaSelecionada = "Escala selecionada:";
+  static String txtSemEscala = "Não foi encontrada nenhuma"
+      "escala na base de dados. por favor crie uma";
 
   // TELA LISTAGEM
   static String nomeTelaListagem = "Lista de escala";
