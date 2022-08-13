@@ -54,6 +54,31 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
     });
   }
 
+  //metodo para exibir alerta para excluir tarefa do banco de dados
+  Future<void> exibirConfirmacaoExcluir() {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(Textos.legAlertExclusao),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(context, false),
+                  child: const Text("Cancelar")),
+              TextButton(
+                  onPressed: () {
+                    bancoDados.excluirTabela(tabelaSelecionada);
+                    Navigator.pushReplacementNamed(
+                        context, Constantes.rotaTelaSelecaoEscala);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(Textos.sucessoExluirItemBanco)));
+                  },
+                  child: const Text("Excluir")),
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     double alturaTela = MediaQuery.of(context).size.height;
@@ -138,11 +163,15 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                                             },
                                           );
                                         } else {
-                                          return Text(
-                                            Textos.txtSemEscala,
-                                            style: const TextStyle(
+                                          return Container(
+                                            margin: const EdgeInsets.all(10),
+                                            child: Text(
+                                              Textos.txtSemEscala,
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
                                                 fontSize: 20,
-                                                fontWeight: FontWeight.bold),
+                                              ),
+                                            ),
                                           );
                                         }
                                       },
@@ -161,15 +190,28 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                                             style:
                                                 const TextStyle(fontSize: 18),
                                           ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
                                           Text(
                                             tabelaSelecionada.replaceAll(
                                                 RegExp(r'_'), ' '),
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 18),
+                                          ),
+                                          Container(
+                                            margin: const EdgeInsets.only(
+                                                right: 10.0, left: 10.0),
+                                            width: 40,
+                                            height: 40,
+                                            child: FloatingActionButton(
+                                                backgroundColor: Colors.red,
+                                                onPressed: () {
+                                                  exibirConfirmacaoExcluir();
+                                                },
+                                                child: const Icon(
+                                                  Icons.close,
+                                                  color: Colors.white,
+                                                  size: 30,
+                                                )),
                                           ),
                                         ],
                                       ),
@@ -195,6 +237,7 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                           width: 60,
                           height: 60,
                           child: FloatingActionButton(
+                            heroTag: "btnAvancarSelecaoEscala",
                             backgroundColor: PaletaCores.corVerdeCiano,
                             onPressed: () {
                               Navigator.pushReplacementNamed(

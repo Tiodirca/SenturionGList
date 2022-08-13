@@ -6,7 +6,7 @@ import '../Uteis/estilo.dart';
 import '../Uteis/constantes.dart';
 import '../Uteis/paleta_cores.dart';
 import '../Uteis/Servicos/banco_de_dados.dart';
-import '../Uteis/Servicos/consulta.dart';
+import '../Uteis/Servicos/consultas.dart';
 import '../Uteis/textos.dart';
 import '../Widget/barra_navegacao.dart';
 import '../Widget/fundo_tela_widget.dart';
@@ -143,6 +143,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
             width: 30,
             height: 30,
             child: FloatingActionButton(
+              heroTag: "btnExluirLocal",
               backgroundColor: Colors.redAccent,
               child: const Icon(Icons.close, size: 20),
               onPressed: () {

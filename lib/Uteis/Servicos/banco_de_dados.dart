@@ -56,6 +56,8 @@ class BancoDeDados {
           ''');
   }
 
+  // ----------- METODOS REFERENTE AS TABELAS
+
   // metodo para criar tabela de listagem de forma dinamica
   Future<void> criarTabela(String querySQL, String tabela) async {
     return await _database!.execute('''
@@ -67,6 +69,12 @@ class BancoDeDados {
     Database? db = await instance.database;
     return await db!.rawQuery("SELECT * FROM sqlite_master WHERE type='table'");
   }
+
+  Future<void> excluirTabela(String tabela) async {
+    return _database!.execute("DROP table $tabela");
+  }
+
+  // ----------- METODOS REFERENTE AOS DADOS
 
   // métodos auxiliares
   // metodo para inserir dados no banco

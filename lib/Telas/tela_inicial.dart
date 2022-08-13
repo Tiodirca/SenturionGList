@@ -68,13 +68,13 @@ class TelaInicial extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(right: 20.0,left: 20.0),
+                                  padding: const EdgeInsets.only(
+                                      right: 20.0, left: 20.0),
                                   child: Text(
                                     Textos.legSelecaoTipoEscala,
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white),
+                                        fontSize: 18, color: Colors.white),
                                   ),
                                 ),
                                 SizedBox(
@@ -95,8 +95,8 @@ class TelaInicial extends StatelessWidget {
                   ],
                 ),
               )),
-          bottomNavigationBar:
-              const SizedBox(height: 60, child: BarraNavegacao()),
+          backgroundColor: Colors.white,
+          bottomNavigationBar: const SizedBox(height: 60, child: BarraNavegacao()),
         ));
   }
 }

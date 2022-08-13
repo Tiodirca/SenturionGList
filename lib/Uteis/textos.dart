@@ -59,7 +59,7 @@ class Textos {
       "Utilize a lista abaixo para selecionar uma escala";
   static String txtEscalaSelecionada = "Escala selecionada:";
   static String txtSemEscala = "Não foi encontrada nenhuma"
-      "escala na base de dados. por favor crie uma";
+      " escala na base de dados. por favor crie uma";
 
   // TELA LISTAGEM
   static String nomeTelaListagem = "Lista de escala";
@@ -68,6 +68,7 @@ class Textos {
       "gerar o arquivo em PDF,se necessario edite ela conforme precisar";
   static String legListaGerada =
       "Clique sobre uma das linhas para seleciona-la e exibir menu de opções sobre a mesma";
+  static String telaListagemOpcoes = "Opções de item";
 
   // GERAIS
   static String txtListaVazia = "Sua lista esta vazia";
