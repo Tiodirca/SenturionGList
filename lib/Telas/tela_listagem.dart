@@ -20,10 +20,9 @@ class TelaListagem extends StatefulWidget {
 
 class _TelaListagemState extends State<TelaListagem> {
   Estilo estilo = Estilo();
-  List<Map<String, dynamic>> itens = [];
-  List<String> chaves = [];
-  List<String> valore = [];
-  int t = 0;
+  List<Map<dynamic, dynamic>> itens = [];
+  bool itemSelecionado = false;
+  int idItem = 0;
 
   // referencia classe para gerenciar o banco de dados
   final bancoDados = BancoDeDados.instance;
@@ -39,10 +38,57 @@ class _TelaListagemState extends State<TelaListagem> {
     await Consulta.consultarTabelaSelecionada(widget.nomeTabela).then((value) {
       setState(() {
         itens = value;
-
       });
     });
-    print(itens);
+  }
+
+  Future<void> exibirConfirmacaoOpcoes(int id, String data) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(Textos.legAlertOpcoes),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Column(
+                    children: [
+                      Text(
+                        "ID: ${id.toString()}",
+                      ),
+                      Text(
+                        "Data: $data",
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(context, false),
+                  child: const Text("Cancelar")),
+              TextButton(
+                  onPressed: () {
+                    bancoDados.excluir(id, widget.nomeTabela);
+                    consultarDados();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(Textos.sucessoExluirItemBanco)));
+                    Navigator.pop(context, false);
+                  },
+                  child: const Text("Excluir")),
+              TextButton(
+                  onPressed: () {
+                    //bancoDados.excluir(id, Constantes.bancoTabelaPessoa);
+                    // consultarPessoas();
+                    //ScaffoldMessenger.of(context).showSnackBar(
+                    //    SnackBar(content: Text(Textos.sucessoExluirItemBanco)));
+                    //Navigator.pop(context, false);
+                  },
+                  child: const Text("Editar")),
+            ],
+          );
+        });
   }
 
   @override
@@ -101,17 +147,21 @@ class _TelaListagemState extends State<TelaListagem> {
                                   top: 10.0, right: 10.0, left: 10.0),
                               child: Column(
                                 children: [
-                                  Text(
-                                    Textos.legListaGerada,
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                        fontSize: 18, color: Colors.black),
+                                  Container(
+                                    margin: const EdgeInsets.only(
+                                        left: 10.0, right: 10.0),
+                                    child: Text(
+                                      Textos.legListaGerada,
+                                      textAlign: TextAlign.justify,
+                                      style: const TextStyle(
+                                          fontSize: 18, color: Colors.black),
+                                    ),
                                   ),
                                   Container(
                                     alignment: Alignment.center,
                                     margin: const EdgeInsets.symmetric(
                                         horizontal: 10.0, vertical: 0.0),
-                                    height: alturaTela * 0.2,
+                                    height: alturaTela * 0.3,
                                     width: larguraTela,
                                     child: ListView(
                                       children: [
@@ -120,11 +170,17 @@ class _TelaListagemState extends State<TelaListagem> {
                                             scrollDirection: Axis.horizontal,
                                             child: DataTable(
                                               columnSpacing: 10,
+                                              dividerThickness: 2.0,
+                                              showCheckboxColumn: false,
                                               columns: [
                                                 ...itens.first.keys
                                                     .map(
                                                       (e) => DataColumn(
-                                                        label: Text(e,
+                                                        label: Text(
+                                                            e
+                                                                .toString()
+                                                                .replaceAll(
+                                                                    "_", " "),
                                                             textAlign: TextAlign
                                                                 .center,
                                                             style:
@@ -137,39 +193,29 @@ class _TelaListagemState extends State<TelaListagem> {
                                               ],
                                               rows: itens
                                                   .map(
-                                                    (item) => DataRow(cells: [
-                                                      ...item.values.map(
-                                                        (e) {
-                                                          return DataCell(
-                                                              Container(
-                                                            width: 190,
-                                                            height: 100,
-                                                            child:
-                                                                LayoutBuilder(
-                                                              builder: (context,
-                                                                  constraints) {
-                                                                if (!e.toString().contains("editar")) {
-                                                                  return SizedBox(
-                                                                      width:
-                                                                          190,
-                                                                      child: Text(
-                                                                          e,
-                                                                          textAlign:
-                                                                              TextAlign.center));
-                                                                } else {
-                                                                  return const SizedBox(
-                                                                      width:
-                                                                          190,
-                                                                      child: Icon(
-                                                                          Icons
-                                                                              .edit));
-                                                                }
-                                                              },
-                                                            ),
-                                                          ));
+                                                    (item) => DataRow(
+                                                        onSelectChanged:
+                                                            (newValue) {
+                                                          setState(() {
+                                                            idItem = item
+                                                                .values.first;
+                                                          });
+                                                          exibirConfirmacaoOpcoes(
+                                                              idItem,
+                                                              item.values
+                                                                  .elementAt(
+                                                                      1));
                                                         },
-                                                      )
-                                                    ]),
+                                                        cells: [
+                                                          ...item.values.map(
+                                                            (e) {
+                                                              return DataCell(SizedBox(
+                                                                  width: 100,
+                                                                  child: Text(e
+                                                                      .toString())));
+                                                            },
+                                                          )
+                                                        ]),
                                                   )
                                                   .toList(),
                                             ),

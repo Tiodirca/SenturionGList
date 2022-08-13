@@ -20,9 +20,11 @@ class TelaSelecaoEscala extends StatefulWidget {
 class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
   Estilo estilo = Estilo();
   bool exibirConfirmacaoEscala = false;
+  bool exibirLista = false;
   String nomeItemDrop = "";
   String tabelaSelecionada = "";
   late List<String> tabelas;
+
   // referencia classe para gerenciar o banco de dados
   final bancoDados = BancoDeDados.instance;
 
@@ -37,16 +39,17 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
     final tabelasRecuperadas = await bancoDados.consultaTabela();
     setState(() {
       for (var linha in tabelasRecuperadas) {
-       var nomeTabelas = linha['name'];
+        var nomeTabelas = linha['name'];
         nomeItemDrop = nomeTabelas.toString();
         tabelas.add(nomeTabelas.toString());
         tabelas.removeWhere((element) =>
-            element
-                .toString()
-                .contains(Constantes.bancoTabelaLocalTrabalho) ||
-            element
-                .toString()
-                .contains(Constantes.bancoTabelaPessoa));
+            element.toString().contains(Constantes.bancoTabelaLocalTrabalho) ||
+            element.toString().contains(Constantes.bancoTabelaPessoa));
+      }
+      if (tabelas.isNotEmpty) {
+        exibirLista = true;
+      } else {
+        exibirLista = false;
       }
     });
   }
@@ -90,7 +93,9 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                               flex: 1,
                               child: Column(
                                 children: [
-                                  SizedBox(
+                                  Container(
+                                    margin: const EdgeInsets.only(
+                                        left: 10.0, right: 10.0),
                                     width: larguraTela,
                                     child: Text(
                                       Textos.descricaoTelaSelecaoEscala,
@@ -107,26 +112,39 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                                 padding: const EdgeInsets.only(top: 10.0),
                                 child: Column(
                                   children: [
-                                    DropdownButton(
-                                      value: nomeItemDrop,
-                                      icon: const Icon(Icons.list_alt_outlined),
-                                      items: tabelas
-                                          .map((item) =>
-                                              DropdownMenuItem<String>(
-                                                value: item,
-                                                child: Text(item
-                                                    .replaceAll(
-                                                        RegExp(r'_'), ' ')),
-                                              ))
-                                          .toList(),
-                                      onChanged: (String? value) {
-                                        setState(() {
-                                          nomeItemDrop = value!;
-                                          tabelaSelecionada = value;
-                                          exibirConfirmacaoEscala = true;
-                                          //statusTelaCarregamento = true;
-                                          //chamarRecuperarIDObservacao();
-                                        });
+                                    LayoutBuilder(
+                                      builder: (context, constraints) {
+                                        if (exibirLista) {
+                                          return DropdownButton(
+                                            value: nomeItemDrop,
+                                            icon: const Icon(
+                                                Icons.list_alt_outlined),
+                                            items: tabelas
+                                                .map((item) =>
+                                                    DropdownMenuItem<String>(
+                                                      value: item,
+                                                      child: Text(
+                                                          item.replaceAll(
+                                                              RegExp(r'_'),
+                                                              ' ')),
+                                                    ))
+                                                .toList(),
+                                            onChanged: (String? value) {
+                                              setState(() {
+                                                nomeItemDrop = value!;
+                                                tabelaSelecionada = value;
+                                                exibirConfirmacaoEscala = true;
+                                              });
+                                            },
+                                          );
+                                        } else {
+                                          return Text(
+                                            Textos.txtSemEscala,
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          );
+                                        }
                                       },
                                     ),
                                     const SizedBox(
@@ -180,7 +198,8 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                             backgroundColor: PaletaCores.corVerdeCiano,
                             onPressed: () {
                               Navigator.pushReplacementNamed(
-                                  context, Constantes.rotaTelaListagem,arguments: tabelaSelecionada);
+                                  context, Constantes.rotaTelaListagem,
+                                  arguments: tabelaSelecionada);
                             },
                             child: Text(Textos.btnUsarEscala,
                                 style: const TextStyle(

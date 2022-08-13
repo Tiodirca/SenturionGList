@@ -71,10 +71,10 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
     // utilizada para criar a tabela no banco de dados
     widget.listaLocal.map(
       (item) {
-        querySQL = "$querySQL${item.replaceAll(" ", "")} TEXT NOT NULL,";
+        querySQL = "$querySQL${item.replaceAll(" ", "_")} TEXT NOT NULL,";
       },
     ).toList();
-
+    print(querySQL);
     // pegando o tamanho da string
     int tamanhoQuery = querySQL.length;
     // subtraindo o ultimo index da string
@@ -98,15 +98,17 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
           // para setar valor para o segundo elemento do map
           if (widget.listaPeriodo[i].contains(Textos.diaQuarta) ||
               widget.listaPeriodo[i].contains(Textos.diaSexta)) {
-            linha[Textos.localHoraTroca.replaceAll(" ", "")] = "19:00 ás 20:00";
+            linha[Textos.localHoraTroca.replaceAll(" ", "_")] =
+                "19:00 ás 20:00";
           } else {
-            linha[Textos.localHoraTroca.replaceAll(" ", "")] = "18:00 às 19:00";
+            linha[Textos.localHoraTroca.replaceAll(" ", "_")] =
+                "18:00 às 19:00";
           }
           // definindo que a variavel vai receber um index aleatorio da lista
           int numeroRandomico = random.nextInt(widget.listaPessoas.length);
           // adicionando no map um valor contido no index da lista de pessoas
           // a cada item contido na lista de locais
-          linha[item.replaceAll(" ", "")] =
+          linha[item.replaceAll(" ", "_")] =
               widget.listaPessoas[numeroRandomico];
         },
       ).toList();
@@ -119,21 +121,6 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
       Navigator.pushReplacementNamed(context, Constantes.rotaTelaSelecaoEscala);
     });
   }
-
-  // teste() async {
-  //   Map<String, dynamic> linha = {
-  //     'altura': "_controllerNomePessoa.text",
-  //     'largura': "valorGenero"
-  //   };
-  //   await bancoDados.inserir(linha, "teste");
-  // }
-  //
-  // consulta() async {
-  //   final registros = await bancoDados.consultarLinhas("teste");
-  //   for (var linha in registros) {
-  //     print(linha);
-  //   }
-  // }
 
   //metodo para mudar o estado do radio button
   void mudarRadioButton(int value) {
@@ -279,23 +266,26 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                       )),
                                   Expanded(
                                       flex: 2,
-                                      child: Container(
-                                          padding: const EdgeInsets.only(
-                                              top: 0.0,
-                                              right: 10.0,
-                                              left: 10.0),
-                                          height: alturaTela * 0.4,
+                                      child: SizedBox(
+                                          height: alturaTela * 0.5,
                                           width: larguraTela,
                                           child: SingleChildScrollView(
                                             child: Column(
                                               children: [
-                                                Text(
-                                                  Textos
-                                                      .descricaoNomesConjuntos,
-                                                  textAlign: TextAlign.center,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      color: Colors.black),
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 0.0,
+                                                          right: 10.0,
+                                                          left: 10.0),
+                                                  child: Text(
+                                                    Textos
+                                                        .descricaoNomesConjuntos,
+                                                    textAlign: TextAlign.center,
+                                                    style: const TextStyle(
+                                                        fontSize: 18,
+                                                        color: Colors.black),
+                                                  ),
                                                 ),
                                                 Row(
                                                   mainAxisAlignment:
@@ -335,86 +325,84 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                                 ),
                                                 Visibility(
                                                   visible: configEscala,
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceAround,
+                                                  child: Wrap(
+                                                    crossAxisAlignment:
+                                                        WrapCrossAlignment
+                                                            .center,
                                                     children: [
-                                                      Column(
-                                                        children: [
-                                                          SizedBox(
-                                                            width: larguraTela *
-                                                                0.4,
-                                                            height: 50,
-                                                            child: Text(
-                                                              Textos
-                                                                  .selecaoNomePessoas,
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style: const TextStyle(
-                                                                  fontSize: 18,
-                                                                  color: Colors
-                                                                      .black),
+                                                      SizedBox(
+                                                        width:
+                                                            larguraTela * 0.5,
+                                                        child: Column(
+                                                          children: [
+                                                            SizedBox(
+                                                              height: 50,
+                                                              child: Text(
+                                                                Textos
+                                                                    .selecaoNomePessoas,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        18,
+                                                                    color: Colors
+                                                                        .black),
+                                                              ),
                                                             ),
-                                                          ),
-                                                          SizedBox(
-                                                              height:
-                                                                  alturaTela *
-                                                                      0.3,
-                                                              width:
-                                                                  larguraTela *
-                                                                      0.4,
-                                                              child: ListView(
-                                                                children: [
-                                                                  ...itensListaCheckPessoas
-                                                                      .map((e) =>
-                                                                          CheckboxWidget(
-                                                                            item:
-                                                                                e,
-                                                                          ))
-                                                                      .toList()
-                                                                ],
-                                                              )),
-                                                        ],
+                                                            SizedBox(
+                                                                height:
+                                                                    alturaTela *
+                                                                        0.3,
+                                                                child: ListView(
+                                                                  children: [
+                                                                    ...itensListaCheckPessoas
+                                                                        .map((e) =>
+                                                                            CheckboxWidget(
+                                                                              item: e,
+                                                                            ))
+                                                                        .toList()
+                                                                  ],
+                                                                )),
+                                                          ],
+                                                        ),
                                                       ),
-                                                      Column(
-                                                        children: [
-                                                          SizedBox(
-                                                            width: larguraTela *
-                                                                0.4,
-                                                            height: 50,
-                                                            child: Text(
-                                                              Textos
-                                                                  .selecaoNomeDiasSemana,
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style: const TextStyle(
-                                                                  fontSize: 18,
-                                                                  color: Colors
-                                                                      .black),
+                                                      SizedBox(
+                                                        width:
+                                                            larguraTela * 0.5,
+                                                        child: Column(
+                                                          children: [
+                                                            SizedBox(
+                                                              height: 50,
+                                                              child: Text(
+                                                                Textos
+                                                                    .selecaoNomeDiasSemana,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        18,
+                                                                    color: Colors
+                                                                        .black),
+                                                              ),
                                                             ),
-                                                          ),
-                                                          SizedBox(
-                                                              height:
-                                                                  alturaTela *
-                                                                      0.3,
-                                                              width:
-                                                                  larguraTela *
-                                                                      0.4,
-                                                              child: ListView(
-                                                                children: [
-                                                                  ...itensListaCheckDias
-                                                                      .map((e) =>
-                                                                          CheckboxWidget(
-                                                                            item:
-                                                                                e,
-                                                                          ))
-                                                                      .toList()
-                                                                ],
-                                                              )),
-                                                        ],
+                                                            SizedBox(
+                                                                height:
+                                                                    alturaTela *
+                                                                        0.3,
+                                                                child: ListView(
+                                                                  children: [
+                                                                    ...itensListaCheckDias
+                                                                        .map((e) =>
+                                                                            CheckboxWidget(
+                                                                              item: e,
+                                                                            ))
+                                                                        .toList()
+                                                                  ],
+                                                                )),
+                                                          ],
+                                                        ),
                                                       )
                                                     ],
                                                   ),
