@@ -43,13 +43,12 @@ class Consulta {
   }
 
   //metodo para realizar a consulta no banco de dados
-  static Future<List<Map<String, dynamic>>> consultarTabelaSelecionada(
+  static Future<List<Map<dynamic, dynamic>>> consultarTabelaSelecionada(
       String tabela) async {
     final registros = await bancoDados.consultarLinhas(tabela);
-    List<Map<String, dynamic>> lista = [];
+    List<Map<dynamic, dynamic>> lista = [];
     for (var linha in registros) {
       lista.add(linha);
-
     }
     return lista;
   }

@@ -51,13 +51,6 @@ class Textos {
   static String selecaoNomeDiasSemana = "Selecione os dias";
   static String labelNomeEscala = "Nome da escala";
 
-  // TELA LISTAGEM
-  static String nomeTelaListagem = "Lista de escala";
-  static String decricaoTelaListagem =
-      "Aqui você pode conferir a escala gerada. revise-a antes de "
-      "gerar o arquivo em PDF,se necessario edite ela conforme precisar";
-  static String legListaGerada = "Lista de escala com todos os elementos";
-
   // TELA SELECAO ESCALA
   static String nomeTelaSelecaoEscala = "Seleção de escala";
   static String descricaoTelaSelecaoEscala =
@@ -65,6 +58,14 @@ class Textos {
   static String legListaEscala =
       "Utilize a lista abaixo para selecionar uma escala";
   static String txtEscalaSelecionada = "Escala selecionada:";
+
+  // TELA LISTAGEM
+  static String nomeTelaListagem = "Lista de escala";
+  static String decricaoTelaListagem =
+      "Aqui você pode conferir a escala gerada. revise-a antes de "
+      "gerar o arquivo em PDF,se necessario edite ela conforme precisar";
+  static String legListaGerada =
+      "Clique sobre uma das linhas para seleciona-la e exibir menu de opções sobre a mesma";
 
   // GERAIS
   static String txtListaVazia = "Sua lista esta vazia";
@@ -74,6 +75,8 @@ class Textos {
 
   // ALERTS
   static String legAlertExclusao = "Deseja realmente excluir este item ?";
+  static String legAlertOpcoes =
+      "Selecione uma opção";
 
   // ERROS E SUCESSO
   static String erroTextFieldVazio = "Preencha o campo antes";
@@ -98,4 +101,7 @@ class Textos {
 
   static String localData = "Data";
   static String localHoraTroca = "Horario de Troca";
+
+  static String localExcluir = "Excluir";
+  static String localEditar = "Editar";
 }

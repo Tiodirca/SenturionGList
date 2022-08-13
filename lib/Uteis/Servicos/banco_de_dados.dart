@@ -59,7 +59,7 @@ class BancoDeDados {
   // metodo para criar tabela de listagem de forma dinamica
   Future<void> criarTabela(String querySQL, String tabela) async {
     return await _database!.execute('''
-          CREATE TABLE $tabela($querySQL)
+          CREATE TABLE $tabela(${"id INTEGER PRIMARY KEY,$querySQL"})
           ''');
   }
 
