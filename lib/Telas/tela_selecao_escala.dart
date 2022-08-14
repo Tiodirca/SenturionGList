@@ -44,6 +44,7 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
         tabelas.add(nomeTabelas.toString());
         tabelas.removeWhere((element) =>
             element.toString().contains(Constantes.bancoTabelaLocalTrabalho) ||
+            element.toString().contains("android_metadata") ||
             element.toString().contains(Constantes.bancoTabelaPessoa));
       }
       if (tabelas.isNotEmpty) {

@@ -55,14 +55,16 @@ class _TelaListagemState extends State<TelaListagem> {
                   Column(
                     children: [
                       Text(
-                          "ID: ${id.toString()}", style: const TextStyle(
-                        fontSize: 18,
-                      ),
+                        "ID: ${id.toString()}",
+                        style: const TextStyle(
+                          fontSize: 18,
+                        ),
                       ),
                       Text(
-                        "Data: $data", style: const TextStyle(
-                        fontSize: 18,
-                      ),
+                        "Data: $data",
+                        style: const TextStyle(
+                          fontSize: 18,
+                        ),
                       ),
                     ],
                   ),
@@ -80,10 +82,9 @@ class _TelaListagemState extends State<TelaListagem> {
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(Textos.sucessoExluirItemBanco)));
                     Navigator.pop(context, false);
-                    setState((){
+                    setState(() {
                       itemSelecionado = false;
                     });
-
                   },
                   child: const Text("Excluir")),
             ],
@@ -91,8 +92,7 @@ class _TelaListagemState extends State<TelaListagem> {
         });
   }
 
-  Widget opcoesItemLista(int id, String data) =>
-      Container(
+  Widget opcoesItemLista(int id, String data) => Container(
         padding: const EdgeInsets.only(
             top: 10, right: 20.0, left: 20.0, bottom: 70.0),
         child: Card(
@@ -152,9 +152,13 @@ class _TelaListagemState extends State<TelaListagem> {
                     child: FloatingActionButton(
                       backgroundColor: Colors.yellow,
                       onPressed: () {
-                        setState(() {
-                          itemSelecionado = false;
-                        });
+                        var dados = {};
+                        dados[Constantes.parametroEdicaoNomeTabela] =
+                            widget.nomeTabela;
+                        dados[Constantes.parametroEdicaoIdItem] = id;
+                        Navigator.pushReplacementNamed(
+                            context, Constantes.rotaTelaEdicao,
+                            arguments: dados);
                       },
                       child: const Icon(Icons.edit, size: 40),
                     ),
@@ -180,18 +184,9 @@ class _TelaListagemState extends State<TelaListagem> {
 
   @override
   Widget build(BuildContext context) {
-    double alturaTela = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double larguraTela = MediaQuery
-        .of(context)
-        .size
-        .width;
-    double alturaBarraStatus = MediaQuery
-        .of(context)
-        .padding
-        .top;
+    double alturaTela = MediaQuery.of(context).size.height;
+    double larguraTela = MediaQuery.of(context).size.width;
+    double alturaBarraStatus = MediaQuery.of(context).padding.top;
     double alturaAppBar = AppBar().preferredSize.height;
 
     return Theme(
@@ -218,149 +213,137 @@ class _TelaListagemState extends State<TelaListagem> {
                             Constantes.alturaNavigationBar),
                     Positioned(
                         child: Column(
-                          children: [
-                            Expanded(
-                                flex: 1,
-                                child: Container(
-                                  padding: const EdgeInsets.only(
-                                      top: 10.0, right: 10.0, left: 10.0),
-                                  width: larguraTela,
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        Textos.decricaoTelaListagem,
-                                        textAlign: TextAlign.justify,
-                                        style: const TextStyle(
-                                            fontSize: 18, color: Colors.white),
-                                      ),
-                                    ],
+                      children: [
+                        Expanded(
+                            flex: 1,
+                            child: Container(
+                              padding: const EdgeInsets.only(
+                                  top: 10.0, right: 10.0, left: 10.0),
+                              width: larguraTela,
+                              child: Column(
+                                children: [
+                                  Text(
+                                    Textos.decricaoTelaListagem,
+                                    textAlign: TextAlign.justify,
+                                    style: const TextStyle(
+                                        fontSize: 18, color: Colors.white),
                                   ),
-                                )),
-                            Expanded(
-                                flex: 2,
-                                child: Container(
-                                    padding: const EdgeInsets.only(
-                                        top: 10.0, right: 10.0, left: 10.0),
-                                    width: larguraTela,
-                                    height: alturaTela * 0.5,
-                                    child: LayoutBuilder(
-                                      builder: (context, constraints) {
-                                        if (itemSelecionado) {
-                                          return opcoesItemLista(
-                                              idItem, dataItem);
-                                        } else {
-                                          return Column(
-                                            children: [
-                                              Container(
-                                                margin: const EdgeInsets.only(
-                                                    left: 10.0, right: 10.0),
-                                                child: Text(
-                                                  Textos.legListaGerada,
-                                                  textAlign: TextAlign.justify,
-                                                  style: const TextStyle(
-                                                      fontSize: 18,
-                                                      color: Colors.black),
-                                                ),
-                                              ),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                margin: const EdgeInsets
-                                                    .symmetric(
-                                                    horizontal: 10.0,
-                                                    vertical: 0.0),
-                                                height: alturaTela * 0.3,
-                                                width: larguraTela,
-                                                child: ListView(
-                                                  children: [
-                                                    Center(
-                                                      child: SingleChildScrollView(
-                                                        scrollDirection:
+                                ],
+                              ),
+                            )),
+                        Expanded(
+                            flex: 2,
+                            child: Container(
+                                padding: const EdgeInsets.only(
+                                    top: 10.0, right: 10.0, left: 10.0),
+                                width: larguraTela,
+                                height: alturaTela * 0.5,
+                                child: LayoutBuilder(
+                                  builder: (context, constraints) {
+                                    if (itemSelecionado) {
+                                      return opcoesItemLista(idItem, dataItem);
+                                    } else {
+                                      return Column(
+                                        children: [
+                                          Container(
+                                            margin: const EdgeInsets.only(
+                                                left: 10.0, right: 10.0),
+                                            child: Text(
+                                              Textos.legListaGerada,
+                                              textAlign: TextAlign.justify,
+                                              style: const TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.black),
+                                            ),
+                                          ),
+                                          Container(
+                                            alignment: Alignment.center,
+                                            margin: const EdgeInsets.symmetric(
+                                                horizontal: 10.0,
+                                                vertical: 0.0),
+                                            height: alturaTela * 0.3,
+                                            width: larguraTela,
+                                            child: ListView(
+                                              children: [
+                                                Center(
+                                                  child: SingleChildScrollView(
+                                                    scrollDirection:
                                                         Axis.horizontal,
-                                                        child: DataTable(
-                                                          columnSpacing: 10,
-                                                          dividerThickness: 2.0,
-                                                          showCheckboxColumn: false,
-                                                          columns: [
-                                                            ...itens.first.keys
-                                                                .map(
-                                                                  (e) {
-                                                                return DataColumn(
-                                                                  label: Text(
-                                                                      e
-                                                                          .toString()
-                                                                          .replaceAll(
+                                                    child: DataTable(
+                                                      columnSpacing: 10,
+                                                      dividerThickness: 2.0,
+                                                      showCheckboxColumn: false,
+                                                      columns: [
+                                                        ...itens.first.keys.map(
+                                                          (e) {
+                                                            return DataColumn(
+                                                              label: Text(
+                                                                  e
+                                                                      .toString()
+                                                                      .replaceAll(
                                                                           "_",
                                                                           " "),
-                                                                      textAlign:
+                                                                  textAlign:
                                                                       TextAlign
                                                                           .center,
-                                                                      style:
+                                                                  style:
                                                                       const TextStyle(
-                                                                        fontSize:
+                                                                    fontSize:
                                                                         20,
-                                                                      )),
-                                                                );
-                                                              },
-                                                            ).toList()
-                                                          ],
-                                                          rows: itens
-                                                              .map(
-                                                                (item) =>
-                                                                DataRow(
-                                                                    onSelectChanged:
-                                                                        (
-                                                                        newValue) {
-                                                                      setState(() {
-                                                                        dataItem =
-                                                                            item
-                                                                                .values
-                                                                                .elementAt(
-                                                                                1);
-                                                                        idItem =
-                                                                            item
-                                                                                .values
-                                                                                .first;
-                                                                        itemSelecionado =
+                                                                  )),
+                                                            );
+                                                          },
+                                                        ).toList()
+                                                      ],
+                                                      rows: itens
+                                                          .map(
+                                                            (item) => DataRow(
+                                                                onSelectChanged:
+                                                                    (newValue) {
+                                                                  setState(() {
+                                                                    dataItem = item
+                                                                        .values
+                                                                        .elementAt(
+                                                                            1);
+                                                                    idItem = item
+                                                                        .values
+                                                                        .first;
+                                                                    itemSelecionado =
                                                                         true;
-                                                                      });
-                                                                      // exibirConfirmacaoOpcoes(
-                                                                      //     idItem,
-                                                                      //     item.values
-                                                                      //         .elementAt(
-                                                                      //         1));
+                                                                  });
+                                                                  // exibirConfirmacaoOpcoes(
+                                                                  //     idItem,
+                                                                  //     item.values
+                                                                  //         .elementAt(
+                                                                  //         1));
+                                                                },
+                                                                cells: [
+                                                                  ...item.values
+                                                                      .map(
+                                                                    (e) {
+                                                                      return DataCell(SizedBox(
+                                                                          width:
+                                                                              100,
+                                                                          child:
+                                                                              Text(e.toString())));
                                                                     },
-                                                                    cells: [
-                                                                      ...item
-                                                                          .values
-                                                                          .map(
-                                                                            (
-                                                                            e) {
-                                                                          return DataCell(
-                                                                              SizedBox(
-                                                                                  width:
-                                                                                  100,
-                                                                                  child:
-                                                                                  Text(
-                                                                                      e
-                                                                                          .toString())));
-                                                                        },
-                                                                      )
-                                                                    ]),
+                                                                  )
+                                                                ]),
                                                           )
-                                                              .toList(),
-                                                        ),
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          );
-                                        }
-                                      },
-                                    )))
-                          ],
-                        )),
+                                                          .toList(),
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    }
+                                  },
+                                )))
+                      ],
+                    )),
                   ],
                 ),
               ),

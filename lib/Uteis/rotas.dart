@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:senturionglist/Telas/tela_edicao.dart';
 import 'package:senturionglist/Telas/tela_gerar_escala.dart';
 import 'package:senturionglist/Telas/tela_listagem.dart';
 import 'package:senturionglist/Telas/tela_selecao_dias_semana.dart';
@@ -88,6 +89,17 @@ class Rotas {
               listaLocal: args[Constantes.parametroListaLocal],
               listaDias: args[Constantes.parametroListaDias],
               listaPeriodo: args[Constantes.parametroListaPeriodo],
+            ),
+          );
+        } else {
+          return erroRota(settings);
+        }
+      case Constantes.rotaTelaEdicao:
+        if (args is Map) {
+          return MaterialPageRoute(
+            builder: (_) => TelaEdicao(
+              nomeTabela: args[Constantes.parametroEdicaoNomeTabela],
+              idItem: args[Constantes.parametroEdicaoIdItem],
             ),
           );
         } else {

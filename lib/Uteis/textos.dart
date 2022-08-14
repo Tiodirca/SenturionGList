@@ -5,6 +5,7 @@ class Textos {
   static String btnGerar = "Gerar";
   static String btnGerarPDF = "Gerar PDF";
   static String btnUsarEscala = "Usar";
+  static String btnAtualizar = "Atualizar";
 
   // TELA INICIAL
   static String legSelecaoTipoEscala =
@@ -69,6 +70,9 @@ class Textos {
   static String legListaGerada =
       "Clique sobre uma das linhas para seleciona-la e exibir menu de opções sobre a mesma";
   static String telaListagemOpcoes = "Opções de item";
+
+  // TELA EDICAO
+  static String nomeTelaEdicao = "Edição de item";
 
   // GERAIS
   static String txtListaVazia = "Sua lista esta vazia";

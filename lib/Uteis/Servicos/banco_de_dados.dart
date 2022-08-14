@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
 import '../constantes.dart';
 
 class BancoDeDados {
@@ -28,17 +31,22 @@ class BancoDeDados {
 
   // abre o banco de dados e o cria se ele não existir
   _initDatabase() async {
-    //Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    //String path = join(documentsDirectory.path, bancoDadosNome);
     // Init ffi loader if needed.
-    sqfliteFfiInit();
-    var databaseFactory = databaseFactoryFfi;
-    var db = await databaseFactory.openDatabase(inMemoryDatabasePath,
-        options: OpenDatabaseOptions(
-            onCreate: _onCreate, version: bancoDadosVersao));
-    //return await openDatabase(path,
-    //  version: bancoDadosVersao, onCreate: _onCreate);
-    return db;
+    if (Platform.isWindows || Platform.isLinux) {
+      // Initialize FFI
+      sqfliteFfiInit();
+      var databaseFactory = databaseFactoryFfi;
+      var db = await databaseFactory.openDatabase(inMemoryDatabasePath,
+          options: OpenDatabaseOptions(
+              onCreate: _onCreate, version: bancoDadosVersao));
+      return db;
+    }
+    else if (Platform.isAndroid || Platform.isIOS) {
+      Directory documentsDirectory = await getApplicationDocumentsDirectory();
+      String path = join(documentsDirectory.path, bancoDadosNome);
+      return await openDatabase(path,
+          version: bancoDadosVersao, onCreate: _onCreate);
+    }
   }
 
   // Código SQL para criar o banco de dados e a tabela
@@ -54,6 +62,12 @@ class BancoDeDados {
             $columnId INTEGER PRIMARY KEY,
             $columnLocal TEXT NOT NULL)
           ''');
+  }
+
+  Future<List<Map<dynamic, dynamic>>> consultarPorID(
+      String tabela, int idDado) async {
+    Database? db = await instance.database;
+    return await db!.query("$tabela WHERE id = $idDado");
   }
 
   // ----------- METODOS REFERENTE AS TABELAS

@@ -10,6 +10,7 @@ class Constantes {
   static const rotaTelaListagem = "/telaListagem";
   static const rotaTelaGerarEscala = "/telaGerarEscala";
   static const rotaTelaSelecaoEscala = "/telaSelecaoEscala";
+  static const rotaTelaEdicao = "/telaEdicao";
 
   // constantes de parametros passados de uma tela para outra
   static const parametroGenero = "generoParametro";
@@ -17,6 +18,8 @@ class Constantes {
   static const parametroListaLocal = "listaLocal";
   static const parametroListaDias = "listaDias";
   static const parametroListaPeriodo = "listaPeriodo";
+  static const parametroEdicaoNomeTabela = "nomeTabela";
+  static const parametroEdicaoIdItem = "idItem";
 
   // constantes dos icones exibidos na barra de navegacao
   static const tipoIconeHome = "home";
