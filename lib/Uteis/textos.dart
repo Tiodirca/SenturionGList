@@ -21,6 +21,7 @@ class Textos {
       "Digite o nome dos locais de trabalho que deseja adicionar a lista";
   static String labelTextCadPessoa = "Nome da pessoa";
   static String labelTextCadLocalTrabalho = "Nome do local";
+  static String descricaoCadastroLocalOpcoesAdicionais = "Deseja adicionar campos com inserção manual ?";
 
   // TELA SELECAO DIAS
   static String nomeTelaSelecaoDias = "Seleção dias da semana";
@@ -67,8 +68,6 @@ class Textos {
   static String decricaoTelaListagem =
       "Aqui você pode conferir a escala gerada. revise-a antes de "
       "gerar o arquivo em PDF,se necessario edite ela conforme precisar";
-  static String legListaGerada =
-      "Clique sobre uma das linhas para seleciona-la e exibir menu de opções sobre a mesma";
   static String telaListagemOpcoes = "Opções de item";
 
   // TELA EDICAO
@@ -109,6 +108,8 @@ class Textos {
 
   static String localData = "Data";
   static String localHoraTroca = "Horario de Troca";
+  static String localUniforme = "Uniforme";
+  static String localServirCeia = "Servir Santa Ceia";
 
   static String localExcluir = "Excluir";
   static String localEditar = "Editar";

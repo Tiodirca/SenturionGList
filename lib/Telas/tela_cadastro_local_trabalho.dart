@@ -30,9 +30,11 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
   bool retornoListaVazia = false;
   String tipoEscala = "";
   double alturaNavigationBar = 120.0;
+  int valorRadioButton = 1;
   List<LocalTrabalho> localTrabalho = [];
   List<String> localSelecionados = [];
   final List<CheckBoxModel> itensCheckBox = [];
+  final List<CheckBoxModel> itensCheckBoxOpcoesAdicionais = [];
   final TextEditingController _controllerNome = TextEditingController(text: "");
 
 //variavel usada para validar o formulario
@@ -109,6 +111,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
         localSelecionados.add(element.texto);
       }
     }
+    localSelecionados.add(Textos.localUniforme);
+    localSelecionados.add(Textos.localServirCeia);
   }
 
   //metodo para exibir alerta para excluir tarefa do banco de dados
@@ -135,6 +139,18 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
           );
         });
   }
+
+  removerAcentos(String texto) {
+    String comAcentos = "ÄÅÁÂÀÃäáâàãÉÊËÈéêëèÍÎÏÌíîïìÖÓÔÒÕöóôòõÜÚÛüúûùÇç";
+    String semAcentos = "AAAAAAaaaaaEEEEeeeeIIIIiiiiOOOOOoooooUUUuuuuCc";
+
+    for (int i = 0; i < comAcentos.length; i++) {
+      texto =
+          texto.replaceAll(comAcentos[i].toString(), semAcentos[i].toString());
+    }
+    return texto;
+  }
+
 
   Widget checkBoxPersonalizado(CheckBoxModel checkBoxModel) => CheckboxListTile(
         activeColor: PaletaCores.corAzul,
@@ -214,8 +230,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                                       Textos.descricaoCadastroLocalTrabalho,
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.white),
+                                          fontSize: 18, color: Colors.white),
                                     ),
                                     const SizedBox(
                                       height: 10.0,
@@ -284,52 +299,60 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                           Expanded(
                               flex: 2,
                               child: Container(
-                                padding: const EdgeInsets.only(top: 10.0),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      Textos.legLista,
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                          fontSize: 18, color: Colors.black),
-                                    ),
-                                    LayoutBuilder(
-                                      builder: (context, constraints) {
-                                        if (retornoListaVazia) {
-                                          return SizedBox(
-                                            height: 200,
-                                            child: Center(
-                                              child: Text(
-                                                Textos.txtListaVazia,
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20,
+                                  padding: const EdgeInsets.only(top: 10.0),
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          Textos.legLista,
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.black),
+                                        ),
+                                        LayoutBuilder(
+                                          builder: (context, constraints) {
+                                            if (retornoListaVazia) {
+                                              return SizedBox(
+                                                height: 200,
+                                                child: Center(
+                                                  child: Text(
+                                                    Textos.txtListaVazia,
+                                                    style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20,
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
-                                            ),
-                                          );
-                                        } else {
-                                          return Container(
-                                              padding: const EdgeInsets.only(
-                                                  top: 10.0),
-                                              height: alturaTela * 0.4,
-                                              width: larguraTela * 0.9,
-                                              child: ListView(
+                                              );
+                                            } else {
+                                              return Column(
                                                 children: [
-                                                  ...itensCheckBox
-                                                      .map((e) =>
-                                                          checkBoxPersonalizado(
-                                                            e,
-                                                          ))
-                                                      .toList()
+                                                  Container(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 10.0),
+                                                      height: alturaTela * 0.4,
+                                                      width: larguraTela * 0.9,
+                                                      child: ListView(
+                                                        children: [
+                                                          ...itensCheckBox
+                                                              .map((e) =>
+                                                                  checkBoxPersonalizado(
+                                                                    e,
+                                                                  ))
+                                                              .toList()
+                                                        ],
+                                                      )),
                                                 ],
-                                              ));
-                                        }
-                                      },
-                                    )
-                                  ],
-                                ),
-                              ))
+                                              );
+                                            }
+                                          },
+                                        )
+                                      ],
+                                    ),
+                                  )))
                         ],
                       ))
                     ],
