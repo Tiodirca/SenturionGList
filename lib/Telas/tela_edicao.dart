@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:senturionglist/Modelo/pessoa.dart';
+import 'package:senturionglist/Uteis/AjustarVisualizacao.dart';
 import 'package:senturionglist/Uteis/estilo.dart';
 
-import '../Modelo/check_box_modelo.dart';
 import '../Uteis/constantes.dart';
 import '../Uteis/paleta_cores.dart';
 import '../Uteis/Servicos/banco_de_dados.dart';
-import '../Uteis/Servicos/consultas.dart';
 import '../Uteis/textos.dart';
 import '../Widget/barra_navegacao.dart';
 import '../Widget/fundo_tela_widget.dart';
@@ -25,6 +23,8 @@ class TelaEdicao extends StatefulWidget {
 class _TelaEdicaoState extends State<TelaEdicao> {
   Estilo estilo = Estilo();
   List<Map<dynamic, dynamic>> itens = [];
+  List<String> chaves = [];
+  List<String> valores = [];
 
 //variavel usada para validar o formulario
   final _chaveFormulario = GlobalKey<FormState>();
@@ -45,18 +45,27 @@ class _TelaEdicaoState extends State<TelaEdicao> {
         .then((value) {
       setState(() {
         itens = value;
-        print(itens);
       });
     });
-   print(itens.first.values);
-   for (var value1 in itens) {
-     print(value1.values);
-   }
+    pegarValoresIndividual();
+  }
+
+  pegarValoresIndividual() {
+    //pegando valores de forma individual
+    for (var value1 in itens.first.keys) {
+      chaves.add(value1.toString().replaceAll("_", " "));
+    }
+    for (var value1 in itens.first.values) {
+      valores.add(value1.toString());
+    }
+    //removendo o primeiro index pois contem o id
+    chaves.removeAt(0);
+    valores.removeAt(0);
   }
 
   Widget textField(String valorInicial, String label) => Container(
-        padding:
-            const EdgeInsets.only(left: 5.0, top: 2.0, right: 5.0, bottom: 5.0),
+        padding: const EdgeInsets.only(
+            left: 5.0, top: 10.0, right: 5.0, bottom: 5.0),
         width: 300,
         child: TextFormField(
           keyboardType: TextInputType.text,
@@ -143,7 +152,7 @@ class _TelaEdicaoState extends State<TelaEdicao> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        Textos.descricaoCadastroPessoas,
+                                        Textos.descricaoTelaEdicao,
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                             fontSize: 18, color: Colors.white),
@@ -157,26 +166,18 @@ class _TelaEdicaoState extends State<TelaEdicao> {
                                   padding: const EdgeInsets.only(top: 10.0),
                                   child: Column(
                                     children: [
-                                      Text(
-                                        Textos.legLista,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                            fontSize: 18, color: Colors.black),
-                                      ),
                                       Container(
-                                        width: larguraTela,
-                                        height: 300,
-                                        color: Colors.yellow,
-                                        child: ListView.builder(
-                                          itemCount: 0,
-                                          itemBuilder: (context, index) {
-                                            return textField(
-                                                itens.map((e) => e)
-                                                    .elementAt(index).toString(),
-                                                "label");
-                                          },
-                                        ),
-                                      )
+                                          width: AjustarVisualizacao
+                                              .ajustarTextField(larguraTela),
+                                          height: alturaTela * 0.4,
+                                          color: Colors.yellow,
+                                          child: ListView.builder(
+                                            itemCount: chaves.length,
+                                            itemBuilder: (context, index) =>
+                                                textField(
+                                                    valores.elementAt(index),
+                                                    chaves.elementAt(index)),
+                                          ))
                                     ],
                                   ),
                                 ))
@@ -187,7 +188,7 @@ class _TelaEdicaoState extends State<TelaEdicao> {
                   ),
                 ),
               ),
-              bottomNavigationBar: Container(
+              bottomNavigationBar: SizedBox(
                 height: Constantes.alturaNavigationBar,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -196,13 +197,13 @@ class _TelaEdicaoState extends State<TelaEdicao> {
                       width: 60,
                       height: 60,
                       child: FloatingActionButton(
-                        heroTag: "btnAvancarEdicao",
+                        heroTag: "btnAtualizar",
                         backgroundColor: PaletaCores.corVerdeCiano,
                         onPressed: () {},
                         child: Text(Textos.btnAtualizar,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold)),
+                                fontSize: 16, fontWeight: FontWeight.bold)),
                       ),
                     ),
                     const SizedBox(

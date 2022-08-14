@@ -74,7 +74,6 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
         querySQL = "$querySQL${item.replaceAll(" ", "_")} TEXT NOT NULL,";
       },
     ).toList();
-    print(querySQL);
     // pegando o tamanho da string
     int tamanhoQuery = querySQL.length;
     // subtraindo o ultimo index da string
@@ -445,6 +444,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                 width: 60,
                                 height: 60,
                                 child: FloatingActionButton(
+                                  heroTag: "btnGerar",
                                   backgroundColor: PaletaCores.corVerdeCiano,
                                   onPressed: () {
                                     if (_chaveFormulario.currentState!

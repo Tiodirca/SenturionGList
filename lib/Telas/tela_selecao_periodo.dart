@@ -306,7 +306,7 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
                         width: 60,
                         height: 60,
                         child: FloatingActionButton(
-                          heroTag: "btnAvancarSelecaoIntervalo",
+                          heroTag: "btnAvancarSelecaoPeriodo",
                           backgroundColor: PaletaCores.corVerdeCiano,
                           onPressed: () {
                             if (listaDatasFinal.isEmpty) {

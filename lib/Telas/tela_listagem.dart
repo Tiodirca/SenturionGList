@@ -24,6 +24,7 @@ class _TelaListagemState extends State<TelaListagem> {
   bool itemSelecionado = false;
   int idItem = 0;
   String dataItem = "";
+  List<String> chaves = [];
 
   // referencia classe para gerenciar o banco de dados
   final bancoDados = BancoDeDados.instance;
@@ -41,6 +42,10 @@ class _TelaListagemState extends State<TelaListagem> {
         itens = value;
       });
     });
+    for (var value1 in itens.first.keys) {
+      chaves.add(value1.toString().replaceAll("_", " "));
+    }
+    print(chaves);
   }
 
   Future<void> exibirConfirmacaoOpcoes(int id, String data) {
@@ -92,7 +97,7 @@ class _TelaListagemState extends State<TelaListagem> {
         });
   }
 
-  Widget opcoesItemLista(int id, String data) => Container(
+  Widget opcoesItemLista(int id, String data, double largura) => Container(
         padding: const EdgeInsets.only(
             top: 10, right: 20.0, left: 20.0, bottom: 70.0),
         child: Card(
@@ -101,24 +106,26 @@ class _TelaListagemState extends State<TelaListagem> {
               borderRadius: BorderRadius.all(Radius.circular(30))),
           child: Column(
             children: [
+              Text(Textos.telaListagemOpcoes,
+                  textAlign: TextAlign.end,
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold)),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(Textos.telaListagemOpcoes,
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold)),
                   Container(
                     margin: const EdgeInsets.only(top: 10.0),
                     width: 40,
                     height: 40,
                     child: FloatingActionButton(
+                      heroTag: "btnFecharJanela",
                       backgroundColor: Colors.red,
                       onPressed: () {
                         setState(() {
                           itemSelecionado = false;
                         });
                       },
-                      child: const Icon(Icons.close, size: 35),
+                      child: const Icon(Icons.close, size: 30),
                     ),
                   ),
                 ],
@@ -143,14 +150,15 @@ class _TelaListagemState extends State<TelaListagem> {
                 ),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
                     margin: const EdgeInsets.only(top: 10.0, bottom: 20.0),
-                    width: 45,
-                    height: 45,
+                    width: 40,
+                    height: 40,
                     child: FloatingActionButton(
-                      backgroundColor: Colors.yellow,
+                      heroTag: "btnEditarItem",
+                      backgroundColor: PaletaCores.corAmarela,
                       onPressed: () {
                         var dados = {};
                         dados[Constantes.parametroEdicaoNomeTabela] =
@@ -160,19 +168,20 @@ class _TelaListagemState extends State<TelaListagem> {
                             context, Constantes.rotaTelaEdicao,
                             arguments: dados);
                       },
-                      child: const Icon(Icons.edit, size: 40),
+                      child: const Icon(Icons.edit, size: 30),
                     ),
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 10.0, bottom: 20.0),
-                    width: 45,
-                    height: 45,
+                    width: 40,
+                    height: 40,
                     child: FloatingActionButton(
+                      heroTag: "btnExcluirItem",
                       backgroundColor: Colors.red,
                       onPressed: () {
                         exibirConfirmacaoOpcoes(id, data);
                       },
-                      child: const Icon(Icons.delete_forever, size: 40),
+                      child: const Icon(Icons.delete_forever, size: 30),
                     ),
                   ),
                 ],
@@ -241,7 +250,8 @@ class _TelaListagemState extends State<TelaListagem> {
                                 child: LayoutBuilder(
                                   builder: (context, constraints) {
                                     if (itemSelecionado) {
-                                      return opcoesItemLista(idItem, dataItem);
+                                      return opcoesItemLista(
+                                          idItem, dataItem, larguraTela);
                                     } else {
                                       return Column(
                                         children: [
@@ -274,7 +284,7 @@ class _TelaListagemState extends State<TelaListagem> {
                                                       dividerThickness: 2.0,
                                                       showCheckboxColumn: false,
                                                       columns: [
-                                                        ...itens.first.keys.map(
+                                                        ...chaves.map(
                                                           (e) {
                                                             return DataColumn(
                                                               label: Text(
@@ -294,6 +304,26 @@ class _TelaListagemState extends State<TelaListagem> {
                                                             );
                                                           },
                                                         ).toList()
+                                                        // ...itens.first.keys.map(
+                                                        //       (e) {
+                                                        //     return DataColumn(
+                                                        //       label: Text(
+                                                        //           e
+                                                        //               .toString()
+                                                        //               .replaceAll(
+                                                        //               "_",
+                                                        //               " "),
+                                                        //           textAlign:
+                                                        //           TextAlign
+                                                        //               .center,
+                                                        //           style:
+                                                        //           const TextStyle(
+                                                        //             fontSize:
+                                                        //             20,
+                                                        //           )),
+                                                        //     );
+                                                        //   },
+                                                        // ).toList()
                                                       ],
                                                       rows: itens
                                                           .map(
@@ -311,11 +341,6 @@ class _TelaListagemState extends State<TelaListagem> {
                                                                     itemSelecionado =
                                                                         true;
                                                                   });
-                                                                  // exibirConfirmacaoOpcoes(
-                                                                  //     idItem,
-                                                                  //     item.values
-                                                                  //         .elementAt(
-                                                                  //         1));
                                                                 },
                                                                 cells: [
                                                                   ...item.values
@@ -357,6 +382,7 @@ class _TelaListagemState extends State<TelaListagem> {
                     width: 60,
                     height: 60,
                     child: FloatingActionButton(
+                      heroTag: "btnListagemGerarPDF",
                       backgroundColor: PaletaCores.corVerdeCiano,
                       onPressed: () {},
                       child: Text(Textos.btnGerarPDF,

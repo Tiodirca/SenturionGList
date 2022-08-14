@@ -148,7 +148,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
             width: 30,
             height: 30,
             child: FloatingActionButton(
-              heroTag: "btnExcluirPessoas",
+              heroTag: "btnExcluirPessoa ${checkBoxModel.idItem}",
               backgroundColor: Colors.redAccent,
               child: const Icon(Icons.close, size: 20),
               onPressed: () {

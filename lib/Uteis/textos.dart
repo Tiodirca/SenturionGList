@@ -5,7 +5,7 @@ class Textos {
   static String btnGerar = "Gerar";
   static String btnGerarPDF = "Gerar PDF";
   static String btnUsarEscala = "Usar";
-  static String btnAtualizar = "Atualizar";
+  static String btnAtualizar = "Editar";
 
   // TELA INICIAL
   static String legSelecaoTipoEscala =
@@ -73,6 +73,8 @@ class Textos {
 
   // TELA EDICAO
   static String nomeTelaEdicao = "Edição de item";
+  static String descricaoTelaEdicao =
+      "Utilize os campos abaixo para editar os itens";
 
   // GERAIS
   static String txtListaVazia = "Sua lista esta vazia";
@@ -82,8 +84,7 @@ class Textos {
 
   // ALERTS
   static String legAlertExclusao = "Deseja realmente excluir este item ?";
-  static String legAlertOpcoes =
-      "Selecione uma opção";
+  static String legAlertOpcoes = "Selecione uma opção";
 
   // ERROS E SUCESSO
   static String erroTextFieldVazio = "Preencha o campo antes";

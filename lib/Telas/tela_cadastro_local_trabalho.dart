@@ -143,7 +143,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
             width: 30,
             height: 30,
             child: FloatingActionButton(
-              heroTag: "btnExluirLocal",
+              heroTag: "btnExcluirLocal ${checkBoxModel.idItem}",
               backgroundColor: Colors.redAccent,
               child: const Icon(Icons.close, size: 20),
               onPressed: () {
