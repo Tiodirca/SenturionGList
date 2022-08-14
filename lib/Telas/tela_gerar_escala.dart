@@ -74,6 +74,8 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
         querySQL = "$querySQL${item.replaceAll(" ", "_")} TEXT NOT NULL,";
       },
     ).toList();
+    print(querySQL);
+    print(widget.listaLocal);
     // pegando o tamanho da string
     int tamanhoQuery = querySQL.length;
     // subtraindo o ultimo index da string
@@ -95,7 +97,25 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
           linha[Textos.localData] = widget.listaPeriodo[i];
           // verificando se cada data na lista contem os seguintes parametros
           // para setar valor para o segundo elemento do map
-          if (widget.listaPeriodo[i].contains(Textos.diaQuarta) ||
+
+          // definindo que a variavel vai receber um index aleatorio da lista
+          int numeroRandomico = random.nextInt(widget.listaPessoas.length);
+          // adicionando no map um valor contido no index da lista de pessoas
+          // a cada item contido na lista de locais
+          linha[item.replaceAll(" ", "_")] =
+              widget.listaPessoas[numeroRandomico];
+
+          // adicionando valor vazio a determinados campos
+          if (item.contains(Textos.localServirCeia)) {
+            linha[Textos.localServirCeia] = "";
+          }
+          if (item.contains(Textos.localUniforme)) {
+            linha[Textos.localUniforme] = "";
+          }
+          if (widget.listaPeriodo[i].contains(Textos.diaSegunda) ||
+              widget.listaPeriodo[i].contains(Textos.diaTerca) ||
+              widget.listaPeriodo[i].contains(Textos.diaQuarta) ||
+              widget.listaPeriodo[i].contains(Textos.diaQuinta) ||
               widget.listaPeriodo[i].contains(Textos.diaSexta)) {
             linha[Textos.localHoraTroca.replaceAll(" ", "_")] =
                 "19:00 ás 20:00";
@@ -103,12 +123,6 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
             linha[Textos.localHoraTroca.replaceAll(" ", "_")] =
                 "18:00 às 19:00";
           }
-          // definindo que a variavel vai receber um index aleatorio da lista
-          int numeroRandomico = random.nextInt(widget.listaPessoas.length);
-          // adicionando no map um valor contido no index da lista de pessoas
-          // a cada item contido na lista de locais
-          linha[item.replaceAll(" ", "_")] =
-              widget.listaPessoas[numeroRandomico];
         },
       ).toList();
       // chamando metodo

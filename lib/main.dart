@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:senturionglist/Uteis/paleta_cores.dart';
+import 'Uteis/ScrollBehaviorPersonalizado.dart';
 import 'Uteis/constantes.dart';
 import 'Uteis/rotas.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -14,6 +15,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // definindo scroll behavior personalizado para permitir rolagem horizontal no navegador
+      scrollBehavior: ScrollBehaviorPersonalizado(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: PaletaCores.corAdtl,

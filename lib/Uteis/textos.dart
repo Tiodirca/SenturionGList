@@ -109,7 +109,7 @@ class Textos {
   static String localData = "Data";
   static String localHoraTroca = "Horario de Troca";
   static String localUniforme = "Uniforme";
-  static String localServirCeia = "Servir Santa Ceia";
+  static String localServirCeia = "Servir_Santa_Ceia";
 
   static String localExcluir = "Excluir";
   static String localEditar = "Editar";

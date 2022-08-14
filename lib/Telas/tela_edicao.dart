@@ -25,6 +25,7 @@ class _TelaEdicaoState extends State<TelaEdicao> {
   List<Map<dynamic, dynamic>> itens = [];
   List<String> chaves = [];
   List<String> valores = [];
+  bool ativarBotaoHora = false;
 
 //variavel usada para validar o formulario
   final _chaveFormulario = GlobalKey<FormState>();
@@ -54,6 +55,9 @@ class _TelaEdicaoState extends State<TelaEdicao> {
     //pegando valores de forma individual
     for (var value1 in itens.first.keys) {
       chaves.add(value1.toString().replaceAll("_", " "));
+      if(value1.toString().contains(Textos.localHoraTroca)){
+        bool ativarBotaoHora = true;
+      }
     }
     for (var value1 in itens.first.values) {
       valores.add(value1.toString());
@@ -64,12 +68,14 @@ class _TelaEdicaoState extends State<TelaEdicao> {
   }
 
   Widget textField(String valorInicial, String label) => Container(
-        padding: const EdgeInsets.only(
-            left: 5.0, top: 10.0, right: 5.0, bottom: 5.0),
-        width: 300,
+        margin: const EdgeInsets.all(10),
+        color: Colors.red,
         child: TextFormField(
           keyboardType: TextInputType.text,
           initialValue: valorInicial,
+          onFieldSubmitted: (valor){
+            print(valor);
+          },
           validator: (value) {
             if (value!.isEmpty) {
               return Textos.erroTextFieldVazio;
@@ -164,11 +170,11 @@ class _TelaEdicaoState extends State<TelaEdicao> {
                                 flex: 2,
                                 child: Container(
                                   padding: const EdgeInsets.only(top: 10.0),
+                                  width: larguraTela,
                                   child: Column(
                                     children: [
                                       Container(
-                                          width: AjustarVisualizacao
-                                              .ajustarTextField(larguraTela),
+                                          width: larguraTela,
                                           height: alturaTela * 0.4,
                                           color: Colors.yellow,
                                           child: ListView.builder(
@@ -178,6 +184,23 @@ class _TelaEdicaoState extends State<TelaEdicao> {
                                                     valores.elementAt(index),
                                                     chaves.elementAt(index)),
                                           ))
+                                      // child: GridView.count(
+                                      //   crossAxisCount: 3,
+                                      //   children: [
+                                      //     ...chaves
+                                      //         .map(
+                                      //           (e) => textField(valores.elementAt(1), e,alturaTela)
+                                      //         )
+                                      //         .toList()
+                                      //   ],
+                                      // ),
+                                      // child: ListView.builder(
+                                      //   itemCount: chaves.length,
+                                      //   itemBuilder: (context, index) =>
+                                      //       textField(
+                                      //           valores.elementAt(index),
+                                      //           chaves.elementAt(index)),
+                                      // ))
                                     ],
                                   ),
                                 ))

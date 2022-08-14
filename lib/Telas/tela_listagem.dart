@@ -162,7 +162,7 @@ class _TelaListagemState extends State<TelaListagem> {
                                           scrollDirection: Axis.horizontal,
                                           child: DataTable(
                                             columnSpacing: 10,
-                                            dividerThickness: 2.0,
+                                            dividerThickness: 1.0,
                                             showCheckboxColumn: false,
                                             columns: [
                                               ...chaves.map(
@@ -207,14 +207,16 @@ class _TelaListagemState extends State<TelaListagem> {
                                                           (e) {
                                                         return DataCell(
                                                             SizedBox(
+                                                              height: 40,
                                                                 width:
-                                                                100,
+                                                                80,
                                                                 child: Text(
+                                                                  textAlign: TextAlign.center,
                                                                     e.toString())));
                                                       },
                                                     ),
                                                     DataCell(SizedBox(
-                                                      width: 100,
+                                                      width: 50,
                                                       child: SizedBox(
                                                         width: 30,
                                                         height: 30,
@@ -254,7 +256,7 @@ class _TelaListagemState extends State<TelaListagem> {
                                                       ),
                                                     )),
                                                     DataCell(SizedBox(
-                                                      width: 100,
+                                                      width: 50,
                                                       child: SizedBox(
                                                         width: 30,
                                                         height: 30,
