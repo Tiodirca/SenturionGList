@@ -129,7 +129,7 @@ class _TelaListagemState extends State<TelaListagem> {
                             flex: 1,
                             child: Container(
                               padding: const EdgeInsets.only(
-                                  top: 10.0, right: 10.0, left: 10.0),
+                                  top: 10.0, right: 15.0, left: 15.0),
                               width: larguraTela,
                               child: Column(
                                 children: [
@@ -137,7 +137,7 @@ class _TelaListagemState extends State<TelaListagem> {
                                     Textos.decricaoTelaListagem,
                                     textAlign: TextAlign.justify,
                                     style: const TextStyle(
-                                        fontSize: 18, color: Colors.white),
+                                        fontSize: Constantes.tamanhoLetraDescritivas, color: Colors.white),
                                   ),
                                 ],
                               ),
@@ -145,163 +145,156 @@ class _TelaListagemState extends State<TelaListagem> {
                         Expanded(
                             flex: 2,
                             child: Container(
-                                padding: const EdgeInsets.only(
-                                    top: 10.0, right: 10.0, left: 10.0),
+                              padding: const EdgeInsets.only(
+                                  top: 10.0, right: 10.0, left: 10.0),
+                              width: larguraTela,
+                              height: alturaTela * 0.5,
+                              child: Container(
+                                alignment: Alignment.center,
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 10.0, vertical: 0.0),
+                                height: alturaTela * 0.3,
                                 width: larguraTela,
-                                height: alturaTela * 0.5,
-                                child:  Container(
-                                  alignment: Alignment.center,
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 10.0, vertical: 0.0),
-                                  height: alturaTela * 0.3,
-                                  width: larguraTela,
-                                  child: ListView(
-                                    children: [
-                                      Center(
-                                        child: SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: DataTable(
-                                            columnSpacing: 10,
-                                            dividerThickness: 1.0,
-                                            showCheckboxColumn: false,
-                                            columns: [
-                                              ...chaves.map(
+                                child: ListView(
+                                  children: [
+                                    Center(
+                                      child: SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: DataTable(
+                                          columnSpacing: 10,
+                                          dividerThickness: 1.0,
+                                          showCheckboxColumn: false,
+                                          columns: [
+                                            ...chaves.map(
+                                              (e) {
+                                                return DataColumn(
+                                                  label: Text(
+                                                      e
+                                                          .toString()
+                                                          .replaceAll("_", " "),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: const TextStyle(
+                                                          fontSize: Constantes
+                                                              .tamanhoLetraDescritivas,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                );
+                                              },
+                                            ),
+                                            const DataColumn(
+                                              label: Text("Editar",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontSize: Constantes
+                                                          .tamanhoLetraDescritivas,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ),
+                                            const DataColumn(
+                                              label: Text("Excluir",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontSize: Constantes
+                                                          .tamanhoLetraDescritivas,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ),
+                                          ],
+                                          rows: itens
+                                              .map(
+                                                (item) => DataRow(cells: [
+                                                  ...item.values.map(
                                                     (e) {
-                                                  return DataColumn(
-                                                    label: Text(
-                                                        e
-                                                            .toString()
-                                                            .replaceAll(
-                                                            "_", " "),
-                                                        textAlign: TextAlign
-                                                            .center,
-                                                        style:
-                                                        const TextStyle(
-                                                          fontSize: 20,
-                                                          fontFamily: "Zubayr"
-                                                        )),
-                                                  );
-                                                },
-                                              ),
-                                              const DataColumn(
-                                                label: Text("Editar",
-                                                    textAlign:
-                                                    TextAlign.center,
-                                                    style: TextStyle(
-                                                      fontSize: 20,
-                                                        fontFamily: "Zubayr"
-                                                    )),
-                                              ),
-                                              const DataColumn(
-                                                label: Text("Excluir",
-                                                    textAlign:
-                                                    TextAlign.center,
-                                                    style: TextStyle(
-                                                      fontSize: 20,
-                                                        fontFamily: "Zubayr"
-                                                    )),
-                                              ),
-                                            ],
-                                            rows: itens
-                                                .map(
-                                                  (item) => DataRow(
-                                                  cells: [
-                                                    ...item.values.map(
-                                                          (e) {
-                                                        return DataCell(
-                                                            SizedBox(
-                                                              height: 40,
-                                                                width:
-                                                                80,
-                                                                child: Text(
-                                                                  textAlign: TextAlign.center,
-                                                                    e.toString())));
-                                                      },
+                                                      return DataCell(SizedBox(
+                                                          width: 120,
+                                                          child: SingleChildScrollView(
+                                                            scrollDirection: Axis.horizontal,
+                                                            child: Text(
+                                                              textAlign:
+                                                              TextAlign
+                                                                  .center,
+                                                              e.toString(),style: const TextStyle(
+                                                                fontSize: 18
+                                                            ),),
+                                                          )));
+                                                    },
+                                                  ),
+                                                  DataCell(SizedBox(
+                                                    width: 50,
+                                                    child: SizedBox(
+                                                      width: 30,
+                                                      height: 30,
+                                                      child:
+                                                          FloatingActionButton(
+                                                        heroTag:
+                                                            "btnEditarItem${item.values.first}",
+                                                        backgroundColor:
+                                                            PaletaCores
+                                                                .corAmarela,
+                                                        onPressed: () {
+                                                          idItem =
+                                                              item.values.first;
+                                                          var dados = {};
+                                                          dados[Constantes
+                                                                  .parametroEdicaoNomeTabela] =
+                                                              widget.nomeTabela;
+                                                          dados[Constantes
+                                                                  .parametroEdicaoIdItem] =
+                                                              idItem;
+                                                          Navigator
+                                                              .pushReplacementNamed(
+                                                                  context,
+                                                                  Constantes
+                                                                      .rotaTelaEdicao,
+                                                                  arguments:
+                                                                      dados);
+                                                        },
+                                                        child: const Icon(
+                                                            Icons.edit,
+                                                            size: 20),
+                                                      ),
                                                     ),
-                                                    DataCell(SizedBox(
-                                                      width: 50,
-                                                      child: SizedBox(
-                                                        width: 30,
-                                                        height: 30,
-                                                        child:
-                                                        FloatingActionButton(
-                                                          heroTag:
-                                                          "btnEditarItem",
-                                                          backgroundColor:
-                                                          PaletaCores
-                                                              .corAmarela,
-                                                          onPressed:
-                                                              () {
-                                                            idItem = item
+                                                  )),
+                                                  DataCell(SizedBox(
+                                                    width: 50,
+                                                    child: SizedBox(
+                                                      width: 30,
+                                                      height: 30,
+                                                      child:
+                                                          FloatingActionButton(
+                                                        heroTag:
+                                                            "btnExcluirItem${item.values.first}",
+                                                        backgroundColor:
+                                                            Colors.red,
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            dataItem = item
                                                                 .values
-                                                                .first;
-                                                            var dados =
-                                                            {};
-                                                            dados[Constantes
-                                                                .parametroEdicaoNomeTabela] =
-                                                                widget
-                                                                    .nomeTabela;
-                                                            dados[Constantes
-                                                                .parametroEdicaoIdItem] =
-                                                                idItem;
-                                                            Navigator.pushReplacementNamed(
-                                                                context,
-                                                                Constantes
-                                                                    .rotaTelaEdicao,
-                                                                arguments:
-                                                                dados);
-                                                          },
-                                                          child: const Icon(
-                                                              Icons
-                                                                  .edit,
-                                                              size: 20),
-                                                        ),
+                                                                .elementAt(1);
+                                                            idItem = item
+                                                                .values.first;
+                                                          });
+                                                          exibirConfirmacaoExclusao(
+                                                              idItem, dataItem);
+                                                        },
+                                                        child: const Icon(
+                                                            Icons
+                                                                .delete_forever,
+                                                            size: 20),
                                                       ),
-                                                    )),
-                                                    DataCell(SizedBox(
-                                                      width: 50,
-                                                      child: SizedBox(
-                                                        width: 30,
-                                                        height: 30,
-                                                        child:
-                                                        FloatingActionButton(
-                                                          heroTag:
-                                                          "btnExcluirItem${item.values.first}",
-                                                          backgroundColor:
-                                                          Colors
-                                                              .red,
-                                                          onPressed:
-                                                              () {
-                                                            setState(
-                                                                    () {
-                                                                  dataItem = item
-                                                                      .values
-                                                                      .elementAt(
-                                                                      1);
-                                                                  idItem = item
-                                                                      .values
-                                                                      .first;
-                                                                });
-                                                            exibirConfirmacaoExclusao(
-                                                                idItem,
-                                                                dataItem);
-                                                          },
-                                                          child: const Icon(
-                                                              Icons
-                                                                  .delete_forever,
-                                                              size: 20),
-                                                        ),
-                                                      ),
-                                                    ))
-                                                  ]),
-                                            )
-                                                .toList(),
-                                          ),
+                                                    ),
+                                                  ))
+                                                ]),
+                                              )
+                                              .toList(),
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                ),))
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ))
                       ],
                     )),
                   ],
@@ -314,16 +307,15 @@ class _TelaListagemState extends State<TelaListagem> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   SizedBox(
-                    width: 60,
-                    height: 60,
+                    width: Constantes.tamanhoFloatButtonNavigationBar,
+                    height: Constantes.tamanhoFloatButtonNavigationBar,
                     child: FloatingActionButton(
                       heroTag: "btnListagemGerarPDF",
                       backgroundColor: PaletaCores.corVerdeCiano,
                       onPressed: () {},
                       child: Text(Textos.btnGerarPDF,
-                          textAlign: TextAlign.center,
                           style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
+                              fontSize: Constantes.tamanhoLetraDescritivas, fontWeight: FontWeight.bold)),
                     ),
                   ),
                   const SizedBox(

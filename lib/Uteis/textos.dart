@@ -2,8 +2,8 @@ class Textos {
   static String btnCadastrar = "Cadastrar";
   static String btnCooperador = "Cooperadores";
   static String btnCooperadoras = "Cooperadoras";
-  static String btnGerar = "Gerar";
-  static String btnGerarPDF = "Gerar PDF";
+  static String btnGerar = "Criar";
+  static String btnGerarPDF = "PDF";
   static String btnUsarEscala = "Usar";
   static String btnAtualizar = "Editar";
 
@@ -90,7 +90,8 @@ class Textos {
   static String erroSemIntervalo =
       "Defina um periodo de dias que terá a escala";
   static String erroTabelaExistente =
-      "Defina outro nome para a escala. já existe uma escala este nome";
+      "Defina outro nome para a escala. já existe uma escala este nome na base de dados";
+  static String erroNomeExiste = "Adicione outro nome. pois o mesmo ja existe na base de dados";
   static String erroSemSelecaoCheck =
       "Selecione pelo menos um item da lista. clicando encima dos nomes";
   static String sucessoAddBanco = "Sucesso ao adicionar item a base de dados";

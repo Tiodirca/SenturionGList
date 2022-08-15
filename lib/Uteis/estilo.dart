@@ -4,7 +4,7 @@ import 'package:senturionglist/Uteis/paleta_cores.dart';
 class Estilo {
   ThemeData get estiloGeral => ThemeData(
       primaryColor: PaletaCores.corAdtl,
-      fontFamily: 'Comic',
+      fontFamily: 'Zubayr',
       appBarTheme: const AppBarTheme(
         color: PaletaCores.corAdtl,
         elevation: 0,
@@ -16,6 +16,7 @@ class Estilo {
       ),
       scaffoldBackgroundColor: Colors.white,
       inputDecorationTheme: InputDecorationTheme(
+          errorStyle: const TextStyle(fontSize: 13, color: Colors.white),
           hintStyle: const TextStyle(color: Colors.white),
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(width: 2, color: Colors.white),
@@ -40,9 +41,10 @@ class Estilo {
       // estilo dos botoes
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          side: const BorderSide(color: Colors.black),
+          side: const BorderSide(color: Colors.black,width: 1.5),
           primary: Colors.white,
-          elevation: 5,
+          elevation: 10,
+          textStyle: const TextStyle(fontWeight: FontWeight.w900, fontSize: 18),
           shadowColor: Colors.white,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(30))),

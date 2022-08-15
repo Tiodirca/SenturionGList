@@ -26,10 +26,10 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
   int valorGenero = 0;
   int idItem = 0;
   bool retornoListaVazia = false;
+  bool nomeExiste = false;
   String tipoEscala = "";
   List<Pessoa> pessoas = [];
   List<String> listaPessoasSelecionados = [];
-  double alturaNavigationBar = 120.0;
   final List<CheckBoxModel> itensCheckBox = [];
   final TextEditingController _controllerNomePessoa =
       TextEditingController(text: "");
@@ -64,7 +64,11 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
           RemoverAcentos.removerAcentos(_controllerNomePessoa.text),
       BancoDeDados.columnPessoaGenero: valorGenero
     };
-    await bancoDados.inserir(linha, Constantes.bancoTabelaPessoa);
+    int id = await bancoDados.inserir(linha, Constantes.bancoTabelaPessoa);
+    if (id.toString().isNotEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(Textos.sucessoAddBanco)));
+    }
     consultarPessoas();
   }
 
@@ -157,7 +161,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                 exibirConfirmacaoExcluir(checkBoxModel.idItem);
               },
             )),
-        title: Text(checkBoxModel.texto),
+        title: Text(checkBoxModel.texto, style: const TextStyle(fontSize: Constantes.tamanhoLetraDescritivas)),
         value: checkBoxModel.checked,
         side: const BorderSide(width: 2, color: Colors.black),
         onChanged: (value) {
@@ -212,7 +216,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                             Expanded(
                                 flex: 1,
                                 child: Container(
-                                  padding: const EdgeInsets.only(top: 10.0),
+                                  padding: const EdgeInsets.only(
+                                      left: 10.0, right: 10.0, top: 10.0),
                                   width: larguraTela,
                                   child: Column(
                                     children: [
@@ -220,14 +225,12 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                                         Textos.descricaoCadastroPessoas,
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
-                                            fontSize: 18, color: Colors.white),
+                                            fontSize: Constantes.tamanhoLetraDescritivas, color: Colors.white),
                                       ),
                                       const SizedBox(
                                         height: 10,
                                       ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                      Wrap(
                                         children: [
                                           Container(
                                               padding: const EdgeInsets.only(
@@ -266,11 +269,27 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                                                 if (_chaveFormulario
                                                     .currentState!
                                                     .validate()) {
-                                                  inserirDados();
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(SnackBar(
-                                                          content: Text(Textos
-                                                              .sucessoAddBanco)));
+                                                  setState(() {
+                                                    for (var value
+                                                        in itensCheckBox) {
+                                                      if (value.texto ==
+                                                          _controllerNomePessoa
+                                                              .text) {
+                                                        nomeExiste = true;
+                                                      }
+                                                    }
+                                                    if (nomeExiste == true) {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(SnackBar(
+                                                              content: Text(Textos
+                                                                  .erroNomeExiste)));
+                                                      nomeExiste = false;
+                                                    } else {
+                                                      nomeExiste = false;
+                                                      inserirDados();
+                                                    }
+                                                  });
                                                 }
                                               },
                                               child: Text(
@@ -291,14 +310,14 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                             Expanded(
                                 flex: 2,
                                 child: Container(
-                                  padding: const EdgeInsets.only(top: 10.0),
+                                  padding: const EdgeInsets.only(left: 5.0,right: 5.0,top: 10.0),
                                   child: Column(
                                     children: [
                                       Text(
                                         Textos.legLista,
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
-                                            fontSize: 18, color: Colors.black),
+                                            fontSize: Constantes.tamanhoLetraDescritivas, color: Colors.black),
                                       ),
                                       LayoutBuilder(
                                         builder: (context, constraints) {
@@ -344,7 +363,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                   ),
                 ),
               ),
-              bottomNavigationBar: Container(
+              bottomNavigationBar: SizedBox(
                 height: Constantes.alturaNavigationBar,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,

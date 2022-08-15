@@ -1,6 +1,7 @@
 import '../../Modelo/check_box_modelo.dart';
 import 'package:flutter/material.dart';
 
+import '../Uteis/constantes.dart';
 import '../Uteis/paleta_cores.dart';
 
 class CheckboxWidget extends StatefulWidget {
@@ -19,7 +20,7 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
       activeColor: PaletaCores.corAdtl,
       checkColor: PaletaCores.corAdtlLetras,
       title: Text(widget.item.texto,
-          style: const TextStyle(color: Colors.black)),
+          style: const TextStyle(color: Colors.black,fontSize: Constantes.tamanhoLetraDescritivas)),
       side: const BorderSide(width: 2, color: Colors.black),
       value: widget.item.checked,
       onChanged: (value) {

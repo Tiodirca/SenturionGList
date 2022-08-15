@@ -24,8 +24,7 @@ class TelaCarregamento extends StatelessWidget {
                   Textos.txtTelaCarregamento,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    fontSize: 20,
-                  ),
+                      fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 20,

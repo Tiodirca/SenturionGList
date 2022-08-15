@@ -1,5 +1,7 @@
 class Constantes {
   static const alturaNavigationBar = 130.0;
+  static const tamanhoLetraDescritivas = 20.0;
+  static const double tamanhoFloatButtonNavigationBar = 62;
 
   // constantes de rotas
   static const rotaTelaInicial = "/telaInicial";

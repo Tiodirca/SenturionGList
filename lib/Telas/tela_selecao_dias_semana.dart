@@ -100,7 +100,7 @@ class _TelaSelecaoDiasSemanaState extends State<TelaSelecaoDiasSemana> {
                                     Textos.descricaoTelaSelecaoDias,
                                     textAlign: TextAlign.justify,
                                     style: const TextStyle(
-                                        fontSize: 18,
+                                        fontSize: Constantes.tamanhoLetraDescritivas,
                                         color: Colors.white),
                                   ),
                                 )
@@ -109,14 +109,14 @@ class _TelaSelecaoDiasSemanaState extends State<TelaSelecaoDiasSemana> {
                         Expanded(
                             flex: 2,
                             child: Container(
-                              padding: const EdgeInsets.only(top: 10.0),
+                              padding: const EdgeInsets.only(left: 5.0,right: 5.0,top: 10.0),
                               child: Column(
                                 children: [
                                   Text(
                                     Textos.legLista,
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
-                                        fontSize: 18, color: Colors.black),
+                                        fontSize: Constantes.tamanhoLetraDescritivas, color: Colors.black),
                                   ),
                                   SizedBox(
                                       height: alturaTela * 0.4,

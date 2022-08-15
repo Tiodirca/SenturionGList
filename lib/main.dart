@@ -20,7 +20,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: PaletaCores.corAdtl,
-        fontFamily: 'Comic',
       ),
       //definicoes usadas no date picker
       localizationsDelegates: const [

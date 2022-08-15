@@ -127,7 +127,7 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                                       Textos.descricaoTelaSelecaoEscala,
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(
-                                          fontSize: 18, color: Colors.white),
+                                          fontSize: Constantes.tamanhoLetraDescritivas, color: Colors.white),
                                     ),
                                   ),
                                 ],
@@ -152,7 +152,9 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                                                       child: Text(
                                                           item.replaceAll(
                                                               RegExp(r'_'),
-                                                              ' ')),
+                                                              ' '),style: const TextStyle(
+                                                        fontSize: Constantes.tamanhoLetraDescritivas
+                                                      )),
                                                     ))
                                                 .toList(),
                                             onChanged: (String? value) {
@@ -189,14 +191,14 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                                           Text(
                                             Textos.txtEscalaSelecionada,
                                             style:
-                                                const TextStyle(fontSize: 18),
+                                                const TextStyle(fontSize: Constantes.tamanhoLetraDescritivas),
                                           ),
                                           Text(
                                             tabelaSelecionada.replaceAll(
                                                 RegExp(r'_'), ' '),
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: 18),
+                                                fontSize: Constantes.tamanhoLetraDescritivas),
                                           ),
                                           Container(
                                             margin: const EdgeInsets.only(
@@ -235,8 +237,8 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                       Visibility(
                         visible: exibirConfirmacaoEscala,
                         child: SizedBox(
-                          width: 60,
-                          height: 60,
+                          width: Constantes.tamanhoFloatButtonNavigationBar,
+                          height: Constantes.tamanhoFloatButtonNavigationBar,
                           child: FloatingActionButton(
                             heroTag: "btnAvancarSelecaoEscala",
                             backgroundColor: PaletaCores.corVerdeCiano,
@@ -247,7 +249,7 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                             },
                             child: Text(Textos.btnUsarEscala,
                                 style: const TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold)),
+                                    fontSize: Constantes.tamanhoLetraDescritivas, fontWeight: FontWeight.bold)),
                           ),
                         ),
                       ),

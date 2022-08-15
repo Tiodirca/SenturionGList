@@ -126,7 +126,7 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
             });
           },
           readOnly: true,
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white,),
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
             hintText: '${data.day}/${data.month}/${data.year}',
@@ -143,8 +143,10 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
 
     // o ultimo parametro e o tamanho do
     // container do BUTTON NAVIGATION BAR
-    double alturaGeral =
-        alturaTela - alturaBarraStatus - alturaAppBar - Constantes.alturaNavigationBar;
+    double alturaGeral = alturaTela -
+        alturaBarraStatus -
+        alturaAppBar -
+        Constantes.alturaNavigationBar;
 
     return Theme(
         data: estilo.estiloGeral,
@@ -174,14 +176,17 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
                                     alignment: WrapAlignment.spaceAround,
                                     children: [
                                       Container(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 10.0),
+                                        padding: const EdgeInsets.only(
+                                            left: 5.0,
+                                            right: 5.0,
+                                            bottom: 10.0),
                                         width: larguraTela,
                                         child: Text(
                                           Textos.descricaoTelaSelecaoPeriodo,
-                                          textAlign: TextAlign.center,
+                                          textAlign: TextAlign.justify,
                                           style: const TextStyle(
-                                              fontSize: 18,
+                                              fontSize: Constantes
+                                                  .tamanhoLetraDescritivas,
                                               color: Colors.white),
                                         ),
                                       ),
@@ -231,7 +236,8 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
                                           Textos.descricaoListaSelecaoPeriodo,
                                           textAlign: TextAlign.justify,
                                           style: const TextStyle(
-                                              fontSize: 18,
+                                              fontSize: Constantes
+                                                  .tamanhoLetraDescritivas,
                                               color: Colors.black),
                                         ),
                                       ),
@@ -257,7 +263,7 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
                                                               width: 10.0,
                                                             ),
                                                             SizedBox(
-                                                              width: 250,
+                                                              width: 300,
                                                               child: Text(
                                                                 e,
                                                                 textAlign:
@@ -265,7 +271,7 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
                                                                         .center,
                                                                 style:
                                                                     const TextStyle(
-                                                                  fontSize: 18,
+                                                                  fontSize: Constantes.tamanhoLetraDescritivas,
                                                                 ),
                                                               ),
                                                             )
@@ -312,8 +318,7 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
                             if (listaDatasFinal.isEmpty) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                      content:
-                                          Text(Textos.erroSemIntervalo)));
+                                      content: Text(Textos.erroSemIntervalo)));
                             } else {
                               var dados = {};
                               dados[Constantes.parametroGenero] = widget.genero;

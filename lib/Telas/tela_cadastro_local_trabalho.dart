@@ -29,13 +29,11 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
   int valorGenero = 0;
   int idItem = 0;
   bool retornoListaVazia = false;
+  bool nomeExiste = false;
   String tipoEscala = "";
-  double alturaNavigationBar = 120.0;
-  int valorRadioButton = 1;
   List<LocalTrabalho> localTrabalho = [];
   List<String> localSelecionados = [];
   final List<CheckBoxModel> itensCheckBox = [];
-  final List<CheckBoxModel> itensCheckBoxOpcoesAdicionais = [];
   final TextEditingController _controllerNome = TextEditingController(text: "");
 
 //variavel usada para validar o formulario
@@ -58,6 +56,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
       tipoEscala = Textos.btnCooperador;
       valorGenero = 0;
     }
+    // inserindo valores padrao na lista
     localSelecionados.add(Textos.localData);
     localSelecionados.add(Textos.localHoraTroca);
   }
@@ -69,7 +68,13 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
       BancoDeDados.columnLocal:
           RemoverAcentos.removerAcentos(_controllerNome.text),
     };
-    await bancoDados.inserir(linha, Constantes.bancoTabelaLocalTrabalho);
+    int id =
+        await bancoDados.inserir(linha, Constantes.bancoTabelaLocalTrabalho);
+    if (id.toString().isNotEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(Textos.sucessoAddBanco)));
+    }
+
     consultarLocalTrabalho();
   }
 
@@ -156,7 +161,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                 exibirConfirmacaoExcluir(checkBoxModel.idItem);
               },
             )),
-        title: Text(checkBoxModel.texto),
+        title: Text(checkBoxModel.texto,style: const TextStyle(fontSize: Constantes.tamanhoLetraDescritivas),),
         side: const BorderSide(width: 2, color: Colors.black),
         value: checkBoxModel.checked,
         onChanged: (value) {
@@ -212,7 +217,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                           Expanded(
                               flex: 1,
                               child: Container(
-                                padding: const EdgeInsets.only(top: 10.0),
+                                padding: const EdgeInsets.only(left: 10.0,right: 10.0,top: 10.0),
                                 width: larguraTela,
                                 child: Column(
                                   children: [
@@ -220,14 +225,12 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                                       Textos.descricaoCadastroLocalTrabalho,
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(
-                                          fontSize: 18, color: Colors.white),
+                                          fontSize: Constantes.tamanhoLetraDescritivas, color: Colors.white),
                                     ),
                                     const SizedBox(
                                       height: 10.0,
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                    Wrap(
                                       children: [
                                         Container(
                                             padding: const EdgeInsets.only(
@@ -264,12 +267,27 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                                             onPressed: () {
                                               if (_chaveFormulario.currentState!
                                                   .validate()) {
-                                                inserirDados();
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(SnackBar(
-                                                        content: Text(Textos
-                                                            .sucessoAddBanco)));
-                                              } else {}
+                                                setState(() {
+                                                  for (var value
+                                                      in itensCheckBox) {
+                                                    if (value.texto ==
+                                                        _controllerNome.text) {
+                                                      nomeExiste = true;
+                                                    }
+                                                  }
+                                                  if (nomeExiste == true) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(SnackBar(
+                                                            content: Text(Textos
+                                                                .erroTabelaExistente)));
+                                                    nomeExiste = false;
+                                                  } else {
+                                                    nomeExiste = false;
+                                                    inserirDados();
+                                                  }
+                                                });
+                                              }
                                             },
                                             child: Text(
                                               Textos.btnCadastrar,
@@ -289,7 +307,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                           Expanded(
                               flex: 2,
                               child: Container(
-                                  padding: const EdgeInsets.only(top: 10.0),
+                                  padding: const EdgeInsets.only(left: 10.0,right: 10.0,top: 10.0),
                                   child: SingleChildScrollView(
                                     child: Column(
                                       children: [
@@ -297,7 +315,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                                           Textos.legLista,
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(
-                                              fontSize: 18,
+                                              fontSize: Constantes.tamanhoLetraDescritivas,
                                               color: Colors.black),
                                         ),
                                         LayoutBuilder(

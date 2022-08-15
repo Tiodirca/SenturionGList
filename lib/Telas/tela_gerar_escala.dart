@@ -83,6 +83,13 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
     querySQL = querySQL.substring(0, tamanhoQuery - 1);
   }
 
+  // metodo para pegar o valor digitado
+  // reescrevendo contendo o caracter passado como parametro
+  pegaNomeDigitado() {
+    String nome = _controllerNomeEscala.text.replaceAll(" ", "_");
+    return nome;
+  }
+
   // metodo para inserir dados na tabela criada
   inserir() async {
     // pegando cada elemento do periodo selecionado
@@ -164,7 +171,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
     setState(() {
       for (var linha in tabelasRecuperadas) {
         var tabela = linha['name'];
-        if (_controllerNomeEscala.text.replaceAll(" ", "_") == tabela) {
+        if (pegaNomeDigitado() == tabela) {
           nomeTabelaExiste = true;
         }
       }
@@ -173,7 +180,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
             .showSnackBar(SnackBar(content: Text(Textos.erroTabelaExistente)));
       } else {
         telaCarregar = true;
-        criarTabela();
+        chamarCriarTabela();
         Timer(const Duration(seconds: 3), () {
           inserir();
           ScaffoldMessenger.of(context)
@@ -183,11 +190,10 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
     });
   }
 
-  criarTabela() async {
+  // metodo para criar a tabela no banco de dados
+  chamarCriarTabela() async {
     await bancoDados.criarTabela(
-        querySQL,
-        RemoverAcentos.removerAcentos(_controllerNomeEscala.text)
-            .replaceAll(" ", "_"));
+        querySQL, RemoverAcentos.removerAcentos(pegaNomeDigitado()));
   }
 
   @override
@@ -251,7 +257,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                               Textos.decricaoTelaGerarEscala,
                                               textAlign: TextAlign.center,
                                               style: const TextStyle(
-                                                  fontSize: 18,
+                                                  fontSize: Constantes.tamanhoLetraDescritivas,
                                                   color: Colors.white),
                                             ),
                                             Container(
@@ -298,14 +304,14 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                                   padding:
                                                       const EdgeInsets.only(
                                                           top: 0.0,
-                                                          right: 10.0,
-                                                          left: 10.0),
+                                                          right: 15.0,
+                                                          left: 15.0),
                                                   child: Text(
                                                     Textos
                                                         .descricaoNomesConjuntos,
                                                     textAlign: TextAlign.center,
                                                     style: const TextStyle(
-                                                        fontSize: 18,
+                                                        fontSize: Constantes.tamanhoLetraDescritivas,
                                                         color: Colors.black),
                                                   ),
                                                 ),
@@ -325,7 +331,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                                     const Text(
                                                       'Não',
                                                       style: TextStyle(
-                                                        fontSize: 16.0,
+                                                        fontSize: 17.0,
                                                       ),
                                                     ),
                                                     Radio(
@@ -340,7 +346,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                                     const Text(
                                                       'Sim',
                                                       style: TextStyle(
-                                                        fontSize: 16.0,
+                                                        fontSize: 17.0,
                                                       ),
                                                     ),
                                                   ],
@@ -464,8 +470,8 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                 height: 45,
                               ),
                               SizedBox(
-                                width: 60,
-                                height: 60,
+                                width: Constantes.tamanhoFloatButtonNavigationBar,
+                                height: Constantes.tamanhoFloatButtonNavigationBar,
                                 child: FloatingActionButton(
                                   heroTag: "btnGerar",
                                   backgroundColor: PaletaCores.corVerdeCiano,
@@ -473,16 +479,15 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                     if (_chaveFormulario.currentState!
                                         .validate()) {
                                       setState(() {
-                                        // chamando metodo para criar tabela passando
-                                        // query contendo os campo e o nome da tabela
                                         nomeTabelaExiste = false;
                                         consultaTabelasExistentes();
                                       });
                                     }
                                   },
                                   child: Text(Textos.btnGerar,
+                                      textAlign: TextAlign.center,
                                       style: const TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 19,
                                           fontWeight: FontWeight.bold)),
                                 ),
                               ),
