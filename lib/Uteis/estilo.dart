@@ -12,7 +12,7 @@ class Estilo {
             fontSize: 20,
             color: Colors.white,
             fontWeight: FontWeight.bold,
-            fontFamily: 'Comic'),
+            fontFamily: 'Zubayr'),
       ),
       scaffoldBackgroundColor: Colors.white,
       inputDecorationTheme: InputDecorationTheme(

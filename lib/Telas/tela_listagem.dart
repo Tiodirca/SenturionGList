@@ -178,6 +178,7 @@ class _TelaListagemState extends State<TelaListagem> {
                                                         style:
                                                         const TextStyle(
                                                           fontSize: 20,
+                                                          fontFamily: "Zubayr"
                                                         )),
                                                   );
                                                 },
@@ -188,6 +189,7 @@ class _TelaListagemState extends State<TelaListagem> {
                                                     TextAlign.center,
                                                     style: TextStyle(
                                                       fontSize: 20,
+                                                        fontFamily: "Zubayr"
                                                     )),
                                               ),
                                               const DataColumn(
@@ -196,6 +198,7 @@ class _TelaListagemState extends State<TelaListagem> {
                                                     TextAlign.center,
                                                     style: TextStyle(
                                                       fontSize: 20,
+                                                        fontFamily: "Zubayr"
                                                     )),
                                               ),
                                             ],

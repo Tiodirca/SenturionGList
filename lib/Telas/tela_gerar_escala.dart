@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:senturionglist/Uteis/Servicos/banco_de_dados.dart';
+import 'package:senturionglist/Uteis/remover_acentos.dart';
 import 'package:senturionglist/Widget/check_box_widget.dart';
 import 'package:senturionglist/Widget/tela_carregamento.dart';
 import '../Modelo/check_box_modelo.dart';
@@ -127,7 +128,9 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
       ).toList();
       // chamando metodo
       bancoDados.inserir(
-          linha, _controllerNomeEscala.text.replaceAll(" ", "_"));
+          linha,
+          RemoverAcentos.removerAcentos(_controllerNomeEscala.text)
+              .replaceAll(" ", "_"));
       print(linha);
     }
     Timer(const Duration(seconds: 3), () {
@@ -170,15 +173,21 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
             .showSnackBar(SnackBar(content: Text(Textos.erroTabelaExistente)));
       } else {
         telaCarregar = true;
-        bancoDados.criarTabela(
-            querySQL, _controllerNomeEscala.text.replaceAll(" ", "_"));
-        Timer(const Duration(seconds: 2), () {
+        criarTabela();
+        Timer(const Duration(seconds: 3), () {
           inserir();
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(Textos.sucessoAddBanco)));
         });
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(Textos.sucessoAddBanco)));
       }
     });
+  }
+
+  criarTabela() async {
+    await bancoDados.criarTabela(
+        querySQL,
+        RemoverAcentos.removerAcentos(_controllerNomeEscala.text)
+            .replaceAll(" ", "_"));
   }
 
   @override

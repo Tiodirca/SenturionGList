@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:senturionglist/Modelo/local_trabalho.dart';
+import 'package:senturionglist/Uteis/remover_acentos.dart';
 
 import '../Modelo/check_box_modelo.dart';
 import '../Uteis/estilo.dart';
@@ -65,7 +66,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
   inserirDados() async {
     // linha para incluir os dados
     Map<String, dynamic> linha = {
-      BancoDeDados.columnLocal: _controllerNome.text,
+      BancoDeDados.columnLocal:
+          RemoverAcentos.removerAcentos(_controllerNome.text),
     };
     await bancoDados.inserir(linha, Constantes.bancoTabelaLocalTrabalho);
     consultarLocalTrabalho();
@@ -139,18 +141,6 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
           );
         });
   }
-
-  removerAcentos(String texto) {
-    String comAcentos = "ÄÅÁÂÀÃäáâàãÉÊËÈéêëèÍÎÏÌíîïìÖÓÔÒÕöóôòõÜÚÛüúûùÇç";
-    String semAcentos = "AAAAAAaaaaaEEEEeeeeIIIIiiiiOOOOOoooooUUUuuuuCc";
-
-    for (int i = 0; i < comAcentos.length; i++) {
-      texto =
-          texto.replaceAll(comAcentos[i].toString(), semAcentos[i].toString());
-    }
-    return texto;
-  }
-
 
   Widget checkBoxPersonalizado(CheckBoxModel checkBoxModel) => CheckboxListTile(
         activeColor: PaletaCores.corAzul,

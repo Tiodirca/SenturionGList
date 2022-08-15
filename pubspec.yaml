@@ -85,6 +85,9 @@ flutter:
       - family: Comic
         fonts:
           - asset: assets/fontes/comic_sans_ms.ttf
+      - family: Zubayr
+        fonts:
+          - asset: assets/fontes/zubayr.ttf
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

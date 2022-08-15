@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:senturionglist/Modelo/pessoa.dart';
 import 'package:senturionglist/Uteis/estilo.dart';
+import 'package:senturionglist/Uteis/remover_acentos.dart';
 
 import '../Modelo/check_box_modelo.dart';
 import '../Uteis/constantes.dart';
@@ -59,7 +60,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
   inserirDados() async {
     // linha para incluir os dados
     Map<String, dynamic> linha = {
-      BancoDeDados.columnPessoaNome: _controllerNomePessoa.text,
+      BancoDeDados.columnPessoaNome:
+          RemoverAcentos.removerAcentos(_controllerNomePessoa.text),
       BancoDeDados.columnPessoaGenero: valorGenero
     };
     await bancoDados.inserir(linha, Constantes.bancoTabelaPessoa);
@@ -218,8 +220,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                                         Textos.descricaoCadastroPessoas,
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.white),
+                                            fontSize: 18, color: Colors.white),
                                       ),
                                       const SizedBox(
                                         height: 10,
