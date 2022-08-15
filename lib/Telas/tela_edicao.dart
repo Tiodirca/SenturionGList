@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:senturionglist/Uteis/AjustarVisualizacao.dart';
 import 'package:senturionglist/Uteis/estilo.dart';
 
 import '../Uteis/constantes.dart';
 import '../Uteis/paleta_cores.dart';
 import '../Uteis/Servicos/banco_de_dados.dart';
 import '../Uteis/textos.dart';
+import 'package:intl/intl.dart';
 import '../Widget/barra_navegacao.dart';
 import '../Widget/fundo_tela_widget.dart';
 
@@ -26,6 +26,7 @@ class _TelaEdicaoState extends State<TelaEdicao> {
   List<String> chaves = [];
   List<String> valores = [];
   bool ativarBotaoHora = false;
+  DateTime data = DateTime.now();
 
 //variavel usada para validar o formulario
   final _chaveFormulario = GlobalKey<FormState>();
@@ -37,6 +38,7 @@ class _TelaEdicaoState extends State<TelaEdicao> {
   void initState() {
     super.initState();
     consultarDados();
+
   }
 
   // metodo responsavel por chamar metodo para fazer consulta ao banco de dados
@@ -55,7 +57,7 @@ class _TelaEdicaoState extends State<TelaEdicao> {
     //pegando valores de forma individual
     for (var value1 in itens.first.keys) {
       chaves.add(value1.toString().replaceAll("_", " "));
-      if(value1.toString().contains(Textos.localHoraTroca)){
+      if (value1.toString().contains(Textos.localHoraTroca)) {
         bool ativarBotaoHora = true;
       }
     }
@@ -65,16 +67,50 @@ class _TelaEdicaoState extends State<TelaEdicao> {
     //removendo o primeiro index pois contem o id
     chaves.removeAt(0);
     valores.removeAt(0);
+    //convertendo string para o tipo data
+    data = DateFormat("dd/MM/yyyy", "pt_BR").parse(valores[0]);
   }
 
-  Widget textField(String valorInicial, String label) => Container(
-        margin: const EdgeInsets.all(10),
-        color: Colors.red,
+  Widget textField(String valorInicial, String label, bool leitura,
+          String tipoExibicao) =>
+      Container(
+        margin: const EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
         child: TextFormField(
           keyboardType: TextInputType.text,
           initialValue: valorInicial,
-          onFieldSubmitted: (valor){
+          readOnly: leitura,
+          onFieldSubmitted: (valor) {
             print(valor);
+          },
+          onTap: () async{
+            if (leitura && tipoExibicao == "data") {
+              DateTime? novaData = await showDatePicker(
+                  builder: (context, child) {
+                    return Theme(
+                        data: ThemeData.dark().copyWith(
+                          colorScheme: const ColorScheme.light(
+                            primary: PaletaCores.corAdtl,
+                            onPrimary: Colors.white,
+                            onSurface: Colors.black,
+                          ),
+                          dialogBackgroundColor: Colors.white,
+                        ),
+                        child: child!);
+                  },
+                  context: context,
+                  initialDate: data,
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2100));
+
+              if (novaData == null) return;
+              setState(() {
+                if (label.contains(Textos.labelDataInicial)) {
+                  //dataInicial = novaData;
+                } else {
+                  //dataFinal = novaData;
+                }
+              });
+            }
           },
           validator: (value) {
             if (value!.isEmpty) {
@@ -161,7 +197,9 @@ class _TelaEdicaoState extends State<TelaEdicao> {
                                         Textos.descricaoTelaEdicao,
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
-                                            fontSize: 18, color: Colors.white),
+                                            fontSize: Constantes
+                                                .tamanhoLetraDescritivas,
+                                            color: Colors.white),
                                       ),
                                     ],
                                   ),
@@ -176,31 +214,30 @@ class _TelaEdicaoState extends State<TelaEdicao> {
                                       Container(
                                           width: larguraTela,
                                           height: alturaTela * 0.4,
-                                          color: Colors.yellow,
                                           child: ListView.builder(
                                             itemCount: chaves.length,
-                                            itemBuilder: (context, index) =>
-                                                textField(
+                                            itemBuilder: (context, index) {
+                                              if (index == 0) {
+                                                return textField(
                                                     valores.elementAt(index),
-                                                    chaves.elementAt(index)),
+                                                    chaves.elementAt(index),
+                                                    true,
+                                                    "data");
+                                              } else if (index == 1) {
+                                                return textField(
+                                                    valores.elementAt(index),
+                                                    chaves.elementAt(index),
+                                                    true,
+                                                    "hora");
+                                              } else {
+                                                return textField(
+                                                    valores.elementAt(index),
+                                                    chaves.elementAt(index),
+                                                    false,
+                                                    "");
+                                              }
+                                            },
                                           ))
-                                      // child: GridView.count(
-                                      //   crossAxisCount: 3,
-                                      //   children: [
-                                      //     ...chaves
-                                      //         .map(
-                                      //           (e) => textField(valores.elementAt(1), e,alturaTela)
-                                      //         )
-                                      //         .toList()
-                                      //   ],
-                                      // ),
-                                      // child: ListView.builder(
-                                      //   itemCount: chaves.length,
-                                      //   itemBuilder: (context, index) =>
-                                      //       textField(
-                                      //           valores.elementAt(index),
-                                      //           chaves.elementAt(index)),
-                                      // ))
                                     ],
                                   ),
                                 ))
@@ -217,8 +254,8 @@ class _TelaEdicaoState extends State<TelaEdicao> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     SizedBox(
-                      width: 60,
-                      height: 60,
+                      width: Constantes.tamanhoFloatButtonNavigationBar,
+                      height: Constantes.tamanhoFloatButtonNavigationBar,
                       child: FloatingActionButton(
                         heroTag: "btnAtualizar",
                         backgroundColor: PaletaCores.corVerdeCiano,
@@ -226,7 +263,7 @@ class _TelaEdicaoState extends State<TelaEdicao> {
                         child: Text(Textos.btnAtualizar,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
+                                fontSize: 18, fontWeight: FontWeight.bold)),
                       ),
                     ),
                     const SizedBox(
