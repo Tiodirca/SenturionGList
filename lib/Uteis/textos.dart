@@ -7,6 +7,9 @@ class Textos {
   static String btnUsarEscala = "Usar";
   static String btnAtualizar = "Editar";
 
+
+  static String nomeApp = "Senturion G List";
+
   // TELA INICIAL
   static String legSelecaoTipoEscala =
       "Selecione qual tipo de escala deseja criar";

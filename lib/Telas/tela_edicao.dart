@@ -25,11 +25,14 @@ class _TelaEdicaoState extends State<TelaEdicao> {
   List<Map<dynamic, dynamic>> itens = [];
   List<String> chaves = [];
   List<String> valores = [];
+  List<TextEditingController> listaController = [];
   bool ativarBotaoHora = false;
   DateTime data = DateTime.now();
 
 //variavel usada para validar o formulario
   final _chaveFormulario = GlobalKey<FormState>();
+
+  TextEditingController c = TextEditingController(text: '');
 
   // referencia classe para gerenciar o banco de dados
   final bancoDados = BancoDeDados.instance;
@@ -38,7 +41,6 @@ class _TelaEdicaoState extends State<TelaEdicao> {
   void initState() {
     super.initState();
     consultarDados();
-
   }
 
   // metodo responsavel por chamar metodo para fazer consulta ao banco de dados
@@ -57,9 +59,6 @@ class _TelaEdicaoState extends State<TelaEdicao> {
     //pegando valores de forma individual
     for (var value1 in itens.first.keys) {
       chaves.add(value1.toString().replaceAll("_", " "));
-      if (value1.toString().contains(Textos.localHoraTroca)) {
-        bool ativarBotaoHora = true;
-      }
     }
     for (var value1 in itens.first.values) {
       valores.add(value1.toString());
@@ -68,22 +67,23 @@ class _TelaEdicaoState extends State<TelaEdicao> {
     chaves.removeAt(0);
     valores.removeAt(0);
     //convertendo string para o tipo data
-    data = DateFormat("dd/MM/yyyy", "pt_BR").parse(valores[0]);
+    data = DateFormat("dd/MM/yyyy EEEE", "pt_BR").parse(valores[0]);
+    c.text = valores[0].toString();
   }
 
-  Widget textField(String valorInicial, String label, bool leitura,
-          String tipoExibicao) =>
+  Widget textField(
+          String valorInicial, String label, bool leitura, bool tipoExibicao) =>
       Container(
         margin: const EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
         child: TextFormField(
           keyboardType: TextInputType.text,
-          initialValue: valorInicial,
           readOnly: leitura,
+          initialValue: valorInicial,
           onFieldSubmitted: (valor) {
             print(valor);
           },
-          onTap: () async{
-            if (leitura && tipoExibicao == "data") {
+          onTap: () async {
+            if (leitura && tipoExibicao) {
               DateTime? novaData = await showDatePicker(
                   builder: (context, child) {
                     return Theme(
@@ -104,11 +104,11 @@ class _TelaEdicaoState extends State<TelaEdicao> {
 
               if (novaData == null) return;
               setState(() {
-                if (label.contains(Textos.labelDataInicial)) {
-                  //dataInicial = novaData;
-                } else {
-                  //dataFinal = novaData;
-                }
+                data = novaData;
+                valores[0] =
+                    DateFormat("dd/MM/yyyy EEEE", "pt_BR").format(data);
+                print(valores[0]);
+                c.text = valores[0].toString();
               });
             }
           },
@@ -121,8 +121,9 @@ class _TelaEdicaoState extends State<TelaEdicao> {
           decoration: InputDecoration(
               labelText: label,
               labelStyle: const TextStyle(
-                color: PaletaCores.corAdtl,
-              ),
+                  color: PaletaCores.corAdtl,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(width: 1, color: Colors.black),
                 borderRadius: BorderRadius.circular(10),
@@ -211,33 +212,68 @@ class _TelaEdicaoState extends State<TelaEdicao> {
                                   width: larguraTela,
                                   child: Column(
                                     children: [
-                                      Container(
-                                          width: larguraTela,
+                                      SizedBox(
+                                          width: larguraTela * 0.9,
                                           height: alturaTela * 0.4,
                                           child: ListView.builder(
                                             itemCount: chaves.length,
                                             itemBuilder: (context, index) {
                                               if (index == 0) {
-                                                return textField(
-                                                    valores.elementAt(index),
-                                                    chaves.elementAt(index),
-                                                    true,
-                                                    "data");
+                                                return Container(
+                                                  margin: const EdgeInsets.only(
+                                                      top: 10.0,
+                                                      left: 15.0,
+                                                      right: 15.0),
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 10.0),
+                                                  width: larguraTela * 0.9,
+                                                  height: 50,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: Colors.black,
+                                                          width: 1),
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .all(
+                                                        Radius.circular(10.0),
+                                                      )),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(chaves[0].toString(),
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .black)),
+                                                      Text(
+                                                          valores[0].toString(),
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .black)),
+                                                    ],
+                                                  ),
+                                                );
                                               } else if (index == 1) {
                                                 return textField(
                                                     valores.elementAt(index),
                                                     chaves.elementAt(index),
                                                     true,
-                                                    "hora");
+                                                    false);
                                               } else {
                                                 return textField(
                                                     valores.elementAt(index),
                                                     chaves.elementAt(index),
                                                     false,
-                                                    "");
+                                                    false);
                                               }
                                             },
-                                          ))
+                                          )),
                                     ],
                                   ),
                                 ))

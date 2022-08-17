@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       //setando o suporte da lingua usada no data picker
       supportedLocales: const [Locale('pt', 'BR')],
       //definindo rota inicial
-      initialRoute: Constantes.rotaTelaInicial,
+      initialRoute: Constantes.rotaTelaSplashScreen,
       onGenerateRoute: Rotas.generateRoute,
     );
   }

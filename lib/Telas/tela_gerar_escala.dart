@@ -136,8 +136,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
       // chamando metodo
       bancoDados.inserir(
           linha,
-          RemoverAcentos.removerAcentos(_controllerNomeEscala.text)
-              .replaceAll(" ", "_"));
+          RemoverAcentos.removerAcentos(pegaNomeDigitado()));
       print(linha);
     }
     Timer(const Duration(seconds: 3), () {

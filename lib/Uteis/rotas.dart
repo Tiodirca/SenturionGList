@@ -1,25 +1,25 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:senturionglist/Telas/tela_cadastro_pessoas.dart';
 import 'package:senturionglist/Telas/tela_edicao.dart';
 import 'package:senturionglist/Telas/tela_gerar_escala.dart';
+import 'package:senturionglist/Telas/tela_inicial.dart';
 import 'package:senturionglist/Telas/tela_listagem.dart';
 import 'package:senturionglist/Telas/tela_selecao_dias_semana.dart';
 import 'package:senturionglist/Telas/tela_cadastro_local_trabalho.dart';
 import 'package:senturionglist/Telas/tela_selecao_escala.dart';
 import 'package:senturionglist/Telas/tela_selecao_periodo.dart';
-
-import '../Telas/tela_cadastro_pessoas.dart';
-import '../Telas/tela_inicial.dart';
+import 'package:senturionglist/Telas/tela_splash_screen.dart';
 import 'constantes.dart';
 
 class Rotas {
   static GlobalKey<NavigatorState>? navigatorKey = GlobalKey<NavigatorState>();
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    // Recebe os parâmetros na chamada do Navigator.pushNamed
+    // Recebe os parâmetros na chamada do Navigator.
     final args = settings.arguments;
-
     switch (settings.name) {
+      case Constantes.rotaTelaSplashScreen:
+        return MaterialPageRoute(builder: (_) =>  const TelaSplashScreen());
       case Constantes.rotaTelaInicial:
         return MaterialPageRoute(builder: (_) =>  TelaInicial());
       case Constantes.rotaTelaSelecaoEscala:
@@ -105,38 +105,12 @@ class Rotas {
         } else {
           return erroRota(settings);
         }
-
-      // case Constantes.telaTarefaSecretaFavorito:
-      //   if (args is String) {
-      //     return MaterialPageRoute(
-      //       builder: (_) => TelaTarefaSecretaFavorito(
-      //         tipoExibicao: args,
-      //       ),
-      //     );
-      //   }else {
-      //     return erroRota(settings);
-      //   }
-      // case Constantes.telaTarefaAdicao:
-      //  return MaterialPageRoute(builder: (_) => const TelaAdionarTarefa());
-      // case Constantes.telaTarefaDetalhada:
-      //   if (args is Map) {
-      //     return MaterialPageRoute(
-      //       builder: (_) => TarefaDetalhada(
-      //         item: args[Constantes.parametroDetalhesTarefa],
-      //         comandoTelaLixeira: args[Constantes.parametroDetalhesComando],
-      //       ),
-      //     );
-      //   } else {
-      //     return erroRota(settings);
-      //   }
-
     }
-
     // Se o argumento não é do tipo correto, retorna erro
     return erroRota(settings);
   }
 
-  //metodo para exibir mensagem de erro
+  //metodo para exibir tela de erro
   static Route<dynamic> erroRota(RouteSettings settings) {
     return MaterialPageRoute(builder: (_) {
       return Scaffold(

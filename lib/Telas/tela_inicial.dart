@@ -50,6 +50,16 @@ class TelaInicial extends StatelessWidget {
       child: WillPopScope(
           onWillPop: () async => false,
           child: Scaffold(
+            appBar: AppBar(
+              title: Text(Textos.nomeApp),
+              leadingWidth: 50,
+              leading: Container(
+                margin: const EdgeInsets.only(left: 10),
+                child: Image.asset(
+                  "assets/imagens/logo_app.png",
+                ),
+              ),
+            ),
             body: Container(
                 height: alturaTela - alturaBarraStatus - alturaAppBar,
                 width: larguraTela,
@@ -58,13 +68,16 @@ class TelaInicial extends StatelessWidget {
                   child: Stack(
                     children: [
                       FundoTela(
-                          altura:
-                              alturaTela - alturaBarraStatus - alturaAppBar),
+                          altura: alturaTela -
+                              alturaBarraStatus -
+                              alturaAppBar -
+                              60),
                       Positioned(
                           child: SizedBox(
                               width: larguraTela,
-                              height:
-                                  alturaTela - alturaBarraStatus - alturaAppBar,
+                              height: alturaTela -
+                                  alturaBarraStatus -
+                                  alturaAppBar - 60,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
