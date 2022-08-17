@@ -75,7 +75,7 @@ class BancoDeDados {
   // metodo para criar tabela de listagem de forma dinamica
   Future<void> criarTabela(String querySQL, String tabela) async {
     return await _database!.execute('''
-          CREATE TABLE $tabela(${"id INTEGER PRIMARY KEY,$querySQL"})
+          CREATE TABLE $tabela(${"${Constantes.columnId} INTEGER PRIMARY KEY,$querySQL"})
           ''');
   }
 
@@ -111,7 +111,8 @@ class BancoDeDados {
   // valores das colunas serão usados para atualizar a linha.
   Future<int> atualizar(Map<String, dynamic> row, String tabela) async {
     Database? db = await instance.database;
-    int id = row[columnId];
+    int id = int.parse(row[columnId]);
+    print(id);
     return await db!
         .update(tabela, row, where: '$columnId = ?', whereArgs: [id]);
   }

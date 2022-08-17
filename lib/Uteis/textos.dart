@@ -100,6 +100,7 @@ class Textos {
   static String sucessoAddBanco = "Sucesso ao adicionar item a base de dados";
   static String sucessoExluirItemBanco =
       "Sucesso ao excluir item da base de dados";
+  static String sucessoAtualizarItem = "Sucesso ao atualizar dado na base de dados";
 
   // DIAS DA SEMANA
   static String diaSegunda = "segunda-feira";
