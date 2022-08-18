@@ -6,7 +6,7 @@ class Textos {
   static String btnGerarPDF = "PDF";
   static String btnUsarEscala = "Usar";
   static String btnAtualizar = "Editar";
-
+  static String btnConfigHoraTroca = "Horário troca de turno";
 
   static String nomeApp = "Senturion G List";
 
@@ -24,7 +24,8 @@ class Textos {
       "Digite o nome dos locais de trabalho que deseja adicionar a lista";
   static String labelTextCadPessoa = "Nome da pessoa";
   static String labelTextCadLocalTrabalho = "Nome do local";
-  static String descricaoCadastroLocalOpcoesAdicionais = "Deseja adicionar campos com inserção manual ?";
+  static String descricaoCadastroLocalOpcoesAdicionais =
+      "Deseja adicionar campos com inserção manual ?";
 
   // TELA SELECAO DIAS
   static String nomeTelaSelecaoDias = "Seleção dias da semana";
@@ -78,6 +79,18 @@ class Textos {
   static String descricaoTelaEdicao =
       "Utilize os campos abaixo para editar os itens";
 
+  //TELA CONFIGURACOES
+  static String nomeTelaConfiguracoes = "Configurações";
+  static String descriacaoTelaConfiguracoes = "Selecione uma das opções";
+
+  //CONFIGURACAO HORARIO TROCA TURNO
+  static String horarioInicialSemana = "1° Horário Semana";
+  static String horarioFinalSemana = "2° Horário Semana";
+  static String horarioInicialFinalSemana = "1° Horário Final de Semana";
+  static String horarioFinalFinalSemana = "2° Horário Final de Semana";
+  static String descricaoConfigHorarioTrocaTurno =
+      "Clique encima de uma das opções para selecionar um novo horário";
+
   // GERAIS
   static String txtListaVazia = "Sua lista esta vazia";
   static String legLista = "Selecione um ou mais itens da lista abaixo";
@@ -94,13 +107,16 @@ class Textos {
       "Defina um periodo de dias que terá a escala";
   static String erroTabelaExistente =
       "Defina outro nome para a escala. já existe uma escala este nome na base de dados";
-  static String erroNomeExiste = "Adicione outro nome. pois o mesmo ja existe na base de dados";
+  static String erroNomeExiste =
+      "Adicione outro nome. pois o mesmo ja existe na base de dados";
   static String erroSemSelecaoCheck =
       "Selecione pelo menos um item da lista. clicando encima dos nomes";
   static String sucessoAddBanco = "Sucesso ao adicionar item a base de dados";
   static String sucessoExluirItemBanco =
       "Sucesso ao excluir item da base de dados";
-  static String sucessoAtualizarItem = "Sucesso ao atualizar dado na base de dados";
+  static String sucessoAtualizarItem =
+      "Sucesso ao atualizar dado na base de dados";
+  static String sucessoAtualizarHorario = "Horário atualizado com sucesso";
 
   // DIAS DA SEMANA
   static String diaSegunda = "segunda-feira";
@@ -110,12 +126,4 @@ class Textos {
   static String diaSexta = "sexta-feira";
   static String diaSabado = "sábado";
   static String diaDomingo = "domingo";
-
-  static String localData = "Data";
-  static String localHoraTroca = "Horario de Troca";
-  static String localUniforme = "Uniforme";
-  static String localServirCeia = "Servir_Santa_Ceia";
-
-  static String localExcluir = "Excluir";
-  static String localEditar = "Editar";
 }

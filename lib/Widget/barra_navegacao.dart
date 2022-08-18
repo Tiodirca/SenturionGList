@@ -26,6 +26,10 @@ class BarraNavegacao extends StatelessWidget {
                 Navigator.pushReplacementNamed(
                     context, Constantes.rotaTelaSelecaoEscala);
               }
+              else if( tipoIcone == Constantes.tipoIconeConfiguracao){
+                Navigator.pushReplacementNamed(
+                    context, Constantes.rotaTelaConfiguracoes);
+              }
             },
             child: LayoutBuilder(
               builder: (context, constraints) {

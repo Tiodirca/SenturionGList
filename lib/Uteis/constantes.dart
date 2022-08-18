@@ -14,6 +14,7 @@ class Constantes {
   static const rotaTelaSelecaoEscala = "/telaSelecaoEscala";
   static const rotaTelaEdicao = "/telaEdicao";
   static const rotaTelaSplashScreen = "/telaSplashScreen";
+  static const rotaTelaConfiguracoes = "/telaConfiguracoes";
 
   // constantes de parametros passados de uma tela para outra
   static const parametroGenero = "generoParametro";
@@ -23,6 +24,18 @@ class Constantes {
   static const parametroListaPeriodo = "listaPeriodo";
   static const parametroEdicaoNomeTabela = "nomeTabela";
   static const parametroEdicaoIdItem = "idItem";
+
+  static const primeiroHorarioSemana = "primeiroHorarioSemana";
+  static const segundoHorarioSemana = "segundoHorarioSemana";
+  static const primeiroHorarioFinalSemana = "primeiroHorarioFinalSemana";
+  static const segundoHorarioFinalSemana = "segundoHorarioFinalSemana";
+
+  static const horarioPrimeiroSemanaPadrao = "18:45";
+  static const horarioSegundoSemanaPadrao = "19:45";
+  static const horarioPrimeiroFinalSemanaPadrao = "18:00";
+  static const horarioSegundoFinalSemanaPadrao = "19:00";
+
+  static const horarioMudado = "horarioMudado";
 
   // constantes dos icones exibidos na barra de navegacao
   static const tipoIconeHome = "home";
@@ -37,4 +50,13 @@ class Constantes {
   static const columnPessoaNome = "nome";
   static const columnPessoaGenero = "genero";
   static const columnLocal = "local";
+
+  // string usadas no banco de dados
+  static String localData = "Data";
+  static String localHoraTroca = "Horario de Troca";
+  static String localUniforme = "Uniforme";
+  static String localServirCeia = "Servir_Santa_Ceia";
+
+  static String localExcluir = "Excluir";
+  static String localEditar = "Editar";
 }

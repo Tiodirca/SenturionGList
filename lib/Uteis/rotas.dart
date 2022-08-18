@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:senturionglist/Telas/tela_cadastro_pessoas.dart';
+import 'package:senturionglist/Telas/tela_configuracoes.dart';
 import 'package:senturionglist/Telas/tela_edicao.dart';
 import 'package:senturionglist/Telas/tela_gerar_escala.dart';
 import 'package:senturionglist/Telas/tela_inicial.dart';
@@ -19,9 +20,11 @@ class Rotas {
     final args = settings.arguments;
     switch (settings.name) {
       case Constantes.rotaTelaSplashScreen:
-        return MaterialPageRoute(builder: (_) =>  const TelaSplashScreen());
+        return MaterialPageRoute(builder: (_) => const TelaSplashScreen());
+      case Constantes.rotaTelaConfiguracoes:
+        return MaterialPageRoute(builder: (_) => const TelaConfiguracoes());
       case Constantes.rotaTelaInicial:
-        return MaterialPageRoute(builder: (_) =>  TelaInicial());
+        return MaterialPageRoute(builder: (_) => TelaInicial());
       case Constantes.rotaTelaSelecaoEscala:
         return MaterialPageRoute(builder: (_) => const TelaSelecaoEscala());
       case Constantes.rotaTelaCadastroPessoas:
