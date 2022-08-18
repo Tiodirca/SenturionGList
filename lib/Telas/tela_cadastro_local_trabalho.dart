@@ -57,8 +57,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
       valorGenero = 0;
     }
     // inserindo valores padrao na lista
-    localSelecionados.add(Textos.localData);
-    localSelecionados.add(Textos.localHoraTroca);
+    localSelecionados.add(Constantes.localData);
+    localSelecionados.add(Constantes.localHoraTroca);
   }
 
   // metodo para inserir os dados no banco de dados
@@ -118,8 +118,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
         localSelecionados.add(element.texto);
       }
     }
-    localSelecionados.add(Textos.localUniforme);
-    localSelecionados.add(Textos.localServirCeia);
+    localSelecionados.add(Constantes.localUniforme);
+    localSelecionados.add(Constantes.localServirCeia);
   }
 
   //metodo para exibir alerta para excluir tarefa do banco de dados

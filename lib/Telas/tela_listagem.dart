@@ -137,7 +137,9 @@ class _TelaListagemState extends State<TelaListagem> {
                                     Textos.decricaoTelaListagem,
                                     textAlign: TextAlign.justify,
                                     style: const TextStyle(
-                                        fontSize: Constantes.tamanhoLetraDescritivas, color: Colors.white),
+                                        fontSize:
+                                            Constantes.tamanhoLetraDescritivas,
+                                        color: Colors.white),
                                   ),
                                 ],
                               ),
@@ -208,15 +210,22 @@ class _TelaListagemState extends State<TelaListagem> {
                                                     (e) {
                                                       return DataCell(SizedBox(
                                                           width: 120,
-                                                          child: SingleChildScrollView(
-                                                            scrollDirection: Axis.horizontal,
-                                                            child: Text(
-                                                              textAlign:
-                                                              TextAlign
-                                                                  .center,
-                                                              e.toString(),style: const TextStyle(
-                                                                fontSize: 18
-                                                            ),),
+                                                          child: Center(
+                                                            child:
+                                                                SingleChildScrollView(
+                                                              scrollDirection:
+                                                                  Axis.vertical,
+                                                              child: Text(
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                e.toString(),
+                                                                style:
+                                                                    const TextStyle(
+                                                                        fontSize:
+                                                                            18),
+                                                              ),
+                                                            ),
                                                           )));
                                                     },
                                                   ),
@@ -315,7 +324,8 @@ class _TelaListagemState extends State<TelaListagem> {
                       onPressed: () {},
                       child: Text(Textos.btnGerarPDF,
                           style: const TextStyle(
-                              fontSize: Constantes.tamanhoLetraDescritivas, fontWeight: FontWeight.bold)),
+                              fontSize: Constantes.tamanhoLetraDescritivas,
+                              fontWeight: FontWeight.bold)),
                     ),
                   ),
                   const SizedBox(

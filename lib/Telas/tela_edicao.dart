@@ -64,6 +64,18 @@ class _TelaEdicaoState extends State<TelaEdicao> {
     data = DateFormat("dd/MM/yyyy EEEE", "pt_BR").parse(valores[1]);
   }
 
+  atualizar() async {
+    Map<String, dynamic> linha = {};
+    for (int i = 0; i < chaves.length; i++) {
+      linha[chaves.elementAt(i).replaceAll(" ", "_")] = valores.elementAt(i);
+    }
+    int idDado = await bancoDados.atualizar(linha, widget.nomeTabela);
+    if (idDado.toString().isNotEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(Textos.sucessoAtualizarItem)));
+    }
+  }
+
   // widget do text field usando na lista para o usuario editar
   Widget textField(String valorInicial, String label, int index) => Container(
         margin: const EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
@@ -71,7 +83,6 @@ class _TelaEdicaoState extends State<TelaEdicao> {
           keyboardType: TextInputType.text,
           initialValue: valorInicial,
           onChanged: (valor) {
-            print(valor);
             valores[index] = valor.toString();
           },
           validator: (value) {
@@ -308,24 +319,10 @@ class _TelaEdicaoState extends State<TelaEdicao> {
                         backgroundColor: PaletaCores.corVerdeCiano,
                         onPressed: () async {
                           if (_chaveFormulario.currentState!.validate()) {
-                            Map<String, dynamic> linha = {};
-                            for (int i = 0; i < chaves.length; i++) {
-                              linha[chaves.elementAt(i).replaceAll(" ", "_")] =
-                                  valores.elementAt(i);
-                            }
-                            print(chaves);
-                            print(itens.first.keys);
-                            print(linha);
-                           int idDado = await bancoDados.atualizar(linha, widget.nomeTabela);
-                            if (idDado.toString().isNotEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content:
-                                          Text(Textos.sucessoAtualizarItem)));
-                              Navigator.pushReplacementNamed(
-                                  context, Constantes.rotaTelaListagem,
-                                  arguments: widget.nomeTabela);
-                            }
+                            atualizar();
+                            Navigator.pushReplacementNamed(
+                                context, Constantes.rotaTelaListagem,
+                                arguments: widget.nomeTabela);
                           }
                         },
                         child: Text(Textos.btnAtualizar,

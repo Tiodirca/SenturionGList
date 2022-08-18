@@ -36,6 +36,7 @@ class Estilo {
           ),
           labelStyle: const TextStyle(
             color: Colors.white,
+            fontSize: 18,
           )),
 
       // estilo dos botoes
