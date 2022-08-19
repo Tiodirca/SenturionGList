@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:senturionglist/Uteis/Servicos/banco_de_dados.dart';
+import 'package:senturionglist/Uteis/Servicos/recuperar_valor_share_preferences.dart';
 import 'package:senturionglist/Uteis/remover_acentos.dart';
 import 'package:senturionglist/Widget/check_box_widget.dart';
 import 'package:senturionglist/Widget/tela_carregamento.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../Modelo/check_box_modelo.dart';
 import '../Uteis/constantes.dart';
 import '../Uteis/estilo.dart';
@@ -57,9 +57,9 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
   String primeiroHorarioSemana = "TextEditingController(text: " ")";
   String segundoHorarioSemana = "";
 
-  String primeiroHorarioFinalSemana = "";
+  String horarioSemana = "";
 
-  String segundoHorarioFinalSemana = "";
+  String horarioFinalSemana = "";
 
   @override
   void initState() {
@@ -89,7 +89,23 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
     int tamanhoQuery = querySQL.length;
     // subtraindo o ultimo index da string
     querySQL = querySQL.substring(0, tamanhoQuery - 1);
-    recuperarValoresSharePreferences();
+    //recuperarValoresSharePreferences();
+    chamarRecuperarValorShare();
+  }
+
+  // metodo para recuperar os valores gravados no share preferences
+  chamarRecuperarValorShare() async {
+    await RecupararValorSharePreferences.recuperarValores(
+            Constantes.recuperarValorSemana)
+        .then((value) => setState(() {
+              horarioSemana = value;
+            }));
+
+    await RecupararValorSharePreferences.recuperarValores(
+            Constantes.recuperarValorFinalSemana)
+        .then((value) => setState(() {
+              horarioFinalSemana = value;
+            }));
   }
 
   // metodo para pegar o valor digitado
@@ -97,22 +113,6 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
   pegaNomeDigitado() {
     String nome = _controllerNomeEscala.text.replaceAll(" ", "_");
     return nome;
-  }
-
-  //metodo para recuperar o horario gravado no share prefereces
-  recuperarValoresSharePreferences() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //definindo que as variaveis vao receber o
-    // valor gravado no share preferences
-    primeiroHorarioSemana =
-        prefs.getString(Constantes.primeiroHorarioSemana) ?? '';
-    segundoHorarioSemana =
-        prefs.getString(Constantes.segundoHorarioSemana) ?? '';
-    // final de semana
-    primeiroHorarioFinalSemana =
-        prefs.getString(Constantes.primeiroHorarioFinalSemana) ?? '';
-    segundoHorarioFinalSemana =
-        prefs.getString(Constantes.segundoHorarioFinalSemana) ?? '';
   }
 
   // metodo para inserir dados na tabela criada
@@ -151,10 +151,10 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
               widget.listaPeriodo[i].contains(Textos.diaQuinta) ||
               widget.listaPeriodo[i].contains(Textos.diaSexta)) {
             linha[Constantes.localHoraTroca.replaceAll(" ", "_")] =
-                "$primeiroHorarioSemana troca às $segundoHorarioSemana";
+                horarioSemana;
           } else {
             linha[Constantes.localHoraTroca.replaceAll(" ", "_")] =
-                "$primeiroHorarioFinalSemana troca às $segundoHorarioFinalSemana";
+                horarioFinalSemana;
           }
         },
       ).toList();

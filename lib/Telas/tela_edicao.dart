@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:senturionglist/Uteis/estilo.dart';
+import 'package:senturionglist/Uteis/Servicos/recuperar_valor_share_preferences.dart';
 
 import '../Uteis/constantes.dart';
 import '../Uteis/paleta_cores.dart';
@@ -27,6 +28,8 @@ class _TelaEdicaoState extends State<TelaEdicao> {
   List<String> valores = [];
   bool ativarBotaoHora = false;
   DateTime data = DateTime.now();
+  String horarioSemana = "";
+  String horarioFinalSemana = "";
 
 //variavel usada para validar o formulario
   final _chaveFormulario = GlobalKey<FormState>();
@@ -38,9 +41,11 @@ class _TelaEdicaoState extends State<TelaEdicao> {
   void initState() {
     super.initState();
     consultarDados();
+    recupararHorarioTroca();
   }
 
-  // metodo responsavel por chamar metodo para fazer consulta ao banco de dados
+  // metodo responsavel por chamar metodo para fazer
+  // consulta ao banco de dados
   consultarDados() async {
     await bancoDados
         .consultarPorID(widget.nomeTabela, widget.idItem)
@@ -73,6 +78,35 @@ class _TelaEdicaoState extends State<TelaEdicao> {
     if (idDado.toString().isNotEmpty) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(Textos.sucessoAtualizarItem)));
+    }
+  }
+
+  recupararHorarioTroca() async {
+    await RecupararValorSharePreferences.recuperarValores(
+            Constantes.recuperarValorSemana)
+        .then((value) => setState(() {
+              horarioSemana = value;
+            }));
+
+    await RecupararValorSharePreferences.recuperarValores(
+            Constantes.recuperarValorFinalSemana)
+        .then((value) => setState(() {
+              horarioFinalSemana = value;
+            }));
+
+    print(horarioSemana);
+    print(horarioFinalSemana);
+  }
+
+  exibirHorarioTroca(String data) {
+    if (data.contains(Textos.diaSegunda) ||
+        data.contains(Textos.diaTerca) ||
+        data.contains(Textos.diaQuarta) ||
+        data.contains(Textos.diaQuinta) ||
+        data.contains(Textos.diaSexta)) {
+      return horarioSemana;
+    } else {
+      return horarioFinalSemana;
     }
   }
 
@@ -135,7 +169,11 @@ class _TelaEdicaoState extends State<TelaEdicao> {
           children: [
             Text(tipoExibicao ? chaves[1].toString() : chaves[2].toString(),
                 style: const TextStyle(color: Colors.black)),
-            Text(tipoExibicao ? valores[1].toString() : valores[2].toString(),
+            Text(
+                tipoExibicao
+                    ? valores[1].toString()
+                    : exibirHorarioTroca(
+                        DateFormat("dd/MM/yyyy EEEE", "pt_BR").format(data)),
                 style: const TextStyle(color: Colors.black, fontSize: 16)),
           ],
         ),

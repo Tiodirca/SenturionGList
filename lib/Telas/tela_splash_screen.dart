@@ -5,7 +5,6 @@ import 'package:senturionglist/Widget/tela_carregamento.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Uteis/constantes.dart';
 import '../Uteis/paleta_cores.dart';
-import '../Uteis/textos.dart';
 import '../Widget/fundo_tela_widget.dart';
 
 class TelaSplashScreen extends StatefulWidget {
@@ -29,14 +28,14 @@ class _TelaSplashScreenState extends State<TelaSplashScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final horaMudada = prefs.getString('horaMudada') ?? '';
     if (horaMudada != "sim") {
-      prefs.setString(
-          Constantes.primeiroHorarioSemana, Constantes.horarioPrimeiroSemanaPadrao);
-      prefs.setString(
-          Constantes.segundoHorarioSemana, Constantes.horarioSegundoSemanaPadrao);
+      prefs.setString(Constantes.primeiroHorarioSemana,
+          Constantes.horarioPrimeiroSemanaPadrao);
+      prefs.setString(Constantes.segundoHorarioSemana,
+          Constantes.horarioSegundoSemanaPadrao);
       prefs.setString(Constantes.primeiroHorarioFinalSemana,
           Constantes.horarioPrimeiroFinalSemanaPadrao);
-      prefs.setString(
-          Constantes.segundoHorarioFinalSemana, Constantes.horarioSegundoSemanaPadrao);
+      prefs.setString(Constantes.segundoHorarioFinalSemana,
+          Constantes.horarioSegundoFinalSemanaPadrao);
     }
   }
 

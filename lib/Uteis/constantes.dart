@@ -42,6 +42,10 @@ class Constantes {
   static const tipoIconeLista = "lista";
   static const tipoIconeConfiguracao = "configuracao";
 
+  // constantes recuparar valor share preferences
+  static const recuperarValorSemana = "duranteSemana";
+  static const recuperarValorFinalSemana = "duranteFinalSemana";
+
   // constantes usadas no banco de dados
   static const bancoNomeBanco = "escalas";
   static const bancoTabelaPessoa = "pessoas";
