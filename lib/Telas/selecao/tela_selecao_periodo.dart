@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../Uteis/constantes.dart';
-import '../Uteis/estilo.dart';
-import '../Uteis/paleta_cores.dart';
-import '../Uteis/textos.dart';
-import '../Widget/barra_navegacao.dart';
-import '../Widget/fundo_tela_widget.dart';
+
 import 'package:intl/intl.dart';
+import 'package:senturionglist/Uteis/constantes.dart';
+import 'package:senturionglist/Uteis/estilo.dart';
+import 'package:senturionglist/Uteis/paleta_cores.dart';
+import 'package:senturionglist/Uteis/textos.dart';
+import 'package:senturionglist/Widget/barra_navegacao.dart';
+import 'package:senturionglist/Widget/fundo_tela_widget.dart';
 
 class TelaSelecaoPeriodo extends StatefulWidget {
   const TelaSelecaoPeriodo(

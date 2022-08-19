@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:senturionglist/Modelo/check_box_modelo.dart';
 import 'package:senturionglist/Modelo/pessoa.dart';
+import 'package:senturionglist/Uteis/Servicos/banco_de_dados.dart';
+import 'package:senturionglist/Uteis/Servicos/consultas.dart';
+import 'package:senturionglist/Uteis/constantes.dart';
 import 'package:senturionglist/Uteis/estilo.dart';
+import 'package:senturionglist/Uteis/paleta_cores.dart';
 import 'package:senturionglist/Uteis/remover_acentos.dart';
+import 'package:senturionglist/Uteis/textos.dart';
+import 'package:senturionglist/Widget/barra_navegacao.dart';
+import 'package:senturionglist/Widget/fundo_tela_widget.dart';
 
-import '../Modelo/check_box_modelo.dart';
-import '../Uteis/constantes.dart';
-import '../Uteis/paleta_cores.dart';
-import '../Uteis/Servicos/banco_de_dados.dart';
-import '../Uteis/Servicos/consultas.dart';
-import '../Uteis/textos.dart';
-import '../Widget/barra_navegacao.dart';
-import '../Widget/fundo_tela_widget.dart';
 
 class TelaCadastroPessoas extends StatefulWidget {
   const TelaCadastroPessoas({Key? key, required this.genero}) : super(key: key);

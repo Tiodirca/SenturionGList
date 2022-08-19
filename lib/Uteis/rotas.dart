@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:senturionglist/Telas/tela_cadastro_pessoas.dart';
+import 'package:senturionglist/Telas/cadastro/tela_cadastro_pessoas.dart';
+import 'package:senturionglist/Telas/selecao/tela_selecao_periodo.dart';
 import 'package:senturionglist/Telas/tela_configuracoes.dart';
 import 'package:senturionglist/Telas/tela_edicao.dart';
 import 'package:senturionglist/Telas/tela_gerar_escala.dart';
 import 'package:senturionglist/Telas/tela_inicial.dart';
 import 'package:senturionglist/Telas/tela_listagem.dart';
-import 'package:senturionglist/Telas/tela_selecao_dias_semana.dart';
-import 'package:senturionglist/Telas/tela_cadastro_local_trabalho.dart';
-import 'package:senturionglist/Telas/tela_selecao_escala.dart';
-import 'package:senturionglist/Telas/tela_selecao_periodo.dart';
+import 'package:senturionglist/Telas/selecao/tela_selecao_dias_semana.dart';
+import 'package:senturionglist/Telas/cadastro/tela_cadastro_local_trabalho.dart';
+import 'package:senturionglist/Telas/selecao/tela_selecao_escala.dart';
 import 'package:senturionglist/Telas/tela_splash_screen.dart';
 import 'constantes.dart';
 

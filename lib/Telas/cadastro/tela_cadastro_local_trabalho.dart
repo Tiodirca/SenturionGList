@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:senturionglist/Modelo/local_trabalho.dart';
 import 'package:senturionglist/Uteis/remover_acentos.dart';
 
-import '../Modelo/check_box_modelo.dart';
-import '../Uteis/estilo.dart';
-import '../Uteis/constantes.dart';
-import '../Uteis/paleta_cores.dart';
-import '../Uteis/Servicos/banco_de_dados.dart';
-import '../Uteis/Servicos/consultas.dart';
-import '../Uteis/textos.dart';
-import '../Widget/barra_navegacao.dart';
-import '../Widget/fundo_tela_widget.dart';
+import '../../Modelo/check_box_modelo.dart';
+import '../../Uteis/estilo.dart';
+import '../../Uteis/constantes.dart';
+import '../../Uteis/paleta_cores.dart';
+import '../../Uteis/Servicos/banco_de_dados.dart';
+import '../../Uteis/Servicos/consultas.dart';
+import '../../Uteis/textos.dart';
+import '../../Widget/barra_navegacao.dart';
+import '../../Widget/fundo_tela_widget.dart';
 
 class TelaCadastroLocalTrabalho extends StatefulWidget {
   const TelaCadastroLocalTrabalho(
