@@ -200,7 +200,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
       }
       if (nomeTabelaExiste) {
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(Textos.erroTabelaExistente)));
+            .showSnackBar(SnackBar(content: Text(Textos.erroGerarEscalaTabelaExistente)));
       } else {
         telaCarregar = true;
         chamarCriarTabela();

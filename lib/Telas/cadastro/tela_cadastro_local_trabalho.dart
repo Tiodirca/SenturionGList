@@ -288,7 +288,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                                                             context)
                                                         .showSnackBar(SnackBar(
                                                             content: Text(Textos
-                                                                .erroTabelaExistente)));
+                                                                .erroNomeExiste)));
                                                     nomeExiste = false;
                                                   } else {
                                                     nomeExiste = false;

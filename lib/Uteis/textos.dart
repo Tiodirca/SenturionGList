@@ -72,7 +72,7 @@ class Textos {
   static String nomeTelaListagem = "Lista de escala";
   static String decricaoTelaListagem =
       "Aqui você pode conferir a escala gerada. revise-a antes de "
-      "gerar o arquivo em PDF,se necessario edite ela conforme precisar";
+      "gerar o arquivo em PDF,se necessario edite ou adicione itens conforme precisar";
   static String telaListagemOpcoes = "Opções de item";
 
   // TELA EDICAO
@@ -111,12 +111,15 @@ class Textos {
   static String erroTextFieldVazio = "Preencha o campo antes";
   static String erroSemIntervalo =
       "Defina um periodo de dias que terá a escala";
-  static String erroTabelaExistente =
+  static String erroGerarEscalaTabelaExistente =
       "Defina outro nome para a escala. já existe uma escala este nome na base de dados";
   static String erroNomeExiste =
       "Adicione outro nome. pois o mesmo ja existe na base de dados";
   static String erroSemSelecaoCheck =
       "Selecione pelo menos um item da lista. clicando encima dos nomes";
+  static String erroExclusaoItemListagem =
+      "A escala não pode ficar vazia. adicione"
+      " pelo menos um outro item. para que possa excluir este";
   static String sucessoAddBanco = "Sucesso ao adicionar item a base de dados";
   static String sucessoExluirItemBanco =
       "Sucesso ao excluir item da base de dados";

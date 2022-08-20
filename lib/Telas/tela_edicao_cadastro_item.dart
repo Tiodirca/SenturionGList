@@ -10,18 +10,23 @@ import 'package:intl/intl.dart';
 import '../Widget/barra_navegacao.dart';
 import '../Widget/fundo_tela_widget.dart';
 
-class TelaEdicao extends StatefulWidget {
-  const TelaEdicao({Key? key, required this.nomeTabela, required this.idItem})
+class TelaEdicaoCadastroItem extends StatefulWidget {
+  const TelaEdicaoCadastroItem(
+      {Key? key,
+      required this.camposBancoCadastroItem,
+      required this.nomeTabela,
+      required this.idItem})
       : super(key: key);
 
+  final List<String> camposBancoCadastroItem;
   final String nomeTabela;
   final int idItem;
 
   @override
-  State<TelaEdicao> createState() => _TelaEdicaoState();
+  State<TelaEdicaoCadastroItem> createState() => _TelaEdicaoCadastroItemState();
 }
 
-class _TelaEdicaoState extends State<TelaEdicao> {
+class _TelaEdicaoCadastroItemState extends State<TelaEdicaoCadastroItem> {
   Estilo estilo = Estilo();
   List<Map<dynamic, dynamic>> itens = [];
   List<String> chaves = [];
@@ -30,6 +35,7 @@ class _TelaEdicaoState extends State<TelaEdicao> {
   DateTime data = DateTime.now();
   String horarioSemana = "";
   String horarioFinalSemana = "";
+  String dataString = "";
 
 //variavel usada para validar o formulario
   final _chaveFormulario = GlobalKey<FormState>();
@@ -40,8 +46,26 @@ class _TelaEdicaoState extends State<TelaEdicao> {
   @override
   void initState() {
     super.initState();
-    consultarDados();
-    recupararHorarioTroca();
+    recupararHorarioTroca(); // chamando metodo
+    // verificando se o parametro passado para a tela contem os seguintes requisitos
+    if (widget.camposBancoCadastroItem.isEmpty) {
+      consultarDados();
+    } else {
+      dataString = converterDataString(data);
+      // pegando os valores da lista passados como parametro para a tela
+      for (var value1 in widget.camposBancoCadastroItem) {
+        chaves.add(value1.toString().replaceAll("_", " "));
+        valores.add(""); // add valores vario na lista
+      }
+      // removendo o primeiro index pois contem o ID
+      chaves.removeAt(0);
+    }
+  }
+
+  // metodo para converter  valor do tipo data para string
+  converterDataString(DateTime data) {
+    String dataConverida = DateFormat("dd/MM/yyyy EEEE", "pt_BR").format(data);
+    return dataConverida;
   }
 
   // metodo responsavel por chamar metodo para fazer
@@ -54,10 +78,10 @@ class _TelaEdicaoState extends State<TelaEdicao> {
         itens = value;
       });
     });
-    pegarValoresIndividual();
+    pegarValoresIndividualBanco();
   }
 
-  pegarValoresIndividual() {
+  pegarValoresIndividualBanco() {
     //pegando valores de forma individual
     for (var value1 in itens.first.keys) {
       chaves.add(value1.toString().replaceAll("_", " "));
@@ -67,6 +91,8 @@ class _TelaEdicaoState extends State<TelaEdicao> {
     }
     //convertendo string para o tipo data
     data = DateFormat("dd/MM/yyyy EEEE", "pt_BR").parse(valores[1]);
+    dataString =
+        valores[1] == null ? DateTime.now().toString() : valores[1].toString();
   }
 
   atualizar() async {
@@ -81,6 +107,24 @@ class _TelaEdicaoState extends State<TelaEdicao> {
     }
   }
 
+  inserir() async {
+    // definndo que a lista recebera os seguintes valores
+    // nos index determinados
+    // index 0 corresponde a data e index 1 corresponde ao horario de troca
+    valores[0] = dataString;
+    valores[1] = exibirHorarioTroca(dataString);
+    Map<String, dynamic> linha = {};
+    for (int i = 0; i < chaves.length; i++) {
+      linha[chaves.elementAt(i).replaceAll(" ", "_")] = valores.elementAt(i);
+    }
+    int idDado = await bancoDados.inserir(linha, widget.nomeTabela);
+    if (idDado.toString().isNotEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(Textos.sucessoAddBanco)));
+    }
+  }
+
+  //metodo para recuperar horario gravado no share preferences
   recupararHorarioTroca() async {
     await RecupararValorSharePreferences.recuperarValores(
             Constantes.recuperarValorSemana)
@@ -93,11 +137,10 @@ class _TelaEdicaoState extends State<TelaEdicao> {
         .then((value) => setState(() {
               horarioFinalSemana = value;
             }));
-
-    print(horarioSemana);
-    print(horarioFinalSemana);
   }
 
+  // metodo para exibir o horario gravado no share preferences
+  // baseado no dia da semana selecionado
   exibirHorarioTroca(String data) {
     if (data.contains(Textos.diaSegunda) ||
         data.contains(Textos.diaTerca) ||
@@ -125,9 +168,11 @@ class _TelaEdicaoState extends State<TelaEdicao> {
             }
             return null;
           },
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           decoration: InputDecoration(
             labelText: label,
-            errorStyle: const TextStyle(color: Colors.red, fontSize: 13),
+            errorStyle: const TextStyle(
+                color: Colors.red, fontSize: 13, fontWeight: FontWeight.bold),
             labelStyle: const TextStyle(
                 color: PaletaCores.corAdtl,
                 fontSize: 18,
@@ -156,7 +201,7 @@ class _TelaEdicaoState extends State<TelaEdicao> {
   Widget containerInfoForaLista(bool tipoExibicao) => Container(
         margin: const EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
         padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-        width: 250,
+        width: 270,
         height: 45,
         decoration: BoxDecoration(
             border: Border.all(color: Colors.black, width: 1),
@@ -167,14 +212,20 @@ class _TelaEdicaoState extends State<TelaEdicao> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(tipoExibicao ? chaves[1].toString() : chaves[2].toString(),
-                style: const TextStyle(color: Colors.black)),
+            Text(
+                tipoExibicao ? Constantes.localData : Constantes.localHoraTroca,
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold)),
             Text(
                 tipoExibicao
-                    ? valores[1].toString()
-                    : exibirHorarioTroca(
-                        DateFormat("dd/MM/yyyy EEEE", "pt_BR").format(data)),
-                style: const TextStyle(color: Colors.black, fontSize: 16)),
+                    ? dataString
+                    : exibirHorarioTroca(converterDataString(data)),
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold)),
           ],
         ),
       );
@@ -197,7 +248,11 @@ class _TelaEdicaoState extends State<TelaEdicao> {
             },
             child: Scaffold(
               appBar: AppBar(
-                title: Text(Textos.nomeTelaEdicao, textAlign: TextAlign.center),
+                title: Text(
+                    widget.camposBancoCadastroItem.isEmpty
+                        ? Textos.nomeTelaEdicao
+                        : Textos.nomeTelaCadastroItem,
+                    textAlign: TextAlign.center),
               ),
               body: GestureDetector(
                 onTap: () {
@@ -229,7 +284,9 @@ class _TelaEdicaoState extends State<TelaEdicao> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        Textos.descricaoTelaEdicao,
+                                        widget.camposBancoCadastroItem.isEmpty
+                                            ? Textos.descricaoTelaEdicao
+                                            : Textos.descricaoTelaCadastroItem,
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                             fontSize: Constantes
@@ -251,6 +308,8 @@ class _TelaEdicaoState extends State<TelaEdicao> {
                                             height: 40,
                                             width: 40,
                                             child: FloatingActionButton(
+                                              backgroundColor:
+                                                  PaletaCores.corAdtl,
                                               onPressed: () async {
                                                 DateTime? novaData =
                                                     await showDatePicker(
@@ -289,10 +348,21 @@ class _TelaEdicaoState extends State<TelaEdicao> {
                                                 if (novaData == null) return;
                                                 setState(() {
                                                   data = novaData;
-                                                  valores[1] = DateFormat(
-                                                          "dd/MM/yyyy EEEE",
-                                                          "pt_BR")
-                                                      .format(data);
+                                                  if (widget
+                                                      .camposBancoCadastroItem
+                                                      .isEmpty) {
+                                                    // definindo que a lista vai receber o seguinte valor
+                                                    // no seu index passado como parametro
+                                                    valores[1] =
+                                                        converterDataString(
+                                                            data);
+                                                    dataString = valores[1];
+                                                  } else {
+                                                    dataString =
+                                                        converterDataString(
+                                                            data);
+                                                    valores[1] = dataString;
+                                                  }
                                                 });
                                               },
                                               child: const Icon(
@@ -317,11 +387,15 @@ class _TelaEdicaoState extends State<TelaEdicao> {
                                                   itemCount: chaves.length,
                                                   itemBuilder:
                                                       (context, index) {
+                                                    //
                                                     if (index == 0) {
                                                       return Container();
                                                     } else if (index == 1) {
                                                       return Container();
-                                                    } else if (index == 2) {
+                                                    } else if (index == 2 &&
+                                                        widget
+                                                            .camposBancoCadastroItem
+                                                            .isEmpty) {
                                                       return Container();
                                                     } else {
                                                       return textField(
@@ -349,24 +423,32 @@ class _TelaEdicaoState extends State<TelaEdicao> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    SizedBox(
-                      width: Constantes.tamanhoFloatButtonNavigationBar,
-                      height: Constantes.tamanhoFloatButtonNavigationBar,
-                      child: FloatingActionButton(
-                        heroTag: "btnAtualizar",
-                        backgroundColor: PaletaCores.corVerdeCiano,
-                        onPressed: () async {
-                          if (_chaveFormulario.currentState!.validate()) {
-                            atualizar();
-                            Navigator.pushReplacementNamed(
-                                context, Constantes.rotaTelaListagem,
-                                arguments: widget.nomeTabela);
-                          }
-                        },
-                        child: Text(Textos.btnAtualizar,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold)),
+                    Theme(
+                      data: estilo.botoesBarraNavegacao,
+                      child: SizedBox(
+                        width: Constantes.larguraBotoesBarraNavegacao,
+                        height: 50,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            if (_chaveFormulario.currentState!.validate()) {
+                              if (widget.camposBancoCadastroItem.isEmpty) {
+                                atualizar();
+                              } else {
+                                inserir();
+                              }
+                              Navigator.pushReplacementNamed(
+                                  context, Constantes.rotaTelaListagem,
+                                  arguments: widget.nomeTabela);
+                            }
+                          },
+                          child: Text(
+                              widget.camposBancoCadastroItem.isEmpty
+                                  ? Textos.btnAtualizar
+                                  : Textos.btnCadastrar,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold)),
+                        ),
                       ),
                     ),
                     const SizedBox(

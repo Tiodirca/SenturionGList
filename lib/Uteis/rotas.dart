@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:senturionglist/Telas/cadastro/tela_cadastro_pessoas.dart';
 import 'package:senturionglist/Telas/selecao/tela_selecao_periodo.dart';
 import 'package:senturionglist/Telas/tela_configuracoes.dart';
-import 'package:senturionglist/Telas/tela_edicao.dart';
+import 'package:senturionglist/Telas/tela_edicao_cadastro_item.dart';
 import 'package:senturionglist/Telas/tela_gerar_escala.dart';
 import 'package:senturionglist/Telas/tela_inicial.dart';
 import 'package:senturionglist/Telas/tela_listagem.dart';
@@ -100,7 +100,7 @@ class Rotas {
       case Constantes.rotaTelaEdicao:
         if (args is Map) {
           return MaterialPageRoute(
-            builder: (_) => TelaEdicao(
+            builder: (_) => TelaEdicaoCadastroItem(
               camposBancoCadastroItem: args[Constantes.parametroEdicaoCadCamposBanco],
               nomeTabela: args[Constantes.parametroEdicaoCadNomeTabela],
               idItem: args[Constantes.parametroEdicaoCadIdItem],

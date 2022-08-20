@@ -8,6 +8,8 @@ import '../Uteis/paleta_cores.dart';
 import '../Uteis/textos.dart';
 import '../Widget/barra_navegacao.dart';
 import '../Widget/fundo_tela_widget.dart';
+import "dart:collection";
+
 
 class TelaListagem extends StatefulWidget {
   const TelaListagem({Key? key, required this.nomeTabela}) : super(key: key);
@@ -20,11 +22,10 @@ class TelaListagem extends StatefulWidget {
 
 class _TelaListagemState extends State<TelaListagem> {
   Estilo estilo = Estilo();
-  List<Map<dynamic, dynamic>> itens = [];
+  List<Map<dynamic, dynamic>> itensBanco = [];
   int idItem = 0;
   String dataItem = "";
   List<String> chaves = [];
-
 
   // referencia classe para gerenciar o banco de dados
   final bancoDados = BancoDeDados.instance;
@@ -39,11 +40,22 @@ class _TelaListagemState extends State<TelaListagem> {
   consultarDados() async {
     await Consulta.consultarTabelaSelecionada(widget.nomeTabela).then((value) {
       setState(() {
-        itens = value;
+        itensBanco = value;
       });
     });
-    for (var value1 in itens.first.keys) {
+    for (var value1 in itensBanco.first.keys) {
       chaves.add(value1.toString().replaceAll("_", " "));
+    }
+    final SplayTreeMap<String, Map<String,String>> st =
+    SplayTreeMap<String, Map<String,String>>();
+
+    st["yyy"] = {"should be" : "3rd"};
+    st["zzz"] = {"should be" : "last"};
+    st["aaa"] = {"should be" : "first"};
+    st["bbb"] = {"should be" : "2nd"};
+
+    for (final String key in st.keys) {
+      print("$key : ${st[key]}");
     }
   }
 
@@ -158,13 +170,9 @@ class _TelaListagemState extends State<TelaListagem> {
                                             widget.nomeTabela;
                                         dados[Constantes
                                             .parametroEdicaoCadIdItem] = 0;
-                                        Navigator
-                                            .pushReplacementNamed(
-                                            context,
-                                            Constantes
-                                                .rotaTelaEdicao,
-                                            arguments:
-                                            dados);
+                                        Navigator.pushReplacementNamed(
+                                            context, Constantes.rotaTelaEdicao,
+                                            arguments: dados);
                                       },
                                       child: const Icon(Icons.add, size: 20),
                                     ),
@@ -231,7 +239,7 @@ class _TelaListagemState extends State<TelaListagem> {
                                                           FontWeight.bold)),
                                             ),
                                           ],
-                                          rows: itens
+                                          rows: itensBanco
                                               .map(
                                                 (item) => DataRow(cells: [
                                                   ...item.values.map(
@@ -319,8 +327,22 @@ class _TelaListagemState extends State<TelaListagem> {
                                                             idItem = item
                                                                 .values.first;
                                                           });
-                                                          exibirConfirmacaoExclusao(
-                                                              idItem, dataItem);
+                                                          // verificando se a lista contem somente um item
+                                                          // para exibir acoes definidas abaixo
+                                                          if (itensBanco
+                                                                  .length ==
+                                                              1) {
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(SnackBar(
+                                                                    content: Text(
+                                                                        Textos
+                                                                            .erroExclusaoItemListagem)));
+                                                          } else {
+                                                            exibirConfirmacaoExclusao(
+                                                                idItem,
+                                                                dataItem);
+                                                          }
                                                         },
                                                         child: const Icon(
                                                             Icons
@@ -331,7 +353,7 @@ class _TelaListagemState extends State<TelaListagem> {
                                                   ))
                                                 ]),
                                               )
-                                              .toList(),
+                                              .toList()
                                         ),
                                       ),
                                     )
