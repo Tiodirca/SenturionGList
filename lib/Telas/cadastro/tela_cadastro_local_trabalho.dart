@@ -161,7 +161,12 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                 exibirConfirmacaoExcluir(checkBoxModel.idItem);
               },
             )),
-        title: Text(checkBoxModel.texto,style: const TextStyle(fontSize: Constantes.tamanhoLetraDescritivas),),
+        title: Text(
+          checkBoxModel.texto,
+          style: const TextStyle(
+              fontSize: Constantes.tamanhoLetraDescritivas,
+              fontWeight: FontWeight.bold),
+        ),
         side: const BorderSide(width: 2, color: Colors.black),
         value: checkBoxModel.checked,
         onChanged: (value) {
@@ -217,7 +222,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                           Expanded(
                               flex: 1,
                               child: Container(
-                                padding: const EdgeInsets.only(left: 10.0,right: 10.0,top: 10.0),
+                                padding: const EdgeInsets.only(
+                                    left: 10.0, right: 10.0, top: 10.0),
                                 width: larguraTela,
                                 child: Column(
                                   children: [
@@ -225,7 +231,9 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                                       Textos.descricaoCadastroLocalTrabalho,
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(
-                                          fontSize: Constantes.tamanhoLetraDescritivas, color: Colors.white),
+                                          fontSize: Constantes
+                                              .tamanhoLetraDescritivas,
+                                          color: Colors.white),
                                     ),
                                     const SizedBox(
                                       height: 10.0,
@@ -307,7 +315,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                           Expanded(
                               flex: 2,
                               child: Container(
-                                  padding: const EdgeInsets.only(left: 10.0,right: 10.0,top: 10.0),
+                                  padding: const EdgeInsets.only(
+                                      left: 10.0, right: 10.0, top: 10.0),
                                   child: SingleChildScrollView(
                                     child: Column(
                                       children: [
@@ -315,8 +324,10 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                                           Textos.legLista,
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(
-                                              fontSize: Constantes.tamanhoLetraDescritivas,
-                                              color: Colors.black),
+                                              fontSize: Constantes
+                                                  .tamanhoLetraDescritivas,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                         LayoutBuilder(
                                           builder: (context, constraints) {
@@ -378,33 +389,34 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                         Container(
                           width: larguraTela * 0.3,
                         ),
-                        SizedBox(
-                          width: 60,
-                          height: 60,
-                          child: FloatingActionButton(
-                            heroTag: "btnAvancarCadLocal",
-                            backgroundColor: PaletaCores.corVerdeCiano,
-                            onPressed: () {
-                              pegarItensLocal();
-                              if (localSelecionados.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        content:
-                                            Text(Textos.erroSemSelecaoCheck)));
-                              } else {
-                                var dados = {};
-                                dados[Constantes.parametroGenero] =
-                                    widget.genero;
-                                dados[Constantes.parametroListaPessoas] =
-                                    widget.listaPessoas;
-                                dados[Constantes.parametroListaLocal] =
-                                    localSelecionados;
-                                Navigator.pushReplacementNamed(
-                                    context, Constantes.rotaTelaSelecaoDias,
-                                    arguments: dados);
-                              }
-                            },
-                            child: const Icon(Icons.arrow_forward, size: 40),
+                        Theme(
+                          data: estilo.botoesBarraNavegacao,
+                          child: SizedBox(
+                            width: Constantes.larguraBotoesBarraNavegacao,
+                            height: 50,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                pegarItensLocal();
+                                if (localSelecionados.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              Textos.erroSemSelecaoCheck)));
+                                } else {
+                                  var dados = {};
+                                  dados[Constantes.parametroGenero] =
+                                      widget.genero;
+                                  dados[Constantes.parametroListaPessoas] =
+                                      widget.listaPessoas;
+                                  dados[Constantes.parametroListaLocal] =
+                                      localSelecionados;
+                                  Navigator.pushReplacementNamed(
+                                      context, Constantes.rotaTelaSelecaoDias,
+                                      arguments: dados);
+                                }
+                              },
+                              child: const Icon(Icons.arrow_forward, size: 40),
+                            ),
                           ),
                         ),
                         Container(
@@ -412,7 +424,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                           width: larguraTela * 0.3,
                           child: Text(Textos.txtTipoEscala + tipoEscala,
                               textAlign: TextAlign.end,
-                              style: const TextStyle(fontSize: 15)),
+                              style: const TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold)),
                         ),
                       ],
                     ),

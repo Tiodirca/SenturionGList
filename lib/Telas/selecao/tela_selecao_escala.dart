@@ -127,7 +127,9 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                                       Textos.descricaoTelaSelecaoEscala,
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(
-                                          fontSize: Constantes.tamanhoLetraDescritivas, color: Colors.white),
+                                          fontSize: Constantes
+                                              .tamanhoLetraDescritivas,
+                                          color: Colors.white),
                                     ),
                                   ),
                                 ],
@@ -152,9 +154,11 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                                                       child: Text(
                                                           item.replaceAll(
                                                               RegExp(r'_'),
-                                                              ' '),style: const TextStyle(
-                                                        fontSize: Constantes.tamanhoLetraDescritivas
-                                                      )),
+                                                              ' '),
+                                                          style: const TextStyle(
+                                                           fontWeight: FontWeight.bold,
+                                                              fontSize: Constantes
+                                                                  .tamanhoLetraDescritivas)),
                                                     ))
                                                 .toList(),
                                             onChanged: (String? value) {
@@ -172,8 +176,9 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                                               Textos.txtSemEscala,
                                               textAlign: TextAlign.center,
                                               style: const TextStyle(
-                                                fontSize: 20,
-                                              ),
+                                                  fontSize: Constantes
+                                                      .tamanhoLetraDescritivas,
+                                                  fontWeight: FontWeight.bold),
                                             ),
                                           );
                                         }
@@ -190,15 +195,18 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                                         children: [
                                           Text(
                                             Textos.txtEscalaSelecionada,
-                                            style:
-                                                const TextStyle(fontSize: Constantes.tamanhoLetraDescritivas),
+                                            style: const TextStyle(
+                                                fontSize: Constantes
+                                                    .tamanhoLetraDescritivas,
+                                                fontWeight: FontWeight.bold),
                                           ),
                                           Text(
                                             tabelaSelecionada.replaceAll(
                                                 RegExp(r'_'), ' '),
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                fontSize: Constantes.tamanhoLetraDescritivas),
+                                                fontSize: Constantes
+                                                    .tamanhoLetraDescritivas),
                                           ),
                                           Container(
                                             margin: const EdgeInsets.only(
@@ -236,22 +244,25 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                     children: [
                       Visibility(
                         visible: exibirConfirmacaoEscala,
-                        child: SizedBox(
-                          width: Constantes.tamanhoFloatButtonNavigationBar,
-                          height: Constantes.tamanhoFloatButtonNavigationBar,
-                          child: FloatingActionButton(
-                            heroTag: "btnAvancarSelecaoEscala",
-                            backgroundColor: PaletaCores.corVerdeCiano,
-                            onPressed: () {
-                              Navigator.pushReplacementNamed(
-                                  context, Constantes.rotaTelaListagem,
-                                  arguments: tabelaSelecionada);
-                            },
-                            child: Text(Textos.btnUsarEscala,
-                                style: const TextStyle(
-                                    fontSize: Constantes.tamanhoLetraDescritivas, fontWeight: FontWeight.bold)),
+                        child: Theme(
+                          data: estilo.botoesBarraNavegacao,
+                          child: SizedBox(
+                            width: Constantes.larguraBotoesBarraNavegacao,
+                            height: 50,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pushReplacementNamed(
+                                    context, Constantes.rotaTelaListagem,
+                                    arguments: tabelaSelecionada);
+                              },
+                              child: Text(Textos.btnUsarEscala,
+                                  style: const TextStyle(
+                                      fontSize:
+                                      Constantes.tamanhoLetraDescritivas,
+                                      fontWeight: FontWeight.bold)),
+                            ),
                           ),
-                        ),
+                        )
                       ),
                       const SizedBox(
                         height: 5,

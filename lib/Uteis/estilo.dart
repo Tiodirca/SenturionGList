@@ -16,7 +16,8 @@ class Estilo {
       ),
       scaffoldBackgroundColor: Colors.white,
       inputDecorationTheme: InputDecorationTheme(
-          errorStyle: const TextStyle(fontSize: 13, color: Colors.white),
+          errorStyle: const TextStyle(
+              fontSize: 13, color: Colors.white, fontWeight: FontWeight.bold),
           hintStyle: const TextStyle(color: Colors.white),
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(width: 2, color: Colors.white),
@@ -42,10 +43,24 @@ class Estilo {
       // estilo dos botoes
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          side: const BorderSide(color: Colors.black,width: 1.5),
+          side: const BorderSide(color: Colors.black, width: 1.5),
           primary: Colors.white,
           elevation: 10,
-          textStyle: const TextStyle(fontWeight: FontWeight.w900, fontSize: 18),
+          textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          shadowColor: Colors.white,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30))),
+        ),
+      ));
+
+  ThemeData get botoesBarraNavegacao => ThemeData(
+          // estilo dos botoes
+          elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          side: const BorderSide(color: PaletaCores.corVerdeCiano, width: 1.5),
+          primary: PaletaCores.corVerdeCiano,
+          elevation: 10,
+          textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           shadowColor: Colors.white,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(30))),

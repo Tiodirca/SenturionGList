@@ -64,43 +64,52 @@ class _TelaSelecaoDiasSemanaState extends State<TelaSelecaoDiasSemana> {
     double larguraTela = MediaQuery.of(context).size.width;
     double alturaBarraStatus = MediaQuery.of(context).padding.top;
     double alturaAppBar = AppBar().preferredSize.height;
-    return Theme(data: estilo.estiloGeral, child: WillPopScope(
-        onWillPop: () async {
-          var dados = {};
-          dados[Constantes.parametroGenero] = widget.genero;
-          dados[Constantes.parametroListaPessoas] = widget.listaPessoas;
-          Navigator.pushReplacementNamed(
-              context, Constantes.rotaTelaCadastroLocalTrabalho,
-              arguments: dados);
-          return false;
-        },
-        child: Scaffold(
-          appBar: AppBar(
-            title:
-            Text(Textos.nomeTelaSelecaoDias, textAlign: TextAlign.center),
-          ),
-          body: SizedBox(
-            width: larguraTela,
-            height: alturaTela - alturaBarraStatus - alturaAppBar -  Constantes.alturaNavigationBar,
-            child: Stack(
-              children: [
-                FundoTela(
-                    altura:
-                    alturaTela - alturaBarraStatus - alturaAppBar -  Constantes.alturaNavigationBar),
-                Positioned(
-                    child: Column(
+    return Theme(
+        data: estilo.estiloGeral,
+        child: WillPopScope(
+            onWillPop: () async {
+              var dados = {};
+              dados[Constantes.parametroGenero] = widget.genero;
+              dados[Constantes.parametroListaPessoas] = widget.listaPessoas;
+              Navigator.pushReplacementNamed(
+                  context, Constantes.rotaTelaCadastroLocalTrabalho,
+                  arguments: dados);
+              return false;
+            },
+            child: Scaffold(
+              appBar: AppBar(
+                title: Text(Textos.nomeTelaSelecaoDias,
+                    textAlign: TextAlign.center),
+              ),
+              body: SizedBox(
+                width: larguraTela,
+                height: alturaTela -
+                    alturaBarraStatus -
+                    alturaAppBar -
+                    Constantes.alturaNavigationBar,
+                child: Stack(
+                  children: [
+                    FundoTela(
+                        altura: alturaTela -
+                            alturaBarraStatus -
+                            alturaAppBar -
+                            Constantes.alturaNavigationBar),
+                    Positioned(
+                        child: Column(
                       children: [
                         Expanded(
                             flex: 1,
                             child: Column(
                               children: [
                                 Container(
-                                  margin: const EdgeInsets.only(top: 10.0,left: 10.0,right: 10.0),
+                                  margin: const EdgeInsets.only(
+                                      top: 10.0, left: 10.0, right: 10.0),
                                   child: Text(
                                     Textos.descricaoTelaSelecaoDias,
                                     textAlign: TextAlign.justify,
                                     style: const TextStyle(
-                                        fontSize: Constantes.tamanhoLetraDescritivas,
+                                        fontSize:
+                                            Constantes.tamanhoLetraDescritivas,
                                         color: Colors.white),
                                   ),
                                 )
@@ -109,14 +118,18 @@ class _TelaSelecaoDiasSemanaState extends State<TelaSelecaoDiasSemana> {
                         Expanded(
                             flex: 2,
                             child: Container(
-                              padding: const EdgeInsets.only(left: 5.0,right: 5.0,top: 10.0),
+                              padding: const EdgeInsets.only(
+                                  left: 5.0, right: 5.0, top: 10.0),
                               child: Column(
                                 children: [
                                   Text(
                                     Textos.legLista,
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
-                                        fontSize: Constantes.tamanhoLetraDescritivas, color: Colors.black),
+                                        fontSize:
+                                            Constantes.tamanhoLetraDescritivas,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   SizedBox(
                                       height: alturaTela * 0.4,
@@ -125,8 +138,8 @@ class _TelaSelecaoDiasSemanaState extends State<TelaSelecaoDiasSemana> {
                                         children: [
                                           ...itens
                                               .map((e) => CheckboxWidget(
-                                            item: e,
-                                          ))
+                                                    item: e,
+                                                  ))
                                               .toList()
                                         ],
                                       ))
@@ -135,63 +148,69 @@ class _TelaSelecaoDiasSemanaState extends State<TelaSelecaoDiasSemana> {
                             )),
                       ],
                     ))
-              ],
-            ),
-          ),
-          bottomNavigationBar: SizedBox(
-            height:  Constantes.alturaNavigationBar,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: larguraTela * 0.3,
-                    ),
-                    SizedBox(
-                      width: 60,
-                      height: 60,
-                      child: FloatingActionButton(
-                        heroTag: "btnAvancarSelecaoDias",
-                        backgroundColor: PaletaCores.corVerdeCiano,
-                        onPressed: () {
-                          pegarItens();
-                          if (listaDias.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text(Textos.erroSemSelecaoCheck)));
-                          } else {
-                            var dados = {};
-                            dados[Constantes.parametroGenero] = widget.genero;
-                            dados[Constantes.parametroListaPessoas] =
-                                widget.listaPessoas;
-                            dados[Constantes.parametroListaLocal] =
-                                widget.listaLocal;
-                            dados[Constantes.parametroListaDias] = listaDias;
-                            Navigator.pushReplacementNamed(
-                                context, Constantes.rotaTelaSelecaoPeriodo,
-                                arguments: dados);
-                          }
-                        },
-                        child: const Icon(Icons.arrow_forward, size: 40),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(right: 10.0),
-                      width: larguraTela * 0.3,
-                      child: Text(Textos.txtTipoEscala + tipoEscala,
-                          textAlign: TextAlign.end,
-                          style: const TextStyle(fontSize: 15)),
-                    ),
                   ],
                 ),
-                const SizedBox(
-                  height: 5,
+              ),
+              bottomNavigationBar: SizedBox(
+                height: Constantes.alturaNavigationBar,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: larguraTela * 0.3,
+                        ),
+                        Theme(
+                          data: estilo.botoesBarraNavegacao,
+                          child: SizedBox(
+                            width: Constantes.larguraBotoesBarraNavegacao,
+                            height: 50,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                pegarItens();
+                                if (listaDias.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              Textos.erroSemSelecaoCheck)));
+                                } else {
+                                  var dados = {};
+                                  dados[Constantes.parametroGenero] =
+                                      widget.genero;
+                                  dados[Constantes.parametroListaPessoas] =
+                                      widget.listaPessoas;
+                                  dados[Constantes.parametroListaLocal] =
+                                      widget.listaLocal;
+                                  dados[Constantes.parametroListaDias] =
+                                      listaDias;
+                                  Navigator.pushReplacementNamed(context,
+                                      Constantes.rotaTelaSelecaoPeriodo,
+                                      arguments: dados);
+                                }
+                              },
+                              child: const Icon(Icons.arrow_forward, size: 40),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          width: larguraTela * 0.3,
+                          child: Text(Textos.txtTipoEscala + tipoEscala,
+                              textAlign: TextAlign.end,
+                              style: const TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold)),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const SizedBox(height: 60, child: BarraNavegacao()),
+                  ],
                 ),
-                const SizedBox(height: 60, child: BarraNavegacao()),
-              ],
-            ),
-          ),
-        )));
+              ),
+            )));
   }
 }

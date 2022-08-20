@@ -1,7 +1,7 @@
 class Constantes {
   static const alturaNavigationBar = 130.0;
   static const tamanhoLetraDescritivas = 20.0;
-  static const double tamanhoFloatButtonNavigationBar = 62;
+  static const double larguraBotoesBarraNavegacao = 150.0;
 
   // constantes de rotas
   static const rotaTelaInicial = "/telaInicial";
@@ -22,8 +22,9 @@ class Constantes {
   static const parametroListaLocal = "listaLocal";
   static const parametroListaDias = "listaDias";
   static const parametroListaPeriodo = "listaPeriodo";
-  static const parametroEdicaoNomeTabela = "nomeTabela";
-  static const parametroEdicaoIdItem = "idItem";
+  static const parametroEdicaoCadNomeTabela = "nomeTabela";
+  static const parametroEdicaoCadIdItem = "idItem";
+  static const parametroEdicaoCadCamposBanco = "parametroEdicaoCadCamposBanco";
 
   static const primeiroHorarioSemana = "primeiroHorarioSemana";
   static const segundoHorarioSemana = "segundoHorarioSemana";
@@ -36,6 +37,8 @@ class Constantes {
   static const horarioSegundoFinalSemanaPadrao = "19:00";
 
   static const horarioMudado = "horarioMudado";
+  static const telaCadastroItem = "cadastro";
+  static const telaEdicaoItem = "edicao";
 
   // constantes dos icones exibidos na barra de navegacao
   static const tipoIconeHome = "home";

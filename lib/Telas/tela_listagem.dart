@@ -25,6 +25,7 @@ class _TelaListagemState extends State<TelaListagem> {
   String dataItem = "";
   List<String> chaves = [];
 
+
   // referencia classe para gerenciar o banco de dados
   final bancoDados = BancoDeDados.instance;
 
@@ -141,6 +142,33 @@ class _TelaListagemState extends State<TelaListagem> {
                                             Constantes.tamanhoLetraDescritivas,
                                         color: Colors.white),
                                   ),
+                                  SizedBox(
+                                    width: 30,
+                                    height: 30,
+                                    child: FloatingActionButton(
+                                      heroTag: "botaoAddItem",
+                                      backgroundColor: Colors.green,
+                                      onPressed: () {
+                                        var dados = {};
+                                        dados[Constantes
+                                                .parametroEdicaoCadCamposBanco] =
+                                            chaves;
+                                        dados[Constantes
+                                                .parametroEdicaoCadNomeTabela] =
+                                            widget.nomeTabela;
+                                        dados[Constantes
+                                            .parametroEdicaoCadIdItem] = 0;
+                                        Navigator
+                                            .pushReplacementNamed(
+                                            context,
+                                            Constantes
+                                                .rotaTelaEdicao,
+                                            arguments:
+                                            dados);
+                                      },
+                                      child: const Icon(Icons.add, size: 20),
+                                    ),
+                                  ),
                                 ],
                               ),
                             )),
@@ -220,10 +248,12 @@ class _TelaListagemState extends State<TelaListagem> {
                                                                     TextAlign
                                                                         .center,
                                                                 e.toString(),
-                                                                style:
-                                                                    const TextStyle(
-                                                                        fontSize:
-                                                                            18),
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
                                                               ),
                                                             ),
                                                           )));
@@ -245,11 +275,16 @@ class _TelaListagemState extends State<TelaListagem> {
                                                           idItem =
                                                               item.values.first;
                                                           var dados = {};
+                                                          List<String>
+                                                              chaveVazia = [];
                                                           dados[Constantes
-                                                                  .parametroEdicaoNomeTabela] =
+                                                                  .parametroEdicaoCadCamposBanco] =
+                                                              chaveVazia;
+                                                          dados[Constantes
+                                                                  .parametroEdicaoCadNomeTabela] =
                                                               widget.nomeTabela;
                                                           dados[Constantes
-                                                                  .parametroEdicaoIdItem] =
+                                                                  .parametroEdicaoCadIdItem] =
                                                               idItem;
                                                           Navigator
                                                               .pushReplacementNamed(
@@ -315,17 +350,18 @@ class _TelaListagemState extends State<TelaListagem> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  SizedBox(
-                    width: Constantes.tamanhoFloatButtonNavigationBar,
-                    height: Constantes.tamanhoFloatButtonNavigationBar,
-                    child: FloatingActionButton(
-                      heroTag: "btnListagemGerarPDF",
-                      backgroundColor: PaletaCores.corVerdeCiano,
-                      onPressed: () {},
-                      child: Text(Textos.btnGerarPDF,
-                          style: const TextStyle(
-                              fontSize: Constantes.tamanhoLetraDescritivas,
-                              fontWeight: FontWeight.bold)),
+                  Theme(
+                    data: estilo.botoesBarraNavegacao,
+                    child: SizedBox(
+                      width: Constantes.larguraBotoesBarraNavegacao,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Text(Textos.btnGerarPDF,
+                            style: const TextStyle(
+                                fontSize: Constantes.tamanhoLetraDescritivas,
+                                fontWeight: FontWeight.bold)),
+                      ),
                     ),
                   ),
                   const SizedBox(

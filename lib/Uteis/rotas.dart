@@ -101,8 +101,9 @@ class Rotas {
         if (args is Map) {
           return MaterialPageRoute(
             builder: (_) => TelaEdicao(
-              nomeTabela: args[Constantes.parametroEdicaoNomeTabela],
-              idItem: args[Constantes.parametroEdicaoIdItem],
+              camposBancoCadastroItem: args[Constantes.parametroEdicaoCadCamposBanco],
+              nomeTabela: args[Constantes.parametroEdicaoCadNomeTabela],
+              idItem: args[Constantes.parametroEdicaoCadIdItem],
             ),
           );
         } else {

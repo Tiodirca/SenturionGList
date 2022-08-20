@@ -1,4 +1,5 @@
 class Textos {
+  // botoes
   static String btnCadastrar = "Cadastrar";
   static String btnCooperador = "Cooperadores";
   static String btnCooperadoras = "Cooperadoras";
@@ -78,6 +79,11 @@ class Textos {
   static String nomeTelaEdicao = "Edição de item";
   static String descricaoTelaEdicao =
       "Utilize os campos abaixo para editar os itens";
+
+  // TELA EDICAO
+  static String nomeTelaCadastroItem = "Cadastro de item";
+  static String descricaoTelaCadastroItem =
+      "Utilize os campos abaixo para cadastrar um novo item na escala gerada";
 
   //TELA CONFIGURACOES
   static String nomeTelaConfiguracoes = "Configurações";

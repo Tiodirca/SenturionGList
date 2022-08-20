@@ -11,7 +11,6 @@ import 'package:senturionglist/Uteis/textos.dart';
 import 'package:senturionglist/Widget/barra_navegacao.dart';
 import 'package:senturionglist/Widget/fundo_tela_widget.dart';
 
-
 class TelaCadastroPessoas extends StatefulWidget {
   const TelaCadastroPessoas({Key? key, required this.genero}) : super(key: key);
 
@@ -161,7 +160,10 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                 exibirConfirmacaoExcluir(checkBoxModel.idItem);
               },
             )),
-        title: Text(checkBoxModel.texto, style: const TextStyle(fontSize: Constantes.tamanhoLetraDescritivas)),
+        title: Text(checkBoxModel.texto,
+            style: const TextStyle(
+                fontSize: Constantes.tamanhoLetraDescritivas,
+                fontWeight: FontWeight.bold)),
         value: checkBoxModel.checked,
         side: const BorderSide(width: 2, color: Colors.black),
         onChanged: (value) {
@@ -225,7 +227,10 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                                         Textos.descricaoCadastroPessoas,
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
-                                            fontSize: Constantes.tamanhoLetraDescritivas, color: Colors.white),
+                                          fontSize: Constantes
+                                              .tamanhoLetraDescritivas,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                       const SizedBox(
                                         height: 10,
@@ -310,14 +315,18 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                             Expanded(
                                 flex: 2,
                                 child: Container(
-                                  padding: const EdgeInsets.only(left: 5.0,right: 5.0,top: 10.0),
+                                  padding: const EdgeInsets.only(
+                                      left: 5.0, right: 5.0, top: 10.0),
                                   child: Column(
                                     children: [
                                       Text(
                                         Textos.legLista,
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
-                                            fontSize: Constantes.tamanhoLetraDescritivas, color: Colors.black),
+                                            fontSize: Constantes
+                                                .tamanhoLetraDescritivas,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                       LayoutBuilder(
                                         builder: (context, constraints) {
@@ -374,31 +383,32 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                         Container(
                           width: larguraTela * 0.3,
                         ),
-                        SizedBox(
-                          width: 60,
-                          height: 60,
-                          child: FloatingActionButton(
-                            heroTag: "btnAvancarCadPessoas",
-                            backgroundColor: PaletaCores.corVerdeCiano,
-                            onPressed: () {
-                              pegarItensPessoas();
-                              if (listaPessoasSelecionados.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        content:
-                                            Text(Textos.erroSemSelecaoCheck)));
-                              } else {
-                                var dados = {};
-                                dados[Constantes.parametroGenero] =
-                                    widget.genero;
-                                dados[Constantes.parametroListaPessoas] =
-                                    listaPessoasSelecionados;
-                                Navigator.pushReplacementNamed(context,
-                                    Constantes.rotaTelaCadastroLocalTrabalho,
-                                    arguments: dados);
-                              }
-                            },
-                            child: const Icon(Icons.arrow_forward, size: 40),
+                        Theme(
+                          data: estilo.botoesBarraNavegacao,
+                          child: SizedBox(
+                            width: Constantes.larguraBotoesBarraNavegacao,
+                            height: 50,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                pegarItensPessoas();
+                                if (listaPessoasSelecionados.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              Textos.erroSemSelecaoCheck)));
+                                } else {
+                                  var dados = {};
+                                  dados[Constantes.parametroGenero] =
+                                      widget.genero;
+                                  dados[Constantes.parametroListaPessoas] =
+                                      listaPessoasSelecionados;
+                                  Navigator.pushReplacementNamed(context,
+                                      Constantes.rotaTelaCadastroLocalTrabalho,
+                                      arguments: dados);
+                                }
+                              },
+                              child: const Icon(Icons.arrow_forward, size: 40),
+                            ),
                           ),
                         ),
                         Container(
@@ -406,7 +416,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                           width: larguraTela * 0.3,
                           child: Text(Textos.txtTipoEscala + tipoEscala,
                               textAlign: TextAlign.end,
-                              style: const TextStyle(fontSize: 15)),
+                              style: const TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold)),
                         ),
                       ],
                     ),

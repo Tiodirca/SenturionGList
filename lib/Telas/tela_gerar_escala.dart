@@ -337,7 +337,9 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                                     style: const TextStyle(
                                                         fontSize: Constantes
                                                             .tamanhoLetraDescritivas,
-                                                        color: Colors.black),
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold),
                                                   ),
                                                 ),
                                                 Row(
@@ -356,8 +358,9 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                                     const Text(
                                                       'Não',
                                                       style: TextStyle(
-                                                        fontSize: 17.0,
-                                                      ),
+                                                          fontSize: 17.0,
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
                                                     Radio(
                                                         value: 1,
@@ -371,8 +374,9 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                                     const Text(
                                                       'Sim',
                                                       style: TextStyle(
-                                                        fontSize: 17.0,
-                                                      ),
+                                                          fontSize: 17.0,
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
                                                   ],
                                                 ),
@@ -398,7 +402,11 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                                                         .center,
                                                                 style: const TextStyle(
                                                                     fontSize:
-                                                                        18,
+                                                                        Constantes
+                                                                            .tamanhoLetraDescritivas,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
                                                                     color: Colors
                                                                         .black),
                                                               ),
@@ -435,7 +443,11 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                                                         .center,
                                                                 style: const TextStyle(
                                                                     fontSize:
-                                                                        18,
+                                                                        Constantes
+                                                                            .tamanhoLetraDescritivas,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
                                                                     color: Colors
                                                                         .black),
                                                               ),
@@ -494,28 +506,28 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                 width: larguraTela * 0.4,
                                 height: 45,
                               ),
-                              SizedBox(
-                                width:
-                                    Constantes.tamanhoFloatButtonNavigationBar,
-                                height:
-                                    Constantes.tamanhoFloatButtonNavigationBar,
-                                child: FloatingActionButton(
-                                  heroTag: "btnGerar",
-                                  backgroundColor: PaletaCores.corVerdeCiano,
-                                  onPressed: () {
-                                    if (_chaveFormulario.currentState!
-                                        .validate()) {
-                                      setState(() {
-                                        nomeTabelaExiste = false;
-                                        consultaTabelasExistentes();
-                                      });
-                                    }
-                                  },
-                                  child: Text(Textos.btnGerar,
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                          fontSize: 19,
-                                          fontWeight: FontWeight.bold)),
+                              Theme(
+                                data: estilo.botoesBarraNavegacao,
+                                child: SizedBox(
+                                  width: Constantes
+                                      .larguraBotoesBarraNavegacao,
+                                  height: 50,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      if (_chaveFormulario.currentState!
+                                          .validate()) {
+                                        setState(() {
+                                          nomeTabelaExiste = false;
+                                          consultaTabelasExistentes();
+                                        });
+                                      }
+                                    },
+                                    child: Text(Textos.btnGerar,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                            fontSize: 19,
+                                            fontWeight: FontWeight.bold)),
+                                  ),
                                 ),
                               ),
                               Container(

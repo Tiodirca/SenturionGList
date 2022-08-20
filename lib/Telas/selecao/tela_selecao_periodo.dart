@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import 'package:intl/intl.dart';
 import 'package:senturionglist/Uteis/constantes.dart';
 import 'package:senturionglist/Uteis/estilo.dart';
@@ -127,7 +126,9 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
             });
           },
           readOnly: true,
-          style: const TextStyle(color: Colors.white,),
+          style: const TextStyle(
+            color: Colors.white,
+          ),
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
             hintText: '${data.day}/${data.month}/${data.year}',
@@ -239,7 +240,8 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
                                           style: const TextStyle(
                                               fontSize: Constantes
                                                   .tamanhoLetraDescritivas,
-                                              color: Colors.black),
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                       ),
                                       Container(
@@ -270,10 +272,13 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
                                                                 textAlign:
                                                                     TextAlign
                                                                         .center,
-                                                                style:
-                                                                    const TextStyle(
-                                                                  fontSize: Constantes.tamanhoLetraDescritivas,
-                                                                ),
+                                                                style: const TextStyle(
+                                                                    fontSize:
+                                                                        Constantes
+                                                                            .tamanhoLetraDescritivas,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
                                                               ),
                                                             )
                                                           ],
@@ -306,37 +311,42 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
                               "Dias da Semana :${widget.listaDias.toString().replaceAll("[", "").replaceAll("]", "")}",
                               textAlign: TextAlign.center,
                               style: const TextStyle(
-                                  fontSize: 15, color: Colors.black),
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
                             ),
                           )),
-                      SizedBox(
-                        width: 60,
-                        height: 60,
-                        child: FloatingActionButton(
-                          heroTag: "btnAvancarSelecaoPeriodo",
-                          backgroundColor: PaletaCores.corVerdeCiano,
-                          onPressed: () {
-                            if (listaDatasFinal.isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content: Text(Textos.erroSemIntervalo)));
-                            } else {
-                              var dados = {};
-                              dados[Constantes.parametroGenero] = widget.genero;
-                              dados[Constantes.parametroListaPessoas] =
-                                  widget.listaPessoas;
-                              dados[Constantes.parametroListaLocal] =
-                                  widget.listaLocal;
-                              dados[Constantes.parametroListaDias] =
-                                  widget.listaDias;
-                              dados[Constantes.parametroListaPeriodo] =
-                                  listaDatasFinal;
-                              Navigator.pushReplacementNamed(
-                                  context, Constantes.rotaTelaGerarEscala,
-                                  arguments: dados);
-                            }
-                          },
-                          child: const Icon(Icons.arrow_forward, size: 40),
+                      Theme(
+                        data: estilo.botoesBarraNavegacao,
+                        child: SizedBox(
+                          width: Constantes.larguraBotoesBarraNavegacao,
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (listaDatasFinal.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content:
+                                            Text(Textos.erroSemIntervalo)));
+                              } else {
+                                var dados = {};
+                                dados[Constantes.parametroGenero] =
+                                    widget.genero;
+                                dados[Constantes.parametroListaPessoas] =
+                                    widget.listaPessoas;
+                                dados[Constantes.parametroListaLocal] =
+                                    widget.listaLocal;
+                                dados[Constantes.parametroListaDias] =
+                                    widget.listaDias;
+                                dados[Constantes.parametroListaPeriodo] =
+                                    listaDatasFinal;
+                                Navigator.pushReplacementNamed(
+                                    context, Constantes.rotaTelaGerarEscala,
+                                    arguments: dados);
+                              }
+                            },
+                            child: const Icon(Icons.arrow_forward, size: 40),
+                          ),
                         ),
                       ),
                       Container(
@@ -345,7 +355,8 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
                         width: larguraTela * 0.4,
                         child: Text(Textos.txtTipoEscala + tipoEscala,
                             textAlign: TextAlign.end,
-                            style: const TextStyle(fontSize: 15)),
+                            style: const TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold)),
                       ),
                     ],
                   ),
