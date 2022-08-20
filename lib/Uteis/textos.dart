@@ -3,10 +3,10 @@ class Textos {
   static String btnCadastrar = "Cadastrar";
   static String btnCooperador = "Cooperadores";
   static String btnCooperadoras = "Cooperadoras";
-  static String btnGerar = "Criar";
-  static String btnGerarPDF = "PDF";
-  static String btnUsarEscala = "Usar";
-  static String btnAtualizar = "Editar";
+  static String btnGerar = "Criar Escala";
+  static String btnGerarPDF = "Gerar PDF";
+  static String btnUsarEscala = "Usar Escala";
+  static String btnAtualizar = "Atualizar";
   static String btnConfigHoraTroca = "Horário troca de turno";
 
   static String nomeApp = "Senturion G List";

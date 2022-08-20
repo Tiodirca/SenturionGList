@@ -8,8 +8,6 @@ import '../Uteis/paleta_cores.dart';
 import '../Uteis/textos.dart';
 import '../Widget/barra_navegacao.dart';
 import '../Widget/fundo_tela_widget.dart';
-import "dart:collection";
-
 
 class TelaListagem extends StatefulWidget {
   const TelaListagem({Key? key, required this.nomeTabela}) : super(key: key);
@@ -23,9 +21,11 @@ class TelaListagem extends StatefulWidget {
 class _TelaListagemState extends State<TelaListagem> {
   Estilo estilo = Estilo();
   List<Map<dynamic, dynamic>> itensBanco = [];
+  List<Map<dynamic, dynamic>> itensOrdenado = [];
   int idItem = 0;
   String dataItem = "";
   List<String> chaves = [];
+  List<Map<dynamic, dynamic>> valores = [];
 
   // referencia classe para gerenciar o banco de dados
   final bancoDados = BancoDeDados.instance;
@@ -46,17 +46,10 @@ class _TelaListagemState extends State<TelaListagem> {
     for (var value1 in itensBanco.first.keys) {
       chaves.add(value1.toString().replaceAll("_", " "));
     }
-    final SplayTreeMap<String, Map<String,String>> st =
-    SplayTreeMap<String, Map<String,String>>();
-
-    st["yyy"] = {"should be" : "3rd"};
-    st["zzz"] = {"should be" : "last"};
-    st["aaa"] = {"should be" : "first"};
-    st["bbb"] = {"should be" : "2nd"};
-
-    for (final String key in st.keys) {
-      print("$key : ${st[key]}");
-    }
+    // ordenando a lista pela datao numero passado
+    // para o element At corresponde ao index da lista que contem a datas
+    itensBanco
+        .sort((a, b) => a.values.elementAt(1).compareTo(b.values.elementAt(1)));
   }
 
   Future<void> exibirConfirmacaoExclusao(int id, String data) {
@@ -145,6 +138,7 @@ class _TelaListagemState extends State<TelaListagem> {
                                   top: 10.0, right: 15.0, left: 15.0),
                               width: larguraTela,
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
                                     Textos.decricaoTelaListagem,
@@ -155,8 +149,8 @@ class _TelaListagemState extends State<TelaListagem> {
                                         color: Colors.white),
                                   ),
                                   SizedBox(
-                                    width: 30,
-                                    height: 30,
+                                    width: 40,
+                                    height: 40,
                                     child: FloatingActionButton(
                                       heroTag: "botaoAddItem",
                                       backgroundColor: Colors.green,
@@ -174,7 +168,7 @@ class _TelaListagemState extends State<TelaListagem> {
                                             context, Constantes.rotaTelaEdicao,
                                             arguments: dados);
                                       },
-                                      child: const Icon(Icons.add, size: 20),
+                                      child: const Icon(Icons.add, size: 30),
                                     ),
                                   ),
                                 ],
@@ -199,162 +193,182 @@ class _TelaListagemState extends State<TelaListagem> {
                                       child: SingleChildScrollView(
                                         scrollDirection: Axis.horizontal,
                                         child: DataTable(
-                                          columnSpacing: 10,
-                                          dividerThickness: 1.0,
-                                          showCheckboxColumn: false,
-                                          columns: [
-                                            ...chaves.map(
-                                              (e) {
-                                                return DataColumn(
-                                                  label: Text(
-                                                      e
-                                                          .toString()
-                                                          .replaceAll("_", " "),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: const TextStyle(
-                                                          fontSize: Constantes
-                                                              .tamanhoLetraDescritivas,
-                                                          fontWeight:
-                                                              FontWeight.bold)),
-                                                );
-                                              },
-                                            ),
-                                            const DataColumn(
-                                              label: Text("Editar",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      fontSize: Constantes
-                                                          .tamanhoLetraDescritivas,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ),
-                                            const DataColumn(
-                                              label: Text("Excluir",
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      fontSize: Constantes
-                                                          .tamanhoLetraDescritivas,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ),
-                                          ],
-                                          rows: itensBanco
-                                              .map(
-                                                (item) => DataRow(cells: [
-                                                  ...item.values.map(
-                                                    (e) {
-                                                      return DataCell(SizedBox(
-                                                          width: 120,
-                                                          child: Center(
-                                                            child:
-                                                                SingleChildScrollView(
-                                                              scrollDirection:
-                                                                  Axis.vertical,
-                                                              child: Text(
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                e.toString(),
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        18,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                            ),
-                                                          )));
-                                                    },
-                                                  ),
-                                                  DataCell(SizedBox(
-                                                    width: 50,
-                                                    child: SizedBox(
-                                                      width: 30,
-                                                      height: 30,
-                                                      child:
-                                                          FloatingActionButton(
-                                                        heroTag:
-                                                            "btnEditarItem${item.values.first}",
-                                                        backgroundColor:
-                                                            PaletaCores
-                                                                .corAmarela,
-                                                        onPressed: () {
-                                                          idItem =
-                                                              item.values.first;
-                                                          var dados = {};
-                                                          List<String>
-                                                              chaveVazia = [];
-                                                          dados[Constantes
-                                                                  .parametroEdicaoCadCamposBanco] =
-                                                              chaveVazia;
-                                                          dados[Constantes
-                                                                  .parametroEdicaoCadNomeTabela] =
-                                                              widget.nomeTabela;
-                                                          dados[Constantes
-                                                                  .parametroEdicaoCadIdItem] =
-                                                              idItem;
-                                                          Navigator
-                                                              .pushReplacementNamed(
-                                                                  context,
-                                                                  Constantes
-                                                                      .rotaTelaEdicao,
-                                                                  arguments:
-                                                                      dados);
-                                                        },
-                                                        child: const Icon(
-                                                            Icons.edit,
-                                                            size: 20),
+                                            columnSpacing: 10,
+                                            dividerThickness: 1.0,
+                                            showCheckboxColumn: false,
+                                            columns: [
+                                              ...chaves.map(
+                                                (e) {
+                                                  if (e.contains("id")) {
+                                                    return const DataColumn(
+                                                      label: Text(
+                                                        "",
                                                       ),
+                                                    );
+                                                  } else {
+                                                    return DataColumn(
+                                                      label: Text(
+                                                          e
+                                                              .toString()
+                                                              .replaceAll(
+                                                                  "_", " "),
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: const TextStyle(
+                                                              fontSize: Constantes
+                                                                  .tamanhoLetraDescritivas,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                    );
+                                                  }
+                                                },
+                                              ),
+                                              const DataColumn(
+                                                label: Text("Editar",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontSize: Constantes
+                                                            .tamanhoLetraDescritivas,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ),
+                                              const DataColumn(
+                                                label: Text("Excluir",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontSize: Constantes
+                                                            .tamanhoLetraDescritivas,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ),
+                                            ],
+                                            rows: itensBanco
+                                                .map(
+                                                  (item) => DataRow(cells: [
+                                                    ...item.values.map(
+                                                      (e) {
+                                                        if (e ==
+                                                            item.values
+                                                                .elementAt(0)) {
+                                                          return const DataCell(
+                                                              SizedBox(
+                                                            width: 0,
+                                                          ));
+                                                        } else {
+                                                          return DataCell(
+                                                              SizedBox(
+                                                                  width: 120,
+                                                                  child: Center(
+                                                                    child:
+                                                                        SingleChildScrollView(
+                                                                      scrollDirection:
+                                                                          Axis.vertical,
+                                                                      child:
+                                                                          Text(
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        e.toString(),
+                                                                        style: const TextStyle(
+                                                                            fontSize:
+                                                                                18,
+                                                                            fontWeight:
+                                                                                FontWeight.bold),
+                                                                      ),
+                                                                    ),
+                                                                  )));
+                                                        }
+                                                      },
                                                     ),
-                                                  )),
-                                                  DataCell(SizedBox(
-                                                    width: 50,
-                                                    child: SizedBox(
-                                                      width: 30,
-                                                      height: 30,
-                                                      child:
-                                                          FloatingActionButton(
-                                                        heroTag:
-                                                            "btnExcluirItem${item.values.first}",
-                                                        backgroundColor:
-                                                            Colors.red,
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            dataItem = item
-                                                                .values
-                                                                .elementAt(1);
+                                                    DataCell(SizedBox(
+                                                      width: 50,
+                                                      child: SizedBox(
+                                                        width: 30,
+                                                        height: 30,
+                                                        child:
+                                                            FloatingActionButton(
+                                                          heroTag:
+                                                              "btnEditarItem${item.values.first}",
+                                                          backgroundColor:
+                                                              PaletaCores
+                                                                  .corAmarela,
+                                                          onPressed: () {
                                                             idItem = item
                                                                 .values.first;
-                                                          });
-                                                          // verificando se a lista contem somente um item
-                                                          // para exibir acoes definidas abaixo
-                                                          if (itensBanco
-                                                                  .length ==
-                                                              1) {
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .showSnackBar(SnackBar(
-                                                                    content: Text(
-                                                                        Textos
-                                                                            .erroExclusaoItemListagem)));
-                                                          } else {
-                                                            exibirConfirmacaoExclusao(
-                                                                idItem,
-                                                                dataItem);
-                                                          }
-                                                        },
-                                                        child: const Icon(
-                                                            Icons
-                                                                .delete_forever,
-                                                            size: 20),
+                                                            var dados = {};
+                                                            List<String>
+                                                                chaveVazia = [];
+                                                            dados[Constantes
+                                                                    .parametroEdicaoCadCamposBanco] =
+                                                                chaveVazia;
+                                                            dados[Constantes
+                                                                    .parametroEdicaoCadNomeTabela] =
+                                                                widget
+                                                                    .nomeTabela;
+                                                            dados[Constantes
+                                                                    .parametroEdicaoCadIdItem] =
+                                                                idItem;
+                                                            Navigator
+                                                                .pushReplacementNamed(
+                                                                    context,
+                                                                    Constantes
+                                                                        .rotaTelaEdicao,
+                                                                    arguments:
+                                                                        dados);
+                                                          },
+                                                          child: const Icon(
+                                                              Icons.edit,
+                                                              size: 20),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ))
-                                                ]),
-                                              )
-                                              .toList()
-                                        ),
+                                                    )),
+                                                    DataCell(SizedBox(
+                                                      width: 50,
+                                                      child: SizedBox(
+                                                        width: 30,
+                                                        height: 30,
+                                                        child:
+                                                            FloatingActionButton(
+                                                          heroTag:
+                                                              "btnExcluirItem${item.values.first}",
+                                                          backgroundColor:
+                                                              Colors.red,
+                                                          onPressed: () {
+                                                            setState(() {
+                                                              dataItem = item
+                                                                  .values
+                                                                  .elementAt(1);
+                                                              idItem = item
+                                                                  .values.first;
+                                                            });
+                                                            // verificando se a lista contem somente um item
+                                                            // para exibir acoes definidas abaixo
+                                                            if (itensBanco
+                                                                    .length ==
+                                                                1) {
+                                                              ScaffoldMessenger
+                                                                      .of(
+                                                                          context)
+                                                                  .showSnackBar(
+                                                                      SnackBar(
+                                                                          content:
+                                                                              Text(Textos.erroExclusaoItemListagem)));
+                                                            } else {
+                                                              exibirConfirmacaoExclusao(
+                                                                  idItem,
+                                                                  dataItem);
+                                                            }
+                                                          },
+                                                          child: const Icon(
+                                                              Icons
+                                                                  .delete_forever,
+                                                              size: 20),
+                                                        ),
+                                                      ),
+                                                    ))
+                                                  ]),
+                                                )
+                                                .toList()),
                                       ),
                                     )
                                   ],
