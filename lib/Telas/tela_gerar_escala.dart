@@ -199,8 +199,8 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
         }
       }
       if (nomeTabelaExiste) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(Textos.erroGerarEscalaTabelaExistente)));
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(Textos.erroGerarEscalaTabelaExistente)));
       } else {
         telaCarregar = true;
         chamarCriarTabela();
@@ -503,14 +503,13 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               SizedBox(
-                                width: larguraTela * 0.4,
+                                width: larguraTela * 0.3,
                                 height: 45,
                               ),
                               Theme(
                                 data: estilo.botoesBarraNavegacao,
                                 child: SizedBox(
-                                  width: Constantes
-                                      .larguraBotoesBarraNavegacao,
+                                  width: Constantes.larguraBotoesBarraNavegacao,
                                   height: 50,
                                   child: ElevatedButton(
                                     onPressed: () {
@@ -533,11 +532,18 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                               Container(
                                 padding: const EdgeInsets.only(right: 10.0),
                                 height: 45,
-                                width: larguraTela * 0.4,
-                                child: Text(Textos.txtTipoEscala + tipoEscala,
+                                width: larguraTela * 0.3,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: Text(
+                                    Textos.txtTipoEscala + tipoEscala,
                                     textAlign: TextAlign.end,
-                                    style: const TextStyle(fontSize: 15)),
-                              ),
+                                    style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              )
                             ],
                           ),
                           const SizedBox(

@@ -422,10 +422,16 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                         Container(
                           padding: const EdgeInsets.only(right: 10.0),
                           width: larguraTela * 0.3,
-                          child: Text(Textos.txtTipoEscala + tipoEscala,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: Text(
+                              Textos.txtTipoEscala + tipoEscala,
                               textAlign: TextAlign.end,
                               style: const TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold)),
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
                         ),
                       ],
                     ),

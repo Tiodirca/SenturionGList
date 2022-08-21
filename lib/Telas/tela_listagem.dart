@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:senturionglist/Uteis/GerarPDF.dart';
 import 'package:senturionglist/Uteis/Servicos/banco_de_dados.dart';
 
 import '../Uteis/Servicos/consultas.dart';
@@ -392,7 +393,10 @@ class _TelaListagemState extends State<TelaListagem> {
                       width: Constantes.larguraBotoesBarraNavegacao,
                       height: 50,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          GerarPDF pdf = GerarPDF();
+                          pdf.pegarDados(itensBanco);
+                        },
                         child: Text(Textos.btnGerarPDF,
                             style: const TextStyle(
                                 fontSize: Constantes.tamanhoLetraDescritivas,

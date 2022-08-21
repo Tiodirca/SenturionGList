@@ -135,4 +135,8 @@ class Textos {
   static String diaSexta = "sexta-feira";
   static String diaSabado = "sábado";
   static String diaDomingo = "domingo";
+
+
+  static String pdfEscalaGerada = "Escala gerada por Senturion G List";
+  static String pdfRodape = "\"Quem sua mão ao arado já pois, constante precisa ser\"";
 }

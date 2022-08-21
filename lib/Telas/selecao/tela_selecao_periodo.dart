@@ -304,7 +304,7 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                          width: larguraTela * 0.4,
+                          width: larguraTela * 0.3,
                           height: 45,
                           child: SingleChildScrollView(
                             child: Text(
@@ -352,11 +352,14 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
                       Container(
                         padding: const EdgeInsets.only(right: 10.0),
                         height: 45,
-                        width: larguraTela * 0.4,
-                        child: Text(Textos.txtTipoEscala + tipoEscala,
-                            textAlign: TextAlign.end,
-                            style: const TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold)),
+                        width: larguraTela * 0.3,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Text(Textos.txtTipoEscala + tipoEscala,
+                              textAlign: TextAlign.end,
+                              style: const TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold)),
+                        ),
                       ),
                     ],
                   ),
