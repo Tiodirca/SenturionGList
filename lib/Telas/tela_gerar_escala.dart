@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:senturionglist/Modelo/pessoa_agrupada.dart';
 import 'package:senturionglist/Uteis/Servicos/banco_de_dados.dart';
 import 'package:senturionglist/Uteis/Servicos/recuperar_valor_share_preferences.dart';
 import 'package:senturionglist/Uteis/remover_acentos.dart';
@@ -48,6 +49,8 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
   String querySQL = "";
   final TextEditingController _controllerNomeEscala =
       TextEditingController(text: "");
+  List<String> diasAgrupamento = [];
+  List<PessoasAgrupadas> pessoasAgrupadas = [];
   List<CheckBoxModel> itensListaCheckPessoas = [];
   List<CheckBoxModel> itensListaCheckDias = [];
 
@@ -60,6 +63,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
   String horarioSemana = "";
 
   String horarioFinalSemana = "";
+  Random random = Random();
 
   @override
   void initState() {
@@ -83,18 +87,50 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
         querySQL = "$querySQL${item.replaceAll(" ", "_")} TEXT NOT NULL,";
       },
     ).toList();
-    print(querySQL);
-    print(widget.listaLocal);
-    // pegando o tamanho da string
-    int tamanhoQuery = querySQL.length;
-    // subtraindo o ultimo index da string
-    querySQL = querySQL.substring(0, tamanhoQuery - 1);
-    //recuperarValoresSharePreferences();
-    chamarRecuperarValorShare();
+    // subtraindo o ultimo index da string pois nao e necessario
+    querySQL = querySQL.substring(0, querySQL.length - 1);
+    chamarRecuperarSharePreferences();
+  }
+
+  // metodo para pegar o valor selecionado no check box
+  pegarItensPessoasAgrupadas() async {
+    Random random = Random();
+    // valor minimo de 3 pois corresponde apartir do index de local trabalho
+    // que e adicionado dinamicamente pelo usuario
+    var minimo = 3;
+    // valor maximo pegando o tamanho da lista removendo os dois ultimos index
+    // pois os mesmos nao entrar no sorteio
+    var maximo = widget.listaLocal.length - 2;
+    for (var element in itensListaCheckPessoas) {
+      if (element.checked == true) {
+        // instanciando duas variaveis para sortear numeros entre o valor minimo e maximo
+        int numeroRandomico = minimo + random.nextInt(maximo - minimo);
+        int numeroRandomico2 = minimo + random.nextInt(maximo - minimo);
+        if (numeroRandomico == numeroRandomico2) {
+          //sorteando novo numero caso os dois numeros sorteados sejam iguais
+          numeroRandomico = minimo + random.nextInt(maximo - minimo);
+        }
+        // removendo elementos da lista
+        pessoasAgrupadas.removeWhere((e) => e.nome == element.texto);
+        // adicionando elementos usando a classe modelo
+        pessoasAgrupadas.add(PessoasAgrupadas(
+            nome: element.texto,
+            localTrabalho: widget.listaLocal.elementAt(numeroRandomico)));
+      }
+    }
+  }
+
+  // metodo para pegar os valores do check box
+  pegarItensDiasAgrupamento() {
+    for (var element in itensListaCheckDias) {
+      if (element.checked == true) {
+        diasAgrupamento.add(element.texto);
+      }
+    }
   }
 
   // metodo para recuperar os valores gravados no share preferences
-  chamarRecuperarValorShare() async {
+  chamarRecuperarSharePreferences() async {
     await RecupararValorSharePreferences.recuperarValores(
             Constantes.recuperarValorSemana)
         .then((value) => setState(() {
@@ -117,58 +153,63 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
 
   // metodo para inserir dados na tabela criada
   inserir() async {
-    // pegando cada elemento do periodo selecionado
+    if (configEscala) {
+      pegarItensPessoasAgrupadas();
+      pegarItensDiasAgrupamento();
+    }
+
     for (int i = 0; i < widget.listaPeriodo.length; i++) {
-      //instanciando variavel
-      Random random = Random();
-      // criando map temporario
       Map<String, dynamic> linha = {};
-      // pegando a lista e fazendo um map adicionando informacoes
-      widget.listaLocal.map(
-        (item) {
-          // passando a data como primeiro elemento
-          linha[Constantes.localData] = widget.listaPeriodo[i];
-          // verificando se cada data na lista contem os seguintes parametros
-          // para setar valor para o segundo elemento do map
-
-          // definindo que a variavel vai receber um index aleatorio da lista
-          int numeroRandomico = random.nextInt(widget.listaPessoas.length);
-          // adicionando no map um valor contido no index da lista de pessoas
-          // a cada item contido na lista de locais
-          linha[item.replaceAll(" ", "_")] =
-              widget.listaPessoas[numeroRandomico];
-
-          // adicionando valor vazio a determinados campos
-          if (item.contains(Constantes.localServirCeia)) {
-            linha[Constantes.localServirCeia] = "";
+      for (var element in widget.listaLocal) {
+        // sorteando numero baseado no tamanho da lista
+        int numeroRandomico = random.nextInt(widget.listaPessoas.length);
+        // sobreescrevendo index do mapa
+        linha[Constantes.localData] = widget.listaPeriodo[i];
+        // adicionando os valores da lista ao mapa baseado no numero randomico sorteado
+        linha[element.replaceAll(" ", "_")] =
+            widget.listaPessoas.elementAt(numeroRandomico);
+        // Sobre escrevendo o horario de troca baseado nos dias do periodo
+        if (widget.listaPeriodo[i].contains(Textos.diaSegunda) ||
+            widget.listaPeriodo[i].contains(Textos.diaTerca) ||
+            widget.listaPeriodo[i].contains(Textos.diaQuarta) ||
+            widget.listaPeriodo[i].contains(Textos.diaQuinta) ||
+            widget.listaPeriodo[i].contains(Textos.diaSexta)) {
+          linha[Constantes.localHoraTroca.replaceAll(" ", "_")] = horarioSemana;
+        } else {
+          linha[Constantes.localHoraTroca.replaceAll(" ", "_")] =
+              horarioFinalSemana;
+        }
+        // adicionando valor vazio a determinados campos
+        if (element.contains(Constantes.localServirCeia)) {
+          linha[Constantes.localServirCeia] = "";
+        }
+        if (element.contains(Constantes.localUniforme)) {
+          linha[Constantes.localUniforme] = "";
+        }
+      }
+      // verificando se a variavel e verdadeira
+      if (configEscala) {
+        // pegando o index da lista de dias que devem conter as pessoas agrupadas
+        for (int index = 0; index < diasAgrupamento.length; index++) {
+          if (linha["Data"] == diasAgrupamento.elementAt(index)) {
+            for (var element in pessoasAgrupadas) {
+              //passando para o mapa um novo valor baseado no tipo de local de trabalho
+              // que contem na lista de pessoas agrupadas
+              linha[element.localTrabalho.replaceAll(" ", "_")] = element.nome;
+            }
           }
-          if (item.contains(Constantes.localUniforme)) {
-            linha[Constantes.localUniforme] = "";
-          }
-          if (widget.listaPeriodo[i].contains(Textos.diaSegunda) ||
-              widget.listaPeriodo[i].contains(Textos.diaTerca) ||
-              widget.listaPeriodo[i].contains(Textos.diaQuarta) ||
-              widget.listaPeriodo[i].contains(Textos.diaQuinta) ||
-              widget.listaPeriodo[i].contains(Textos.diaSexta)) {
-            linha[Constantes.localHoraTroca.replaceAll(" ", "_")] =
-                horarioSemana;
-          } else {
-            linha[Constantes.localHoraTroca.replaceAll(" ", "_")] =
-                horarioFinalSemana;
-          }
-        },
-      ).toList();
+        }
+      }
       // chamando metodo
       bancoDados.inserir(
           linha, RemoverAcentos.removerAcentos(pegaNomeDigitado()));
-      print(linha);
     }
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 2), () {
       Navigator.pushReplacementNamed(context, Constantes.rotaTelaSelecaoEscala);
     });
   }
 
-  //metodo para mudar o estado do radio button
+//metodo para mudar o estado do radio button
   void mudarRadioButton(int value) {
     setState(() {
       valorRadioButton = value;
@@ -187,8 +228,8 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
     });
   }
 
-  // metodo para consultar se existe alguma tabela com
-  // o mesmo nome que o usuario esta criando
+// metodo para consultar se existe alguma tabela com
+// o mesmo nome que o usuario esta criando
   consultaTabelasExistentes() async {
     final tabelasRecuperadas = await bancoDados.consultaTabela();
     setState(() {
@@ -204,7 +245,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
       } else {
         telaCarregar = true;
         chamarCriarTabela();
-        Timer(const Duration(seconds: 3), () {
+        Timer(const Duration(seconds: 2), () {
           inserir();
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(Textos.sucessoAddBanco)));
@@ -213,7 +254,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
     });
   }
 
-  // metodo para criar a tabela no banco de dados
+// metodo para criar a tabela no banco de dados
   chamarCriarTabela() async {
     await bancoDados.criarTabela(
         querySQL, RemoverAcentos.removerAcentos(pegaNomeDigitado()));
