@@ -7,23 +7,17 @@ import 'package:senturionglist/Uteis/textos.dart';
 class GerarPDF {
   List<String> chaves = [];
 
-  pegarDados(List<Map<dynamic, dynamic>> itens) {
-    itens.forEach((element) {
-      print(element["Uniforme"]);
-    });
+  pegarDados(List<Map<dynamic, dynamic>> itens, String nomePDF) {
     for (var value1 in itens.first.keys) {
       chaves.add(value1.toString().replaceAll("_", " "));
     }
-
-    Map<dynamic,dynamic> exibir = {};
-    exibir[1] = true;
-    exibir[2] = false;
-    exibir[3] = true;
-    gerarPDF("nomePDF", itens,exibir);
+    // chamando metodo
+    gerarPDF(nomePDF, itens);
+    //index 0 recebe valor vazio pois contem os valores do ID
     chaves[0] = "";
   }
 
-  gerarPDF(String nomePDF, List<Map<dynamic, dynamic>> itens,Map<dynamic, dynamic> exibir) async {
+  gerarPDF(String nomePDF, List<Map<dynamic, dynamic>> itens) async {
     final pdfLib.Document pdf = pdfLib.Document();
     //definindo que a variavel vai receber o caminho da imagem para serem exibidas
     final image = (await rootBundle.load('assets/imagens/logo_app.png'))
@@ -35,7 +29,7 @@ class GerarPDF {
 
     //adicionando a pagina ao pdf
     pdf.addPage(pdfLib.MultiPage(
-        //definindo formato
+        //definindo margem externa da tabela
         margin:
             const pdfLib.EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 10),
         //CABECALHO DO PDF
@@ -44,28 +38,29 @@ class GerarPDF {
                 pdfLib.Container(
                   alignment: pdfLib.Alignment.centerRight,
                   child: pdfLib.Column(children: [
+                    // passando imagem e texto
                     pdfLib.Image(pdfLib.MemoryImage(image),
                         width: 50, height: 50),
-                    pdfLib.Text("Textos.nomeIgreja"),
+                    pdfLib.Text(Textos.pdfNomeInstituicaoADTL),
                   ]),
                 ),
                 pdfLib.SizedBox(height: 5),
-                pdfLib.Text("extos.txtCabecalhoPDF",
+                pdfLib.Text(Textos.pdfCabecalho,
                     textAlign: pdfLib.TextAlign.center),
               ],
             ),
         //RODAPE DO PDF
         footer: (context) => pdfLib.Column(children: [
-              pdfLib.Container(
-                  child: pdfLib.Column(children: [
-                pdfLib.Text("Observações:"),
-                pdfLib.Container(
-                  child: pdfLib.Text("observacao",
-                      textAlign: pdfLib.TextAlign.center,
-                      style:
-                          pdfLib.TextStyle(fontWeight: pdfLib.FontWeight.bold)),
-                ),
-              ])),
+              // pdfLib.Container(
+              //     child: pdfLib.Column(children: [
+              //   pdfLib.Text("Observações:"),
+              //   pdfLib.Container(
+              //     child: pdfLib.Text("observacao",
+              //         textAlign: pdfLib.TextAlign.center,
+              //         style:
+              //             pdfLib.TextStyle(fontWeight: pdfLib.FontWeight.bold)),
+              //   ),
+              // ])),
               pdfLib.SizedBox(height: 20.0),
               pdfLib.Container(
                 child: pdfLib.Text(Textos.pdfRodape,
@@ -101,18 +96,18 @@ class GerarPDF {
                   cellAlignment: pdfLib.Alignment.center,
                   headerHeight: 1,
                   data: <List<String>>[
+                    // passando lista que ira compor o nome das colunas
                     chaves,
+                    // passando a lista que ira contem os valores das colunas
                     ...itens.map(
-                      (e2) {
+                      (linha) {
                         return [
-                          ...e2.values.map(
-                            (e) {
-                              int elemento = 0;
-                              print(exibir.values.where((element) => element == true));
-                              if (e == e2.values.elementAt(0)) {
+                          ...linha.values.map(
+                            (coluna) {
+                              if ((linha.values.elementAt(0)) == coluna) {
                                 return "";
-                              }else {
-                              return e.toString();
+                              } else {
+                                return coluna.toString();
                               }
                             },
                           )

@@ -395,7 +395,7 @@ class _TelaListagemState extends State<TelaListagem> {
                       child: ElevatedButton(
                         onPressed: () {
                           GerarPDF pdf = GerarPDF();
-                          pdf.pegarDados(itensBanco);
+                          pdf.pegarDados(itensBanco,"ffds");
                         },
                         child: Text(Textos.btnGerarPDF,
                             style: const TextStyle(

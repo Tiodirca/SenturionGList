@@ -137,6 +137,9 @@ class Textos {
   static String diaDomingo = "domingo";
 
 
+  static String pdfCabecalho =
+      "Escala  voluntaria de cooperador(a) da ADTL Parque São Carlos";
+  static String pdfNomeInstituicaoADTL = "ADTL Parque São Carlos";
   static String pdfEscalaGerada = "Escala gerada por Senturion G List";
   static String pdfRodape = "\"Quem sua mão ao arado já pois, constante precisa ser\"";
 }
