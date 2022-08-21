@@ -46,6 +46,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
   bool configEscala = false;
   bool telaCarregar = false;
   bool nomeTabelaExiste = false;
+
   String querySQL = "";
   final TextEditingController _controllerNomeEscala =
       TextEditingController(text: "");
