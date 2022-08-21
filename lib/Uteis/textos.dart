@@ -8,6 +8,7 @@ class Textos {
   static String btnUsarEscala = "Usar Escala";
   static String btnAtualizar = "Atualizar";
   static String btnConfigHoraTroca = "Horário troca de turno";
+  static String btnCriar = "Criar";
 
   static String nomeApp = "Senturion G List";
 
@@ -74,6 +75,10 @@ class Textos {
       "Aqui você pode conferir a escala gerada. revise-a antes de "
       "gerar o arquivo em PDF,se necessario edite ou adicione itens conforme precisar";
   static String telaListagemOpcoes = "Opções de item";
+
+  // CONFIG GERAR PDF
+  static String labelNomePDF = "Nome do PDF";
+  static String decricaoNomePDF = "Defina um nome para o arquivo";
 
   // TELA EDICAO
   static String nomeTelaEdicao = "Edição de item";
