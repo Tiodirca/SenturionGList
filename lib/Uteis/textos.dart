@@ -1,5 +1,8 @@
 class Textos {
-  // botoes
+  // NOME APP
+  static String nomeApp = "Senturion G List";
+
+  // BOTOES
   static String btnCadastrar = "Cadastrar";
   static String btnCooperador = "Cooperadores";
   static String btnCooperadoras = "Cooperadoras";
@@ -9,8 +12,6 @@ class Textos {
   static String btnAtualizar = "Atualizar";
   static String btnConfigHoraTroca = "Horário troca de turno";
   static String btnGerar = "Gerar";
-
-  static String nomeApp = "Senturion G List";
 
   // TELA INICIAL
   static String legSelecaoTipoEscala =
@@ -84,12 +85,15 @@ class Textos {
   static String descricaoObservacaoPDF =
       "Deseja adicionar alguma observação/Aviso  ? ";
 
-  // TELA EDICAO
+  // TELA EDICAO ITEM
   static String nomeTelaEdicao = "Edição de item";
   static String descricaoTelaEdicao =
       "Utilize os campos abaixo para editar os itens";
 
-  // TELA EDICAO
+  static String descricaoTelaEdiCadCampoVazio =
+      "Para deixar algum dos campos vazios, digite a seguinte palavra:  'definir' ";
+
+  // TELA CADASTRO ITEM
   static String nomeTelaCadastroItem = "Cadastro de item";
   static String descricaoTelaCadastroItem =
       "Utilize os campos abaixo para cadastrar um novo item na escala gerada";
@@ -116,7 +120,7 @@ class Textos {
   static String legAlertExclusao = "Deseja realmente excluir este item ?";
   static String legAlertOpcoes = "Selecione uma opção";
 
-  // ERROS E SUCESSO
+  // ERROS
   static String erroTextFieldVazio = "Preencha o campo antes";
   static String erroSemIntervalo =
       "Defina um periodo de dias que terá a escala";
@@ -129,8 +133,9 @@ class Textos {
   static String erroExclusaoItemListagem =
       "A escala não pode ficar vazia. adicione"
       " pelo menos um outro item. para que possa excluir este";
-  static String erroCaracteresEspeciais =
-      "Nome contém caractere especial. remova para adicionar item a base de dados";
+  static String erroPreenchaCampo = "Preencha todos os campos";
+
+  // SUCESSOS
   static String sucessoAddBanco = "Sucesso ao adicionar item a base de dados";
   static String sucessoExluirItemBanco =
       "Sucesso ao excluir item da base de dados";
@@ -147,6 +152,7 @@ class Textos {
   static String diaSabado = "sábado";
   static String diaDomingo = "domingo";
 
+  // PDF
   static String pdfCabecalho =
       "Escala  voluntaria de cooperador(a) da ADTL Parque São Carlos";
   static String pdfNomeInstituicaoADTL = "ADTL Parque São Carlos";

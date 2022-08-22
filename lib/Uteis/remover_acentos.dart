@@ -10,11 +10,4 @@ class RemoverAcentos {
     }
     return texto;
   }
-  static verificarCaracteresEspeciais(String texto) {
-    if (texto.contains(RegExp('[^A-Za-z0-9]'))) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 }

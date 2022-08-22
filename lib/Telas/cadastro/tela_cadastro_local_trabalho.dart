@@ -28,8 +28,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
   Estilo estilo = Estilo();
   int valorGenero = 0;
   int idItem = 0;
-  bool retornoListaVazia = false;
-  bool nomeExiste = false;
+  bool boolRetornoListaVazia = false;
+  bool boolNomeExiste = false;
   String tipoEscala = "";
   List<LocalTrabalho> localTrabalho = [];
   List<String> localSelecionados = [];
@@ -70,10 +70,6 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
   // metodo para inserir os dados no banco de dados
   inserirDados() async {
     // linha para incluir os dados
-    if (RemoverAcentos.verificarCaracteresEspeciais(pegarTextoDigitado())) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(Textos.erroCaracteresEspeciais)));
-    } else {
       Map<String, dynamic> linha = {
         BancoDeDados.columnLocal:
             RemoverAcentos.removerAcentos(pegarTextoDigitado()),
@@ -85,7 +81,6 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
             .showSnackBar(SnackBar(content: Text(Textos.sucessoAddBanco)));
       }
       consultarLocalTrabalho();
-    }
   }
 
   // metodo responsavel por chamar metodo para fazer consulta ao banco de dados
@@ -102,9 +97,9 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
         // caso a lista retornada nao seja vazia executar comandos abaixo
         if (value.isNotEmpty) {
           adicionarItensCheckBox();
-          retornoListaVazia = false;
+          boolRetornoListaVazia = false;
         } else {
-          retornoListaVazia = true;
+          boolRetornoListaVazia = true;
         }
       });
     });
@@ -290,18 +285,18 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                                                       in itensCheckBox) {
                                                     if (value.texto ==
                                                         pegarTextoDigitado()) {
-                                                      nomeExiste = true;
+                                                      boolNomeExiste = true;
                                                     }
                                                   }
-                                                  if (nomeExiste == true) {
+                                                  if (boolNomeExiste == true) {
                                                     ScaffoldMessenger.of(
                                                             context)
                                                         .showSnackBar(SnackBar(
                                                             content: Text(Textos
                                                                 .erroNomeExiste)));
-                                                    nomeExiste = false;
+                                                    boolNomeExiste = false;
                                                   } else {
-                                                    nomeExiste = false;
+                                                    boolNomeExiste = false;
                                                     inserirDados();
                                                   }
                                                 });
@@ -341,7 +336,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                                         ),
                                         LayoutBuilder(
                                           builder: (context, constraints) {
-                                            if (retornoListaVazia) {
+                                            if (boolRetornoListaVazia) {
                                               return SizedBox(
                                                 height: 200,
                                                 child: Center(

@@ -19,8 +19,8 @@ class TelaSelecaoEscala extends StatefulWidget {
 
 class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
   Estilo estilo = Estilo();
-  bool exibirConfirmacaoEscala = false;
-  bool exibirLista = false;
+  bool boolExibirConfirmacaoEscala = false;
+  bool boolExibirLista = false;
   String nomeItemDrop = "";
   String tabelaSelecionada = "";
   late List<String> tabelas;
@@ -48,9 +48,9 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
             element.toString().contains(Constantes.bancoTabelaPessoa));
       }
       if (tabelas.isNotEmpty) {
-        exibirLista = true;
+        boolExibirLista = true;
       } else {
-        exibirLista = false;
+        boolExibirLista = false;
       }
     });
   }
@@ -142,7 +142,7 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                                   children: [
                                     LayoutBuilder(
                                       builder: (context, constraints) {
-                                        if (exibirLista) {
+                                        if (boolExibirLista) {
                                           return DropdownButton(
                                             value: nomeItemDrop,
                                             icon: const Icon(
@@ -165,7 +165,7 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                                               setState(() {
                                                 nomeItemDrop = value!;
                                                 tabelaSelecionada = value;
-                                                exibirConfirmacaoEscala = true;
+                                                boolExibirConfirmacaoEscala = true;
                                               });
                                             },
                                           );
@@ -188,7 +188,7 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                                       height: 20.0,
                                     ),
                                     Visibility(
-                                      visible: exibirConfirmacaoEscala,
+                                      visible: boolExibirConfirmacaoEscala,
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -236,14 +236,14 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                   ),
                 ),
                 bottomNavigationBar: SizedBox(
-                  height: exibirConfirmacaoEscala
+                  height: boolExibirConfirmacaoEscala
                       ? Constantes.alturaNavigationBar
                       : 70.0,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Visibility(
-                        visible: exibirConfirmacaoEscala,
+                        visible: boolExibirConfirmacaoEscala,
                         child: Theme(
                           data: estilo.botoesBarraNavegacao,
                           child: SizedBox(

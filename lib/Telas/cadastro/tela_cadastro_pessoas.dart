@@ -24,10 +24,10 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
   Estilo estilo = Estilo();
   int valorGenero = 0;
   int idItem = 0;
-  bool retornoListaVazia = false;
-  bool nomeExiste = false;
+  bool boolRetornoListaVazia = false;
+  bool boolNomeExiste = false;
   String tipoEscala = "";
-  List<Pessoa> pessoas = [];
+  List<Pessoa> listaPessoas = [];
   List<String> listaPessoasSelecionados = [];
   final List<CheckBoxModel> itensCheckBox = [];
   final TextEditingController _controllerNomePessoa =
@@ -62,49 +62,44 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
 
   // metodo para inserir os dados no banco de dados
   inserirDados() async {
-    if (RemoverAcentos.verificarCaracteresEspeciais(pegarTextoDigitado())) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(Textos.erroCaracteresEspeciais)));
-    } else {
-      // linha para incluir os dados
-      Map<String, dynamic> linha = {
-        BancoDeDados.columnPessoaNome: pegarTextoDigitado(),
-        BancoDeDados.columnPessoaGenero: valorGenero
-      };
-      int id = await bancoDados.inserir(linha, Constantes.bancoTabelaPessoa);
-      if (id.toString().isNotEmpty) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(Textos.sucessoAddBanco)));
-      }
-      consultarPessoas();
+    // linha para incluir os dados
+    Map<String, dynamic> linha = {
+      BancoDeDados.columnPessoaNome: pegarTextoDigitado(),
+      BancoDeDados.columnPessoaGenero: valorGenero
+    };
+    int id = await bancoDados.inserir(linha, Constantes.bancoTabelaPessoa);
+    if (id.toString().isNotEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(Textos.sucessoAddBanco)));
     }
+    consultarPessoas();
   }
 
   // metodo responsavel por chamar metodo para fazer consulta ao banco de dados
   consultarPessoas() async {
     // limpando listas
     itensCheckBox.clear();
-    pessoas.clear();
+    listaPessoas.clear();
     // chamando metodo responsavel por pegar os itens no banco de dados
     await Consulta.consultarBancoPessoas(Constantes.bancoTabelaPessoa)
         .then((value) {
       setState(() {
-        pessoas = value;
+        listaPessoas = value;
         // caso a lista retornada nao seja vazia executar comandos abaixo
         if (value.isNotEmpty) {
           // removendo itens da lista conforme os valores contidos nos parametros passados
-          pessoas.removeWhere((item) =>
+          listaPessoas.removeWhere((item) =>
               (item.genero == true && widget.genero == false) ||
               item.genero == false && widget.genero == true);
           // verificando se a lista nao esta vazia
-          if (pessoas.isNotEmpty) {
+          if (listaPessoas.isNotEmpty) {
             adicionarItensCheckBox();
-            retornoListaVazia = false;
+            boolRetornoListaVazia = false;
           } else {
-            retornoListaVazia = true;
+            boolRetornoListaVazia = true;
           }
         } else {
-          retornoListaVazia = true;
+          boolRetornoListaVazia = true;
         }
       });
     });
@@ -113,9 +108,9 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
   // metodo para adicionar itens ao widget de check box
   adicionarItensCheckBox() {
     setState(() {
-      for (int i = 0; i < pessoas.length; i++) {
+      for (int i = 0; i < listaPessoas.length; i++) {
         itensCheckBox
-            .add(CheckBoxModel(texto: pessoas[i].nome, idItem: pessoas[i].id));
+            .add(CheckBoxModel(texto: listaPessoas[i].nome, idItem: listaPessoas[i].id));
       }
       _controllerNomePessoa.text = ""; // definindo texto do campo
     });
@@ -288,18 +283,18 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                                                         in itensCheckBox) {
                                                       if (value.texto ==
                                                           pegarTextoDigitado()) {
-                                                        nomeExiste = true;
+                                                        boolNomeExiste = true;
                                                       }
                                                     }
-                                                    if (nomeExiste == true) {
+                                                    if (boolNomeExiste == true) {
                                                       ScaffoldMessenger.of(
                                                               context)
                                                           .showSnackBar(SnackBar(
                                                               content: Text(Textos
                                                                   .erroNomeExiste)));
-                                                      nomeExiste = false;
+                                                      boolNomeExiste = false;
                                                     } else {
-                                                      nomeExiste = false;
+                                                      boolNomeExiste = false;
                                                       inserirDados();
                                                     }
                                                   });
@@ -338,7 +333,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                                       ),
                                       LayoutBuilder(
                                         builder: (context, constraints) {
-                                          if (retornoListaVazia) {
+                                          if (boolRetornoListaVazia) {
                                             return SizedBox(
                                               height: 200,
                                               child: Center(

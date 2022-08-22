@@ -32,7 +32,6 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
   DateTime dataFinal = DateTime.now();
   List<String> listaDatasFinal = [];
   List<DateTime> listaDatasAuxiliar = [];
-  double alturaNavigationBar = 120.0;
 
   @override
   void initState() {

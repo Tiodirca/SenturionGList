@@ -17,7 +17,7 @@ class TelaConfiguracoes extends StatefulWidget {
 
 class _TelaConfiguracoesState extends State<TelaConfiguracoes> {
   Estilo estilo = Estilo();
-  bool ativarConfigHoraTroca = false;
+  bool boolAtivarConfigHoraTroca = false;
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class _TelaConfiguracoesState extends State<TelaConfiguracoes> {
                                       ),
                                       onPressed: () {
                                         setState(() {
-                                          ativarConfigHoraTroca = true;
+                                          boolAtivarConfigHoraTroca = true;
                                         });
                                       },
                                       child: Text(
@@ -104,7 +104,7 @@ class _TelaConfiguracoesState extends State<TelaConfiguracoes> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Visibility(
-                                      visible: ativarConfigHoraTroca,
+                                      visible: boolAtivarConfigHoraTroca,
                                       child: SizedBox(
                                         height: alturaTela * 0.7,
                                         child: Center(
@@ -121,7 +121,7 @@ class _TelaConfiguracoesState extends State<TelaConfiguracoes> {
                                                       size: 30),
                                                   onPressed: () {
                                                     setState(() {
-                                                      ativarConfigHoraTroca =
+                                                      boolAtivarConfigHoraTroca =
                                                           false;
                                                     });
                                                   },

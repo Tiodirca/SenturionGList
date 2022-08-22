@@ -26,7 +26,7 @@ class _TelaListagemState extends State<TelaListagem> {
   int idItem = 0;
   String dataItem = "";
   List<String> chaves = [];
-  bool configGerarPDF = false;
+  bool boolConfigGerarPDF = false;
 
   // referencia classe para gerenciar o banco de dados
   final bancoDados = BancoDeDados.instance;
@@ -190,7 +190,7 @@ class _TelaListagemState extends State<TelaListagem> {
                                   child: Stack(
                                     children: [
                                       Visibility(
-                                        visible: !configGerarPDF,
+                                        visible: !boolConfigGerarPDF,
                                         child: Container(
                                           alignment: Alignment.center,
                                           margin: const EdgeInsets.symmetric(
@@ -391,7 +391,7 @@ class _TelaListagemState extends State<TelaListagem> {
                                       ),
                                       Positioned(
                                         child: Visibility(
-                                            visible: configGerarPDF,
+                                            visible: boolConfigGerarPDF,
                                             child: Center(
                                               child: SizedBox(
                                                   height: alturaTela * 0.5,
@@ -415,7 +415,7 @@ class _TelaListagemState extends State<TelaListagem> {
                                                                 size: 30),
                                                             onPressed: () {
                                                               setState(() {
-                                                                configGerarPDF =
+                                                                boolConfigGerarPDF =
                                                                     false;
                                                               });
                                                             },
@@ -454,7 +454,7 @@ class _TelaListagemState extends State<TelaListagem> {
                       child: ElevatedButton(
                         onPressed: () {
                           setState(() {
-                            configGerarPDF = true;
+                            boolConfigGerarPDF = true;
                           });
                         },
                         child: Text(Textos.btnGerarPDF,

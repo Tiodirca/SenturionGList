@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pdfLib;
-import 'package:senturionglist/Uteis/salvarPDF/SavePDFMobile.dart';
+import 'package:senturionglist/Uteis/PDF/SavePDF.dart';
 import 'package:senturionglist/Uteis/textos.dart';
 
 class GerarPDF {

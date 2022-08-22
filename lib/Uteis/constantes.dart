@@ -28,19 +28,24 @@ class Constantes {
   static const parametroEdicaoCadIdItem = "idItem";
   static const parametroEdicaoCadCamposBanco = "parametroEdicaoCadCamposBanco";
 
+  // constantes para referenciar no share preferences
   static const primeiroHorarioSemana = "primeiroHorarioSemana";
   static const segundoHorarioSemana = "segundoHorarioSemana";
   static const primeiroHorarioFinalSemana = "primeiroHorarioFinalSemana";
   static const segundoHorarioFinalSemana = "segundoHorarioFinalSemana";
 
+  //constantes com os horarios padroes de troca de escala
   static const horarioPrimeiroSemanaPadrao = "18:45";
   static const horarioSegundoSemanaPadrao = "19:45";
   static const horarioPrimeiroFinalSemanaPadrao = "18:00";
   static const horarioSegundoFinalSemanaPadrao = "19:00";
 
+  // constantes usadas na tela de edicao e cadastro de item manual
   static const horarioMudado = "horarioMudado";
   static const telaCadastroItem = "cadastro";
   static const telaEdicaoItem = "edicao";
+
+  static const parametroCampoVazio = "definir";
 
   // constantes dos icones exibidos na barra de navegacao
   static const tipoIconeHome = "home";

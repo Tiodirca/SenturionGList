@@ -43,9 +43,9 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
   String tipoEscala = "";
   double alturaNavigationBar = 140.0;
   int valorRadioButton = 0;
-  bool configEscala = false;
-  bool telaCarregar = false;
-  bool nomeTabelaExiste = false;
+  bool boolConfigEscala = false;
+  bool boolTelaCarregar = false;
+  bool boolNomeTabelaExiste = false;
 
   String querySQL = "";
   final TextEditingController _controllerNomeEscala =
@@ -155,7 +155,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
 
   // metodo para inserir dados na tabela criada
   inserir() async {
-    if (configEscala) {
+    if (boolConfigEscala) {
       pegarItensPessoasAgrupadas();
       pegarItensDiasAgrupamento();
     }
@@ -190,7 +190,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
         }
       }
       // verificando se a variavel e verdadeira
-      if (configEscala) {
+      if (boolConfigEscala) {
         // pegando o index da lista de dias que devem conter as pessoas agrupadas
         for (int index = 0; index < diasAgrupamento.length; index++) {
           if (linha["Data"] == diasAgrupamento.elementAt(index)) {
@@ -217,12 +217,12 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
       switch (valorRadioButton) {
         case 0:
           setState(() {
-            configEscala = false;
+            boolConfigEscala = false;
           });
           break;
         case 1:
           setState(() {
-            configEscala = true;
+            boolConfigEscala = true;
           });
           break;
       }
@@ -237,14 +237,14 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
       for (var linha in tabelasRecuperadas) {
         var tabela = linha['name'];
         if (pegaNomeDigitado() == tabela) {
-          nomeTabelaExiste = true;
+          boolNomeTabelaExiste = true;
         }
       }
-      if (nomeTabelaExiste) {
+      if (boolNomeTabelaExiste) {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(Textos.erroGerarEscalaTabelaExistente)));
       } else {
-        telaCarregar = true;
+        boolTelaCarregar = true;
         chamarCriarTabela();
         Timer(const Duration(seconds: 2), () {
           inserir();
@@ -285,7 +285,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                 },
                 child: LayoutBuilder(
                   builder: (context, constraints) {
-                    if (telaCarregar) {
+                    if (boolTelaCarregar) {
                       return Container(
                           color: PaletaCores.corAdtl,
                           width: larguraTela,
@@ -422,7 +422,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                                   ],
                                                 ),
                                                 Visibility(
-                                                  visible: configEscala,
+                                                  visible: boolConfigEscala,
                                                   child: Wrap(
                                                     crossAxisAlignment:
                                                         WrapCrossAlignment
@@ -528,7 +528,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
               ),
               bottomNavigationBar: LayoutBuilder(
                 builder: (context, constraints) {
-                  if (telaCarregar) {
+                  if (boolTelaCarregar) {
                     return Container(
                       width: larguraTela,
                       height: Constantes.alturaNavigationBar,
@@ -557,17 +557,8 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                       if (_chaveFormulario.currentState!
                                           .validate()) {
                                         setState(() {
-                                          if (RemoverAcentos
-                                              .verificarCaracteresEspeciais(
-                                                  pegaNomeDigitado())) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(SnackBar(
-                                                    content: Text(Textos
-                                                        .erroCaracteresEspeciais)));
-                                          } else {
-                                            nomeTabelaExiste = false;
+                                          boolNomeTabelaExiste = false;
                                             consultaTabelasExistentes();
-                                          }
                                         });
                                       }
                                     },

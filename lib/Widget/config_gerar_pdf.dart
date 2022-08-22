@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:senturionglist/Uteis/PDF/GerarPDF.dart';
+import 'package:senturionglist/Uteis/constantes.dart';
+import 'package:senturionglist/Uteis/estilo.dart';
+import 'package:senturionglist/Uteis/paleta_cores.dart';
+import 'package:senturionglist/Uteis/textos.dart';
 
-import '../Uteis/GerarPDF.dart';
-import '../Uteis/constantes.dart';
-import '../Uteis/estilo.dart';
-import '../Uteis/paleta_cores.dart';
-import '../Uteis/textos.dart';
+
 
 class ConfigGerarPDF extends StatefulWidget {
   const ConfigGerarPDF(
@@ -22,7 +23,7 @@ class _ConfigGerarPDFState extends State<ConfigGerarPDF> {
   TextEditingController nomePDF = TextEditingController(text: "");
   TextEditingController observacaoText = TextEditingController(text: "");
   int valorRadioButton = 0;
-  bool observacao = false;
+  bool boolObservacao = false;
 
   @override
   void initState() {
@@ -64,12 +65,12 @@ class _ConfigGerarPDFState extends State<ConfigGerarPDF> {
       switch (valorRadioButton) {
         case 0:
           setState(() {
-            observacao = false;
+            boolObservacao = false;
           });
           break;
         case 1:
           setState(() {
-            observacao = true;
+            boolObservacao = true;
           });
           break;
       }
@@ -138,13 +139,13 @@ class _ConfigGerarPDFState extends State<ConfigGerarPDF> {
                 ],
               ),
               Visibility(
-                visible: observacao,
+                visible: boolObservacao,
                 child: textFields(
                     larguraTela, Textos.labelObservacaoPDF, observacaoText),
               ),
               Theme(
                 data: estilo.botoesBarraNavegacao,
-                child: Container(
+                child: SizedBox(
                   width: Constantes.larguraBotoesBarraNavegacao,
                   height: Constantes.alturaBotoesNavegacao,
                   child: ElevatedButton(

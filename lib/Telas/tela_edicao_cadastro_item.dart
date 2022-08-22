@@ -31,7 +31,6 @@ class _TelaEdicaoCadastroItemState extends State<TelaEdicaoCadastroItem> {
   List<Map<dynamic, dynamic>> itens = [];
   List<String> chaves = [];
   List<String> valores = [];
-  bool ativarBotaoHora = false;
   DateTime data = DateTime.now();
   String horarioSemana = "";
   String horarioFinalSemana = "";
@@ -160,7 +159,11 @@ class _TelaEdicaoCadastroItemState extends State<TelaEdicaoCadastroItem> {
           keyboardType: TextInputType.text,
           initialValue: valorInicial,
           onChanged: (valor) {
-            valores[index] = valor.toString();
+            if (valor.contains(Constantes.parametroCampoVazio)) {
+              valores[index] = "";
+            } else {
+              valores[index] = valor.toString();
+            }
           },
           validator: (value) {
             if (value!.isEmpty) {
@@ -287,6 +290,14 @@ class _TelaEdicaoCadastroItemState extends State<TelaEdicaoCadastroItem> {
                                         widget.camposBancoCadastroItem.isEmpty
                                             ? Textos.descricaoTelaEdicao
                                             : Textos.descricaoTelaCadastroItem,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                            fontSize: Constantes
+                                                .tamanhoLetraDescritivas,
+                                            color: Colors.white),
+                                      ),
+                                      Text(
+                                        Textos.descricaoTelaEdiCadCampoVazio,
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                             fontSize: Constantes
@@ -439,6 +450,10 @@ class _TelaEdicaoCadastroItemState extends State<TelaEdicaoCadastroItem> {
                               Navigator.pushReplacementNamed(
                                   context, Constantes.rotaTelaListagem,
                                   arguments: widget.nomeTabela);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text(Textos.erroPreenchaCampo)));
                             }
                           },
                           child: Text(
