@@ -427,7 +427,7 @@ class _TelaEdicaoCadastroItemState extends State<TelaEdicaoCadastroItem> {
                       data: estilo.botoesBarraNavegacao,
                       child: SizedBox(
                         width: Constantes.larguraBotoesBarraNavegacao,
-                        height: 50,
+                        height: Constantes.alturaBotoesNavegacao,
                         child: ElevatedButton(
                           onPressed: () async {
                             if (_chaveFormulario.currentState!.validate()) {

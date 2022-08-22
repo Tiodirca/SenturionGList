@@ -57,7 +57,6 @@ class Estilo {
           // estilo dos botoes
           elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          side: const BorderSide(color: PaletaCores.corVerdeCiano, width: 1.5),
           primary: PaletaCores.corVerdeCiano,
           elevation: 10,
           textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),

@@ -248,7 +248,7 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
                           data: estilo.botoesBarraNavegacao,
                           child: SizedBox(
                             width: Constantes.larguraBotoesBarraNavegacao,
-                            height: 50,
+                            height: Constantes.alturaBotoesNavegacao,
                             child: ElevatedButton(
                               onPressed: () {
                                 Navigator.pushReplacementNamed(

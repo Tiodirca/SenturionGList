@@ -131,34 +131,37 @@ class _ConfigHoraTrocaTurnoState extends State<ConfigHoraTrocaTurno> {
 
     return SizedBox(
         height: alturaTela * 0.6,
-        width: larguraTela*0.8,
+        width: larguraTela * 0.8,
         child: SingleChildScrollView(
           child: Card(
+              elevation: 10,
               child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 10.0),
-                  width: larguraTela*0.6,
-                  child: Text(
-                    Textos.descricaoConfigHorarioTrocaTurno,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 10.0),
+                      width: larguraTela * 0.6,
+                      child: Text(
+                        Textos.descricaoConfigHorarioTrocaTurno,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    selecaoHorario(larguraTela, Textos.horarioInicialSemana,
+                        primeiroHorarioSemana),
+                    selecaoHorario(larguraTela, Textos.horarioFinalSemana,
+                        segundoHorarioSemana),
+                    selecaoHorario(
+                        larguraTela,
+                        Textos.horarioInicialFinalSemana,
+                        primeiroHorarioFinalSemana),
+                    selecaoHorario(larguraTela, Textos.horarioFinalFinalSemana,
+                        segundoHorarioFinalSemana)
+                  ],
                 ),
-                selecaoHorario(larguraTela, Textos.horarioInicialSemana,
-                    primeiroHorarioSemana),
-                selecaoHorario(larguraTela, Textos.horarioFinalSemana,
-                    segundoHorarioSemana),
-                selecaoHorario(larguraTela, Textos.horarioInicialFinalSemana,
-                    primeiroHorarioFinalSemana),
-                selecaoHorario(larguraTela, Textos.horarioFinalFinalSemana,
-                    segundoHorarioFinalSemana)
-              ],
-            ),
-          )),
+              )),
         ));
   }
 }

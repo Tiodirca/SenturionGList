@@ -387,7 +387,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                           data: estilo.botoesBarraNavegacao,
                           child: SizedBox(
                             width: Constantes.larguraBotoesBarraNavegacao,
-                            height: 50,
+                            height: Constantes.alturaBotoesNavegacao,
                             child: ElevatedButton(
                               onPressed: () {
                                 pegarItensPessoas();
@@ -407,7 +407,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                                       arguments: dados);
                                 }
                               },
-                              child: const Icon(Icons.arrow_forward, size: 40),
+                              child: const Icon(Icons.arrow_forward, size: Constantes.tamanhoIconeBotoesNavegacao),
                             ),
                           ),
                         ),

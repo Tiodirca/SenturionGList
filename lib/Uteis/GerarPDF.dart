@@ -7,17 +7,18 @@ import 'package:senturionglist/Uteis/textos.dart';
 class GerarPDF {
   List<String> chaves = [];
 
-  pegarDados(List<Map<dynamic, dynamic>> itens, String nomePDF) {
+  pegarDados(List<Map<dynamic, dynamic>> itens, String nomePDF,String observacao) {
     for (var value1 in itens.first.keys) {
       chaves.add(value1.toString().replaceAll("_", " "));
     }
     // chamando metodo
-    gerarPDF(nomePDF, itens);
+    gerarPDF(nomePDF, itens,observacao);
     //index 0 recebe valor vazio pois contem os valores do ID
     chaves[0] = "";
   }
 
-  gerarPDF(String nomePDF, List<Map<dynamic, dynamic>> itens) async {
+  gerarPDF(String nomePDF, List<Map<dynamic, dynamic>> itens,
+      String observacao) async {
     final pdfLib.Document pdf = pdfLib.Document();
     //definindo que a variavel vai receber o caminho da imagem para serem exibidas
     final image = (await rootBundle.load('assets/imagens/logo_app.png'))
@@ -51,16 +52,16 @@ class GerarPDF {
             ),
         //RODAPE DO PDF
         footer: (context) => pdfLib.Column(children: [
-              // pdfLib.Container(
-              //     child: pdfLib.Column(children: [
-              //   pdfLib.Text("Observações:"),
-              //   pdfLib.Container(
-              //     child: pdfLib.Text("observacao",
-              //         textAlign: pdfLib.TextAlign.center,
-              //         style:
-              //             pdfLib.TextStyle(fontWeight: pdfLib.FontWeight.bold)),
-              //   ),
-              // ])),
+              pdfLib.Container(
+                  child: pdfLib.Column(children: [
+                pdfLib.Text("Observações:"),
+                pdfLib.Container(
+                  child: pdfLib.Text(observacao.isEmpty ? "Sem Observações/Avisos" : observacao,
+                      textAlign: pdfLib.TextAlign.center,
+                      style:
+                          pdfLib.TextStyle(fontWeight: pdfLib.FontWeight.bold)),
+                ),
+              ])),
               pdfLib.SizedBox(height: 20.0),
               pdfLib.Container(
                 child: pdfLib.Text(Textos.pdfRodape,

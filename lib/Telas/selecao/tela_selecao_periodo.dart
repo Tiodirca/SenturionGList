@@ -320,7 +320,7 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
                         data: estilo.botoesBarraNavegacao,
                         child: SizedBox(
                           width: Constantes.larguraBotoesBarraNavegacao,
-                          height: 50,
+                          height: Constantes.alturaBotoesNavegacao,
                           child: ElevatedButton(
                             onPressed: () {
                               if (listaDatasFinal.isEmpty) {
@@ -345,7 +345,7 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
                                     arguments: dados);
                               }
                             },
-                            child: const Icon(Icons.arrow_forward, size: 40),
+                            child: const Icon(Icons.arrow_forward, size: Constantes.tamanhoIconeBotoesNavegacao),
                           ),
                         ),
                       ),

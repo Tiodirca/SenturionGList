@@ -552,7 +552,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                 data: estilo.botoesBarraNavegacao,
                                 child: SizedBox(
                                   width: Constantes.larguraBotoesBarraNavegacao,
-                                  height: 50,
+                                  height: Constantes.alturaBotoesNavegacao,
                                   child: ElevatedButton(
                                     onPressed: () {
                                       if (_chaveFormulario.currentState!

@@ -8,7 +8,7 @@ class Textos {
   static String btnUsarEscala = "Usar Escala";
   static String btnAtualizar = "Atualizar";
   static String btnConfigHoraTroca = "Horário troca de turno";
-  static String btnCriar = "Criar";
+  static String btnCriar = "Gerar Arquivo";
 
   static String nomeApp = "Senturion G List";
 
@@ -23,7 +23,8 @@ class Textos {
   static String descricaoCadastroPessoas =
       "Digite o nome da pessoa que deseja adicionar a lista";
   static String descricaoCadastroLocalTrabalho =
-      "Digite o nome dos locais de trabalho que deseja adicionar a lista";
+      "Digite o nome dos locais de trabalho que deseja adicionar a lista, campo de servir Santa Ceia e "
+      "Uniforme,Data e Horario de troca são adicionados automaticamente";
   static String labelTextCadPessoa = "Nome da pessoa";
   static String labelTextCadLocalTrabalho = "Nome do local";
   static String descricaoCadastroLocalOpcoesAdicionais =
@@ -78,7 +79,10 @@ class Textos {
 
   // CONFIG GERAR PDF
   static String labelNomePDF = "Nome do PDF";
+  static String labelObservacaoPDF = "Observação/Aviso";
   static String decricaoNomePDF = "Defina um nome para o arquivo";
+  static String descricaoObservacaoPDF =
+      "Deseja adicionar alguma observação/Aviso no arquivo ? ";
 
   // TELA EDICAO
   static String nomeTelaEdicao = "Edição de item";
@@ -141,10 +145,10 @@ class Textos {
   static String diaSabado = "sábado";
   static String diaDomingo = "domingo";
 
-
   static String pdfCabecalho =
       "Escala  voluntaria de cooperador(a) da ADTL Parque São Carlos";
   static String pdfNomeInstituicaoADTL = "ADTL Parque São Carlos";
   static String pdfEscalaGerada = "Escala gerada por Senturion G List";
-  static String pdfRodape = "\"Quem sua mão ao arado já pois, constante precisa ser\"";
+  static String pdfRodape =
+      "\"Quem sua mão ao arado já pois, constante precisa ser\"";
 }
