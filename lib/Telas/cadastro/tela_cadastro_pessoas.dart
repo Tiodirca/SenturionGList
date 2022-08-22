@@ -55,20 +55,29 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
     }
   }
 
+  pegarTextoDigitado() {
+    String texto = RemoverAcentos.removerAcentos(_controllerNomePessoa.text);
+    return texto;
+  }
+
   // metodo para inserir os dados no banco de dados
   inserirDados() async {
-    // linha para incluir os dados
-    Map<String, dynamic> linha = {
-      BancoDeDados.columnPessoaNome:
-          RemoverAcentos.removerAcentos(_controllerNomePessoa.text),
-      BancoDeDados.columnPessoaGenero: valorGenero
-    };
-    int id = await bancoDados.inserir(linha, Constantes.bancoTabelaPessoa);
-    if (id.toString().isNotEmpty) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(Textos.sucessoAddBanco)));
+    if (RemoverAcentos.verificarCaracteresEspeciais(pegarTextoDigitado())) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(Textos.erroCaracteresEspeciais)));
+    } else {
+      // linha para incluir os dados
+      Map<String, dynamic> linha = {
+        BancoDeDados.columnPessoaNome: pegarTextoDigitado(),
+        BancoDeDados.columnPessoaGenero: valorGenero
+      };
+      int id = await bancoDados.inserir(linha, Constantes.bancoTabelaPessoa);
+      if (id.toString().isNotEmpty) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(Textos.sucessoAddBanco)));
+      }
+      consultarPessoas();
     }
-    consultarPessoas();
   }
 
   // metodo responsavel por chamar metodo para fazer consulta ao banco de dados
@@ -278,8 +287,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                                                     for (var value
                                                         in itensCheckBox) {
                                                       if (value.texto ==
-                                                          _controllerNomePessoa
-                                                              .text) {
+                                                          pegarTextoDigitado()) {
                                                         nomeExiste = true;
                                                       }
                                                     }
@@ -407,7 +415,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                                       arguments: dados);
                                 }
                               },
-                              child: const Icon(Icons.arrow_forward, size: Constantes.tamanhoIconeBotoesNavegacao),
+                              child: const Icon(Icons.arrow_forward,
+                                  size: Constantes.tamanhoIconeBotoesNavegacao),
                             ),
                           ),
                         ),

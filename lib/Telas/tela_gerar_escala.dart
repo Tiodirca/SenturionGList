@@ -148,7 +148,8 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
   // metodo para pegar o valor digitado
   // reescrevendo contendo o caracter passado como parametro
   pegaNomeDigitado() {
-    String nome = _controllerNomeEscala.text.replaceAll(" ", "_");
+    String nome = RemoverAcentos.removerAcentos(
+        _controllerNomeEscala.text.replaceAll(" ", "_"));
     return nome;
   }
 
@@ -202,8 +203,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
         }
       }
       // chamando metodo
-      bancoDados.inserir(
-          linha, RemoverAcentos.removerAcentos(pegaNomeDigitado()));
+      bancoDados.inserir(linha, pegaNomeDigitado());
     }
     Timer(const Duration(seconds: 2), () {
       Navigator.pushReplacementNamed(context, Constantes.rotaTelaSelecaoEscala);
@@ -257,8 +257,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
 
 // metodo para criar a tabela no banco de dados
   chamarCriarTabela() async {
-    await bancoDados.criarTabela(
-        querySQL, RemoverAcentos.removerAcentos(pegaNomeDigitado()));
+    await bancoDados.criarTabela(querySQL, pegaNomeDigitado());
   }
 
   @override
@@ -558,12 +557,21 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                       if (_chaveFormulario.currentState!
                                           .validate()) {
                                         setState(() {
-                                          nomeTabelaExiste = false;
-                                          consultaTabelasExistentes();
+                                          if (RemoverAcentos
+                                              .verificarCaracteresEspeciais(
+                                                  pegaNomeDigitado())) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                                    content: Text(Textos
+                                                        .erroCaracteresEspeciais)));
+                                          } else {
+                                            nomeTabelaExiste = false;
+                                            consultaTabelasExistentes();
+                                          }
                                         });
                                       }
                                     },
-                                    child: Text(Textos.btnGerar,
+                                    child: Text(Textos.btnCriarEscala,
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                             fontSize: 19,

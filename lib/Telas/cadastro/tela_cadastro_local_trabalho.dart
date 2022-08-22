@@ -61,21 +61,31 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
     localSelecionados.add(Constantes.localHoraTroca);
   }
 
+  pegarTextoDigitado() {
+    String texto = RemoverAcentos.removerAcentos(_controllerNome.text);
+    return texto;
+  }
+
+
   // metodo para inserir os dados no banco de dados
   inserirDados() async {
     // linha para incluir os dados
-    Map<String, dynamic> linha = {
-      BancoDeDados.columnLocal:
-          RemoverAcentos.removerAcentos(_controllerNome.text),
-    };
-    int id =
-        await bancoDados.inserir(linha, Constantes.bancoTabelaLocalTrabalho);
-    if (id.toString().isNotEmpty) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(Textos.sucessoAddBanco)));
+    if (RemoverAcentos.verificarCaracteresEspeciais(pegarTextoDigitado())) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(Textos.erroCaracteresEspeciais)));
+    } else {
+      Map<String, dynamic> linha = {
+        BancoDeDados.columnLocal:
+            RemoverAcentos.removerAcentos(pegarTextoDigitado()),
+      };
+      int id =
+          await bancoDados.inserir(linha, Constantes.bancoTabelaLocalTrabalho);
+      if (id.toString().isNotEmpty) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(Textos.sucessoAddBanco)));
+      }
+      consultarLocalTrabalho();
     }
-
-    consultarLocalTrabalho();
   }
 
   // metodo responsavel por chamar metodo para fazer consulta ao banco de dados
@@ -279,7 +289,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                                                   for (var value
                                                       in itensCheckBox) {
                                                     if (value.texto ==
-                                                        _controllerNome.text) {
+                                                        pegarTextoDigitado()) {
                                                       nomeExiste = true;
                                                     }
                                                   }
@@ -415,7 +425,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                                       arguments: dados);
                                 }
                               },
-                              child: const Icon(Icons.arrow_forward, size: Constantes.tamanhoIconeBotoesNavegacao),
+                              child: const Icon(Icons.arrow_forward,
+                                  size: Constantes.tamanhoIconeBotoesNavegacao),
                             ),
                           ),
                         ),
@@ -428,8 +439,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                               Textos.txtTipoEscala + tipoEscala,
                               textAlign: TextAlign.end,
                               style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold),
+                                  fontSize: 15, fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),

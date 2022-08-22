@@ -145,7 +145,6 @@ class _ConfigGerarPDFState extends State<ConfigGerarPDF> {
               Theme(
                 data: estilo.botoesBarraNavegacao,
                 child: Container(
-                  margin: const EdgeInsets.only(top: 10.0),
                   width: Constantes.larguraBotoesBarraNavegacao,
                   height: Constantes.alturaBotoesNavegacao,
                   child: ElevatedButton(
@@ -154,7 +153,8 @@ class _ConfigGerarPDFState extends State<ConfigGerarPDF> {
                       pdf.pegarDados(
                           widget.itensBanco, nomePDF.text, observacaoText.text);
                     },
-                    child: Text(Textos.btnCriar,
+                    child: Text(Textos.btnGerar,
+                        textAlign: TextAlign.center,
                         style: const TextStyle(
                             fontSize: Constantes.tamanhoLetraDescritivas,
                             fontWeight: FontWeight.bold)),

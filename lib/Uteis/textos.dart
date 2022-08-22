@@ -3,12 +3,12 @@ class Textos {
   static String btnCadastrar = "Cadastrar";
   static String btnCooperador = "Cooperadores";
   static String btnCooperadoras = "Cooperadoras";
-  static String btnGerar = "Criar Escala";
+  static String btnCriarEscala = "Criar Escala";
   static String btnGerarPDF = "Gerar PDF";
   static String btnUsarEscala = "Usar Escala";
   static String btnAtualizar = "Atualizar";
   static String btnConfigHoraTroca = "Horário troca de turno";
-  static String btnCriar = "Gerar Arquivo";
+  static String btnGerar = "Gerar";
 
   static String nomeApp = "Senturion G List";
 
@@ -23,8 +23,8 @@ class Textos {
   static String descricaoCadastroPessoas =
       "Digite o nome da pessoa que deseja adicionar a lista";
   static String descricaoCadastroLocalTrabalho =
-      "Digite o nome dos locais de trabalho que deseja adicionar a lista, campo de servir Santa Ceia e "
-      "Uniforme,Data e Horario de troca são adicionados automaticamente";
+      "Digite o nome dos locais de trabalho que deseja adicionar a lista,Campos de Servir Santa"
+      " Ceia e Uniforme são adicionados automaticamente";
   static String labelTextCadPessoa = "Nome da pessoa";
   static String labelTextCadLocalTrabalho = "Nome do local";
   static String descricaoCadastroLocalOpcoesAdicionais =
@@ -82,7 +82,7 @@ class Textos {
   static String labelObservacaoPDF = "Observação/Aviso";
   static String decricaoNomePDF = "Defina um nome para o arquivo";
   static String descricaoObservacaoPDF =
-      "Deseja adicionar alguma observação/Aviso no arquivo ? ";
+      "Deseja adicionar alguma observação/Aviso  ? ";
 
   // TELA EDICAO
   static String nomeTelaEdicao = "Edição de item";
@@ -129,6 +129,8 @@ class Textos {
   static String erroExclusaoItemListagem =
       "A escala não pode ficar vazia. adicione"
       " pelo menos um outro item. para que possa excluir este";
+  static String erroCaracteresEspeciais =
+      "Nome contém caractere especial. remova para adicionar item a base de dados";
   static String sucessoAddBanco = "Sucesso ao adicionar item a base de dados";
   static String sucessoExluirItemBanco =
       "Sucesso ao excluir item da base de dados";
