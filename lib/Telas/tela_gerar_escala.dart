@@ -321,6 +321,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                               Textos.decricaoTelaGerarEscala,
                                               textAlign: TextAlign.center,
                                               style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
                                                   fontSize: Constantes
                                                       .tamanhoLetraDescritivas,
                                                   color: Colors.white),

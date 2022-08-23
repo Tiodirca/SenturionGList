@@ -184,8 +184,9 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
                                         width: larguraTela,
                                         child: Text(
                                           Textos.descricaoTelaSelecaoPeriodo,
-                                          textAlign: TextAlign.justify,
+                                          textAlign: TextAlign.center,
                                           style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
                                               fontSize: Constantes
                                                   .tamanhoLetraDescritivas,
                                               color: Colors.white),
@@ -197,6 +198,7 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
                                             Textos.labelDataInicial,
                                             textAlign: TextAlign.center,
                                             style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
                                                 fontSize: 16,
                                                 color: Colors.white),
                                           ),
@@ -212,6 +214,7 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
                                             Textos.labelDataFinal,
                                             textAlign: TextAlign.center,
                                             style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
                                                 fontSize: 16,
                                                 color: Colors.white),
                                           ),

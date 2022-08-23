@@ -149,6 +149,7 @@ class _TelaListagemState extends State<TelaListagem> {
                                       Textos.decricaoTelaListagem,
                                       textAlign: TextAlign.justify,
                                       style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
                                           fontSize: Constantes
                                               .tamanhoLetraDescritivas,
                                           color: Colors.white),

@@ -96,7 +96,7 @@ class _ConfigGerarPDFState extends State<ConfigGerarPDF> {
                   Textos.decricaoNomePDF,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
+                      fontSize: Constantes.tamanhoLetraDescritivas, fontWeight: FontWeight.bold),
                 ),
               ),
               textFields(larguraTela, Textos.labelNomePDF, nomePDF),
@@ -106,7 +106,7 @@ class _ConfigGerarPDFState extends State<ConfigGerarPDF> {
                   Textos.descricaoObservacaoPDF,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
+                      fontSize: Constantes.tamanhoLetraDescritivas, fontWeight: FontWeight.bold),
                 ),
               ),
               Row(

@@ -109,8 +109,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
   adicionarItensCheckBox() {
     setState(() {
       for (int i = 0; i < listaPessoas.length; i++) {
-        itensCheckBox
-            .add(CheckBoxModel(texto: listaPessoas[i].nome, idItem: listaPessoas[i].id));
+        itensCheckBox.add(CheckBoxModel(
+            texto: listaPessoas[i].nome, idItem: listaPessoas[i].id));
       }
       _controllerNomePessoa.text = ""; // definindo texto do campo
     });
@@ -130,6 +130,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
               TextButton(
                   onPressed: () {
                     bancoDados.excluir(id, Constantes.bancoTabelaPessoa);
+                    listaPessoasSelecionados = [];
                     consultarPessoas();
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(Textos.sucessoExluirItemBanco)));
@@ -172,6 +173,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
         side: const BorderSide(width: 2, color: Colors.black),
         onChanged: (value) {
           setState(() {
+            // verificando se o balor
             checkBoxModel.checked = value!;
           });
         },
@@ -231,10 +233,10 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                                         Textos.descricaoCadastroPessoas,
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
-                                          fontSize: Constantes
-                                              .tamanhoLetraDescritivas,
-                                          color: Colors.white,
-                                        ),
+                                            fontSize: Constantes
+                                                .tamanhoLetraDescritivas,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                       const SizedBox(
                                         height: 10,
@@ -286,7 +288,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                                                         boolNomeExiste = true;
                                                       }
                                                     }
-                                                    if (boolNomeExiste == true) {
+                                                    if (boolNomeExiste ==
+                                                        true) {
                                                       ScaffoldMessenger.of(
                                                               context)
                                                           .showSnackBar(SnackBar(
@@ -341,7 +344,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
                                                   Textos.txtListaVazia,
                                                   style: const TextStyle(
                                                     fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
+                                                    fontSize: Constantes
+                                                        .tamanhoLetraDescritivas,
                                                   ),
                                                 ),
                                               ),

@@ -292,6 +292,7 @@ class _TelaEdicaoCadastroItemState extends State<TelaEdicaoCadastroItem> {
                                             : Textos.descricaoTelaCadastroItem,
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
                                             fontSize: Constantes
                                                 .tamanhoLetraDescritivas,
                                             color: Colors.white),
@@ -300,6 +301,7 @@ class _TelaEdicaoCadastroItemState extends State<TelaEdicaoCadastroItem> {
                                         Textos.descricaoTelaEdiCadCampoVazio,
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
                                             fontSize: Constantes
                                                 .tamanhoLetraDescritivas,
                                             color: Colors.white),

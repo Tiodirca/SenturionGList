@@ -88,7 +88,7 @@ class TelaInicial extends StatelessWidget {
                                       Textos.legSelecaoTipoEscala,
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(
-                                          fontSize: 18, color: Colors.white),
+                                          fontSize: Constantes.tamanhoLetraDescritivas, color: Colors.white,fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   SizedBox(

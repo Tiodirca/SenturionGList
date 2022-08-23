@@ -66,7 +66,8 @@ class _TelaConfiguracoesState extends State<TelaConfiguracoes> {
                                       Textos.descriacaoTelaConfiguracoes,
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(
-                                          fontSize: 18, color: Colors.white),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: Constantes.tamanhoLetraDescritivas, color: Colors.white),
                                     ),
                                   ),
                                   SizedBox(

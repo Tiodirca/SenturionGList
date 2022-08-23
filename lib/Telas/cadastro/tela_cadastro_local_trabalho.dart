@@ -28,6 +28,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
   Estilo estilo = Estilo();
   int valorGenero = 0;
   int idItem = 0;
+  int ordemLocais = 0;
   bool boolRetornoListaVazia = false;
   bool boolNomeExiste = false;
   String tipoEscala = "";
@@ -66,21 +67,22 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
     return texto;
   }
 
-
   // metodo para inserir os dados no banco de dados
   inserirDados() async {
     // linha para incluir os dados
-      Map<String, dynamic> linha = {
-        BancoDeDados.columnLocal:
-            RemoverAcentos.removerAcentos(pegarTextoDigitado()),
-      };
-      int id =
-          await bancoDados.inserir(linha, Constantes.bancoTabelaLocalTrabalho);
-      if (id.toString().isNotEmpty) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(Textos.sucessoAddBanco)));
-      }
-      consultarLocalTrabalho();
+    Map<String, dynamic> linha = {
+      BancoDeDados.columnLocal:
+      RemoverAcentos.removerAcentos(pegarTextoDigitado()),
+    };
+    int id =
+    await bancoDados.inserir(linha, Constantes.bancoTabelaLocalTrabalho);
+    if (id
+        .toString()
+        .isNotEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(Textos.sucessoAddBanco)));
+    }
+    consultarLocalTrabalho();
   }
 
   // metodo responsavel por chamar metodo para fazer consulta ao banco de dados
@@ -90,7 +92,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
     localTrabalho.clear();
     // chamando metodo responsavel por pegar os itens no banco de dados
     await Consulta.consultarBancoLocalTrabalho(
-            Constantes.bancoTabelaLocalTrabalho)
+        Constantes.bancoTabelaLocalTrabalho)
         .then((value) {
       setState(() {
         localTrabalho = value;
@@ -116,15 +118,25 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
     });
   }
 
-  // metodo para pegar os itens que foram selecionados no check box
-  pegarItensLocal() {
-    for (var element in itensCheckBox) {
-      if (element.checked == true) {
-        localSelecionados.add(element.texto);
+  // // metodo para pegar os itens que foram selecionados no check box
+  // pegarItensLocal() {
+  //   for (var element in itensCheckBox) {
+  //     if (element.checked == true) {
+  //       localSelecionados.add(element.texto);
+  //     }
+  //   }
+  //   localSelecionados.add(Constantes.localUniforme);
+  //   localSelecionados.add(Constantes.localServirCeia);
+  // }
+
+  exibirOrdem(CheckBoxModel checkBoxModel) {
+    String valor = "";
+    for (int i = 0; i < localSelecionados.length; i++) {
+      if (localSelecionados[i].contains(checkBoxModel.texto)) {
+        valor = (i - 1).toString();
       }
     }
-    localSelecionados.add(Constantes.localUniforme);
-    localSelecionados.add(Constantes.localServirCeia);
+    return valor.toString();
   }
 
   //metodo para exibir alerta para excluir tarefa do banco de dados
@@ -152,20 +164,38 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
         });
   }
 
-  Widget checkBoxPersonalizado(CheckBoxModel checkBoxModel) => CheckboxListTile(
+  Widget checkBoxPersonalizado(CheckBoxModel checkBoxModel) =>
+      CheckboxListTile(
         activeColor: PaletaCores.corAzul,
         checkColor: PaletaCores.corAdtlLetras,
         secondary: SizedBox(
-            width: 30,
-            height: 30,
-            child: FloatingActionButton(
-              heroTag: "btnExcluirLocal ${checkBoxModel.idItem}",
-              backgroundColor: Colors.redAccent,
-              child: const Icon(Icons.close, size: 20),
-              onPressed: () {
-                exibirConfirmacaoExcluir(checkBoxModel.idItem);
-              },
-            )),
+          height: 30,
+          width: 70,
+          child: Row(
+            children: [
+              SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: Text(
+                      exibirOrdem(checkBoxModel), style: const TextStyle(
+                      fontSize: Constantes
+                          .tamanhoLetraDescritivas,
+                      fontWeight: FontWeight.bold),)),
+              Container(
+                  margin: const EdgeInsets.only(left: 10.0),
+                  width: 30,
+                  height: 30,
+                  child: FloatingActionButton(
+                    heroTag: "btnExcluirLocal ${checkBoxModel.idItem}",
+                    backgroundColor: Colors.redAccent,
+                    child: const Icon(Icons.close, size: 20),
+                    onPressed: () {
+                      exibirConfirmacaoExcluir(checkBoxModel.idItem);
+                    },
+                  )),
+            ],
+          ),
+        ),
         title: Text(
           checkBoxModel.texto,
           style: const TextStyle(
@@ -177,15 +207,31 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
         onChanged: (value) {
           setState(() {
             checkBoxModel.checked = value!;
+            if (checkBoxModel.checked == true) {
+              ordemLocais++;
+              localSelecionados.add(checkBoxModel.texto);
+            } else {
+              ordemLocais--;
+              localSelecionados.remove(checkBoxModel.texto);
+            }
           });
         },
       );
 
   @override
   Widget build(BuildContext context) {
-    double alturaTela = MediaQuery.of(context).size.height;
-    double larguraTela = MediaQuery.of(context).size.width;
-    double alturaBarraStatus = MediaQuery.of(context).padding.top;
+    double alturaTela = MediaQuery
+        .of(context)
+        .size
+        .height;
+    double larguraTela = MediaQuery
+        .of(context)
+        .size
+        .width;
+    double alturaBarraStatus = MediaQuery
+        .of(context)
+        .padding
+        .top;
     double alturaAppBar = AppBar().preferredSize.height;
 
     return Theme(
@@ -208,180 +254,203 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                 },
                 child: SingleChildScrollView(
                     child: SizedBox(
-                  width: larguraTela,
-                  height: alturaTela -
-                      alturaBarraStatus -
-                      alturaAppBar -
-                      Constantes.alturaNavigationBar,
-                  child: Stack(
-                    children: [
-                      // o ultimo parametro e o tamanho do container do BUTTON NAVIGATION BAR
-                      FundoTela(
-                          altura: alturaTela -
-                              alturaBarraStatus -
-                              alturaAppBar -
-                              Constantes.alturaNavigationBar),
-                      Positioned(
-                          child: Column(
+                      width: larguraTela,
+                      height: alturaTela -
+                          alturaBarraStatus -
+                          alturaAppBar -
+                          Constantes.alturaNavigationBar,
+                      child: Stack(
                         children: [
-                          Expanded(
-                              flex: 1,
-                              child: Container(
-                                padding: const EdgeInsets.only(
-                                    left: 10.0, right: 10.0, top: 10.0),
-                                width: larguraTela,
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      Textos.descricaoCadastroLocalTrabalho,
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                          fontSize: Constantes
-                                              .tamanhoLetraDescritivas,
-                                          color: Colors.white),
-                                    ),
-                                    const SizedBox(
-                                      height: 10.0,
-                                    ),
-                                    Wrap(
-                                      children: [
-                                        Container(
-                                            padding: const EdgeInsets.only(
-                                                left: 5.0,
-                                                top: 0.0,
-                                                right: 5.0,
-                                                bottom: 5.0),
-                                            width: larguraTela * 0.5,
-                                            child: Form(
-                                              key: _chaveFormulario,
-                                              child: TextFormField(
-                                                style: const TextStyle(
-                                                    color: Colors.white),
-                                                keyboardType:
-                                                    TextInputType.text,
-                                                validator: (value) {
-                                                  if (value!.isEmpty) {
-                                                    return Textos
-                                                        .erroTextFieldVazio;
-                                                  }
-                                                  return null;
-                                                },
-                                                controller: _controllerNome,
-                                                decoration: InputDecoration(
-                                                  labelText: Textos
-                                                      .labelTextCadLocalTrabalho,
-                                                ),
-                                              ),
-                                            )),
-                                        SizedBox(
-                                          height: 50,
-                                          width: 150,
-                                          child: ElevatedButton(
-                                            onPressed: () {
-                                              if (_chaveFormulario.currentState!
-                                                  .validate()) {
-                                                setState(() {
-                                                  for (var value
-                                                      in itensCheckBox) {
-                                                    if (value.texto ==
-                                                        pegarTextoDigitado()) {
-                                                      boolNomeExiste = true;
-                                                    }
-                                                  }
-                                                  if (boolNomeExiste == true) {
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(SnackBar(
-                                                            content: Text(Textos
-                                                                .erroNomeExiste)));
-                                                    boolNomeExiste = false;
-                                                  } else {
-                                                    boolNomeExiste = false;
-                                                    inserirDados();
-                                                  }
-                                                });
-                                              }
-                                            },
-                                            child: Text(
-                                              Textos.btnCadastrar,
+                          // o ultimo parametro e o tamanho do container do BUTTON NAVIGATION BAR
+                          FundoTela(
+                              altura: alturaTela -
+                                  alturaBarraStatus -
+                                  alturaAppBar -
+                                  Constantes.alturaNavigationBar),
+                          Positioned(
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                      flex: 1,
+                                      child: Container(
+                                        padding: const EdgeInsets.only(
+                                            left: 10.0, right: 10.0, top: 10.0),
+                                        width: larguraTela,
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              Textos
+                                                  .descricaoCadastroLocalTrabalho,
                                               textAlign: TextAlign.center,
                                               style: const TextStyle(
-                                                  fontSize: 16,
+                                                  fontSize: Constantes
+                                                      .tamanhoLetraDescritivas,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.black),
+                                                  color: Colors.white),
                                             ),
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              )),
-                          Expanded(
-                              flex: 2,
-                              child: Container(
-                                  padding: const EdgeInsets.only(
-                                      left: 10.0, right: 10.0, top: 10.0),
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          Textos.legLista,
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                              fontSize: Constantes
-                                                  .tamanhoLetraDescritivas,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        LayoutBuilder(
-                                          builder: (context, constraints) {
-                                            if (boolRetornoListaVazia) {
-                                              return SizedBox(
-                                                height: 200,
-                                                child: Center(
-                                                  child: Text(
-                                                    Textos.txtListaVazia,
-                                                    style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 20,
+                                            const SizedBox(
+                                              height: 10.0,
+                                            ),
+                                            Wrap(
+                                              children: [
+                                                Container(
+                                                    padding: const EdgeInsets
+                                                        .only(
+                                                        left: 5.0,
+                                                        top: 0.0,
+                                                        right: 5.0,
+                                                        bottom: 5.0),
+                                                    width: larguraTela * 0.5,
+                                                    child: Form(
+                                                      key: _chaveFormulario,
+                                                      child: TextFormField(
+                                                        style: const TextStyle(
+                                                            color: Colors
+                                                                .white),
+                                                        keyboardType:
+                                                        TextInputType.text,
+                                                        validator: (value) {
+                                                          if (value!.isEmpty) {
+                                                            return Textos
+                                                                .erroTextFieldVazio;
+                                                          }
+                                                          return null;
+                                                        },
+                                                        controller: _controllerNome,
+                                                        decoration: InputDecoration(
+                                                          labelText: Textos
+                                                              .labelTextCadLocalTrabalho,
+                                                        ),
+                                                      ),
+                                                    )),
+                                                SizedBox(
+                                                  height: 50,
+                                                  width: 150,
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      if (_chaveFormulario
+                                                          .currentState!
+                                                          .validate()) {
+                                                        setState(() {
+                                                          for (var value
+                                                          in itensCheckBox) {
+                                                            if (value.texto ==
+                                                                pegarTextoDigitado()) {
+                                                              boolNomeExiste =
+                                                              true;
+                                                            }
+                                                          }
+                                                          if (boolNomeExiste ==
+                                                              true) {
+                                                            ScaffoldMessenger
+                                                                .of(
+                                                                context)
+                                                                .showSnackBar(
+                                                                SnackBar(
+                                                                    content: Text(
+                                                                        Textos
+                                                                            .erroNomeExiste)));
+                                                            boolNomeExiste =
+                                                            false;
+                                                          } else {
+                                                            boolNomeExiste =
+                                                            false;
+                                                            inserirDados();
+                                                          }
+                                                        });
+                                                      }
+                                                    },
+                                                    child: Text(
+                                                      Textos.btnCadastrar,
+                                                      textAlign: TextAlign
+                                                          .center,
+                                                      style: const TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight: FontWeight
+                                                              .bold,
+                                                          color: Colors.black),
                                                     ),
                                                   ),
+                                                )
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      )),
+                                  Expanded(
+                                      flex: 2,
+                                      child: Container(
+                                          padding: const EdgeInsets.only(
+                                              left: 10.0,
+                                              right: 10.0,
+                                              top: 10.0),
+                                          child: SingleChildScrollView(
+                                            child: Column(
+                                              children: [
+                                                Text(
+                                                  Textos.legLista,
+                                                  textAlign: TextAlign.center,
+                                                  style: const TextStyle(
+                                                      fontSize: Constantes
+                                                          .tamanhoLetraDescritivas,
+                                                      color: Colors.black,
+                                                      fontWeight: FontWeight
+                                                          .bold),
                                                 ),
-                                              );
-                                            } else {
-                                              return Column(
-                                                children: [
-                                                  Container(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 10.0),
-                                                      height: alturaTela * 0.4,
-                                                      width: larguraTela * 0.9,
-                                                      child: ListView(
+                                                LayoutBuilder(
+                                                  builder: (context,
+                                                      constraints) {
+                                                    if (boolRetornoListaVazia) {
+                                                      return SizedBox(
+                                                        height: 200,
+                                                        child: Center(
+                                                          child: Text(
+                                                            Textos
+                                                                .txtListaVazia,
+                                                            style: const TextStyle(
+                                                              fontWeight:
+                                                              FontWeight.bold,
+                                                              fontSize: 20,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      );
+                                                    } else {
+                                                      return Column(
                                                         children: [
-                                                          ...itensCheckBox
-                                                              .map((e) =>
-                                                                  checkBoxPersonalizado(
-                                                                    e,
-                                                                  ))
-                                                              .toList()
+                                                          Container(
+                                                              padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  top: 10.0),
+                                                              height: alturaTela *
+                                                                  0.4,
+                                                              width: larguraTela *
+                                                                  0.9,
+                                                              child: ListView(
+                                                                children: [
+                                                                  ...itensCheckBox
+                                                                      .map((
+                                                                      e) =>
+                                                                      checkBoxPersonalizado(
+                                                                        e,
+                                                                      ))
+                                                                      .toList()
+                                                                ],
+                                                              )),
                                                         ],
-                                                      )),
-                                                ],
-                                              );
-                                            }
-                                          },
-                                        )
-                                      ],
-                                    ),
-                                  )))
+                                                      );
+                                                    }
+                                                  },
+                                                )
+                                              ],
+                                            ),
+                                          )))
+                                ],
+                              ))
                         ],
-                      ))
-                    ],
-                  ),
-                )),
+                      ),
+                    )),
               ),
               bottomNavigationBar: SizedBox(
                 height: Constantes.alturaNavigationBar,
@@ -401,7 +470,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                             height: Constantes.alturaBotoesNavegacao,
                             child: ElevatedButton(
                               onPressed: () {
-                                pegarItensLocal();
+                                //pegarItensLocal();
                                 if (localSelecionados.isEmpty) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(

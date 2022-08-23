@@ -108,6 +108,7 @@ class _TelaSelecaoDiasSemanaState extends State<TelaSelecaoDiasSemana> {
                                     Textos.descricaoTelaSelecaoDias,
                                     textAlign: TextAlign.justify,
                                     style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
                                         fontSize:
                                             Constantes.tamanhoLetraDescritivas,
                                         color: Colors.white),
@@ -135,6 +136,7 @@ class _TelaSelecaoDiasSemanaState extends State<TelaSelecaoDiasSemana> {
                                       height: alturaTela * 0.4,
                                       width: larguraTela,
                                       child: ListView(
+                                        scrollDirection: Axis.vertical,
                                         children: [
                                           ...itens
                                               .map((e) => CheckboxWidget(
