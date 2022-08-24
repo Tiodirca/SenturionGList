@@ -127,6 +127,7 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
           readOnly: true,
           style: const TextStyle(
             color: Colors.white,
+            fontWeight: FontWeight.bold
           ),
           keyboardType: TextInputType.text,
           decoration: InputDecoration(

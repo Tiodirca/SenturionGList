@@ -281,31 +281,40 @@ class _TelaEdicaoCadastroItemState extends State<TelaEdicaoCadastroItem> {
                           children: [
                             Expanded(
                                 flex: 1,
-                                child: Container(
-                                  padding: const EdgeInsets.only(top: 10.0),
+                                child: SizedBox(
                                   width: larguraTela,
                                   child: Column(
                                     children: [
-                                      Text(
-                                        widget.camposBancoCadastroItem.isEmpty
-                                            ? Textos.descricaoTelaEdicao
-                                            : Textos.descricaoTelaCadastroItem,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: Constantes
-                                                .tamanhoLetraDescritivas,
-                                            color: Colors.white),
+                                      Container(
+                                        margin: const EdgeInsets.only(
+                                            top: 10.0, right: 10.0, left: 10.0),
+                                        width: larguraTela,
+                                        child: Text(
+                                          widget.camposBancoCadastroItem.isEmpty
+                                              ? Textos.descricaoTelaEdicao
+                                              : Textos
+                                                  .descricaoTelaCadastroItem,
+                                          textAlign: TextAlign.justify,
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: Constantes
+                                                  .tamanhoLetraDescritivas,
+                                              color: Colors.white),
+                                        ),
                                       ),
-                                      Text(
-                                        Textos.descricaoTelaEdiCadCampoVazio,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: Constantes
-                                                .tamanhoLetraDescritivas,
-                                            color: Colors.white),
-                                      ),
+                                      Container(
+                                        margin: const EdgeInsets.only(
+                                            top: 10.0, right: 10.0, left: 10.0),
+                                        child: Text(
+                                          Textos.descricaoTelaEdiCadCampoVazio,
+                                          textAlign: TextAlign.justify,
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: Constantes
+                                                  .tamanhoLetraDescritivas,
+                                              color: Colors.white),
+                                        ),
+                                      )
                                     ],
                                   ),
                                 )),

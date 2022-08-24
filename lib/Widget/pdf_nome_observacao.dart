@@ -5,8 +5,6 @@ import 'package:senturionglist/Uteis/estilo.dart';
 import 'package:senturionglist/Uteis/paleta_cores.dart';
 import 'package:senturionglist/Uteis/textos.dart';
 
-
-
 class ConfigGerarPDF extends StatefulWidget {
   const ConfigGerarPDF(
       {Key? key, required this.itensBanco, required this.nomePDFPadrao})
@@ -76,7 +74,6 @@ class _ConfigGerarPDFState extends State<ConfigGerarPDF> {
       }
     });
   }
-
   @override
   Widget build(BuildContext context) {
     double alturaTela = MediaQuery.of(context).size.height;
@@ -96,7 +93,8 @@ class _ConfigGerarPDFState extends State<ConfigGerarPDF> {
                   Textos.decricaoNomePDF,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontSize: Constantes.tamanhoLetraDescritivas, fontWeight: FontWeight.bold),
+                      fontSize: Constantes.tamanhoLetraDescritivas,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               textFields(larguraTela, Textos.labelNomePDF, nomePDF),
@@ -106,7 +104,8 @@ class _ConfigGerarPDFState extends State<ConfigGerarPDF> {
                   Textos.descricaoObservacaoPDF,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontSize: Constantes.tamanhoLetraDescritivas, fontWeight: FontWeight.bold),
+                      fontSize: Constantes.tamanhoLetraDescritivas,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               Row(

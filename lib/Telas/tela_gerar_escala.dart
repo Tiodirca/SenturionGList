@@ -69,6 +69,8 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
   @override
   void initState() {
     super.initState();
+    widget.listaLocal.add(Constantes.localUniforme);
+    widget.listaLocal.add(Constantes.localServirCeia);
     if (widget.genero) {
       tipoEscala = Textos.btnCooperadoras;
     } else {
@@ -559,7 +561,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                           .validate()) {
                                         setState(() {
                                           boolNomeTabelaExiste = false;
-                                            consultaTabelasExistentes();
+                                          consultaTabelasExistentes();
                                         });
                                       }
                                     },

@@ -18,7 +18,8 @@ class Estilo {
       inputDecorationTheme: InputDecorationTheme(
           errorStyle: const TextStyle(
               fontSize: 13, color: Colors.white, fontWeight: FontWeight.bold),
-          hintStyle: const TextStyle(color: Colors.white),
+          hintStyle:
+              const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(width: 2, color: Colors.white),
             borderRadius: BorderRadius.circular(15),
@@ -37,6 +38,7 @@ class Estilo {
           ),
           labelStyle: const TextStyle(
             color: Colors.white,
+            fontWeight: FontWeight.bold,
             fontSize: 18,
           )),
 

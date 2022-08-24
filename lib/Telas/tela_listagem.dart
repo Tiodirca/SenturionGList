@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:senturionglist/Uteis/Servicos/banco_de_dados.dart';
-import 'package:senturionglist/Widget/config_gerar_pdf.dart';
+import 'package:senturionglist/Widget/pdf_nome_observacao.dart';
 
 import '../Uteis/Servicos/consultas.dart';
 import '../Uteis/constantes.dart';

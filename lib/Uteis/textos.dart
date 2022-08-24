@@ -30,6 +30,9 @@ class Textos {
   static String labelTextCadLocalTrabalho = "Nome do local";
   static String descricaoCadastroLocalOpcoesAdicionais =
       "Deseja adicionar campos com inserção manual ?";
+  static String descricaoCadLocalListaOrdem =
+      "Selecione um ou mais itens na lista abaixo, "
+      "lembrando que a ordem selecionada será a mesma ao gerar o arquivo";
 
   // TELA SELECAO DIAS
   static String nomeTelaSelecaoDias = "Seleção dias da semana";
