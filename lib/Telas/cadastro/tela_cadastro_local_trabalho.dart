@@ -259,97 +259,99 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
                           Expanded(
                               flex: 1,
                               child: Container(
-                                padding: const EdgeInsets.only(
-                                    left: 10.0, right: 10.0, top: 10.0),
-                                width: larguraTela,
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      Textos.descricaoCadastroLocalTrabalho,
-                                      textAlign: TextAlign.justify,
-                                      style: const TextStyle(
-                                          fontSize: Constantes
-                                              .tamanhoLetraDescritivas,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    ),
-                                    const SizedBox(
-                                      height: 10.0,
-                                    ),
-                                    Wrap(
-                                      children: [
-                                        Container(
-                                            padding: const EdgeInsets.only(
-                                                left: 5.0,
-                                                top: 0.0,
-                                                right: 5.0,
-                                                bottom: 5.0),
-                                            width: larguraTela * 0.5,
-                                            child: Form(
-                                              key: _chaveFormulario,
-                                              child: TextFormField(
-                                                style: const TextStyle(
-                                                    color: Colors.white),
-                                                keyboardType:
-                                                    TextInputType.text,
-                                                validator: (value) {
-                                                  if (value!.isEmpty) {
-                                                    return Textos
-                                                        .erroTextFieldVazio;
-                                                  }
-                                                  return null;
-                                                },
-                                                controller: _controllerNome,
-                                                decoration: InputDecoration(
-                                                  labelText: Textos
-                                                      .labelTextCadLocalTrabalho,
-                                                ),
-                                              ),
-                                            )),
-                                        SizedBox(
-                                          height: 50,
-                                          width: 150,
-                                          child: ElevatedButton(
-                                            onPressed: () {
-                                              if (_chaveFormulario.currentState!
-                                                  .validate()) {
-                                                setState(() {
-                                                  for (var value
-                                                      in itensCheckBox) {
-                                                    if (value.texto ==
-                                                        pegarTextoDigitado()) {
-                                                      boolNomeExiste = true;
+                                  padding: const EdgeInsets.only(
+                                      left: 10.0, right: 10.0, top: 0.0),
+                                  width: larguraTela,
+                                  child: SingleChildScrollView(
+                                      child: Column(
+                                    children: [
+                                      Text(
+                                        Textos.descricaoCadastroLocalTrabalho,
+                                        textAlign: TextAlign.justify,
+                                        style: const TextStyle(
+                                            fontSize: Constantes
+                                                .tamanhoLetraDescritivas,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Wrap(
+                                        children: [
+                                          Container(
+                                              padding: const EdgeInsets.only(
+                                                  left: 5.0,
+                                                  top: 0.0,
+                                                  right: 5.0,
+                                                  bottom: 5.0),
+                                              width: larguraTela * 0.5,
+                                              child: Form(
+                                                key: _chaveFormulario,
+                                                child: TextFormField(
+                                                  style: const TextStyle(
+                                                      color: Colors.white),
+                                                  keyboardType:
+                                                      TextInputType.text,
+                                                  validator: (value) {
+                                                    if (value!.isEmpty) {
+                                                      return Textos
+                                                          .erroTextFieldVazio;
                                                     }
-                                                  }
-                                                  if (boolNomeExiste == true) {
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(SnackBar(
-                                                            content: Text(Textos
-                                                                .erroNomeExiste)));
-                                                    boolNomeExiste = false;
-                                                  } else {
-                                                    boolNomeExiste = false;
-                                                    inserirDados();
-                                                  }
-                                                });
-                                              }
-                                            },
-                                            child: Text(
-                                              Textos.btnCadastrar,
-                                              textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black),
+                                                    return null;
+                                                  },
+                                                  controller: _controllerNome,
+                                                  decoration: InputDecoration(
+                                                    labelText: Textos
+                                                        .labelTextCadLocalTrabalho,
+                                                  ),
+                                                ),
+                                              )),
+                                          SizedBox(
+                                            height: 50,
+                                            width: 150,
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                if (_chaveFormulario
+                                                    .currentState!
+                                                    .validate()) {
+                                                  setState(() {
+                                                    for (var value
+                                                        in itensCheckBox) {
+                                                      if (value.texto ==
+                                                          pegarTextoDigitado()) {
+                                                        boolNomeExiste = true;
+                                                      }
+                                                    }
+                                                    if (boolNomeExiste ==
+                                                        true) {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(SnackBar(
+                                                              content: Text(Textos
+                                                                  .erroNomeExiste)));
+                                                      boolNomeExiste = false;
+                                                    } else {
+                                                      boolNomeExiste = false;
+                                                      inserirDados();
+                                                    }
+                                                  });
+                                                }
+                                              },
+                                              child: Text(
+                                                Textos.btnCadastrar,
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black),
+                                              ),
                                             ),
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              )),
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  )))),
                           Expanded(
                               flex: 2,
                               child: Container(

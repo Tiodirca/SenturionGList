@@ -125,10 +125,8 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
             });
           },
           readOnly: true,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold
-          ),
+          style:
+              const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
             hintText: '${data.day}/${data.month}/${data.year}',
@@ -171,7 +169,7 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
                             flex: 1,
                             child: Container(
                                 padding: const EdgeInsets.only(
-                                    top: 10.0, right: 10.0, left: 10.0),
+                                    right: 10.0, left: 10.0),
                                 width: larguraTela,
                                 child: SingleChildScrollView(
                                   child: Wrap(
@@ -179,9 +177,7 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
                                     children: [
                                       Container(
                                         padding: const EdgeInsets.only(
-                                            left: 5.0,
-                                            right: 5.0,
-                                            bottom: 10.0),
+                                            left: 5.0, right: 5.0),
                                         width: larguraTela,
                                         child: Text(
                                           Textos.descricaoTelaSelecaoPeriodo,
@@ -348,7 +344,8 @@ class _TelaSelecaoPeriodoState extends State<TelaSelecaoPeriodo> {
                                     arguments: dados);
                               }
                             },
-                            child: const Icon(Icons.arrow_forward, size: Constantes.tamanhoIconeBotoesNavegacao),
+                            child: const Icon(Icons.arrow_forward,
+                                size: Constantes.tamanhoIconeBotoesNavegacao),
                           ),
                         ),
                       ),
