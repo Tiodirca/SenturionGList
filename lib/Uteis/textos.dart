@@ -136,7 +136,14 @@ class Textos {
   static String erroExclusaoItemListagem =
       "A escala não pode ficar vazia. adicione"
       " pelo menos um outro item. para que possa excluir este";
+
   static String erroPreenchaCampo = "Preencha todos os campos";
+
+  static String erroGerarEscalaQuantiPessoas =
+      "Quantidade de pessoas selecionadas para agrupamento, "
+      "maior que a quantidade de locais de trabalho disponiveis";
+  static String erroGerarEscalaSemSelecaoAgrupa =
+      "Selecione pelo menos um nome e uma data que deseja agrupar";
 
   // SUCESSOS
   static String sucessoAddBanco = "Sucesso ao adicionar item a base de dados";

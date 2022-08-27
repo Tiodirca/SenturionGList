@@ -43,15 +43,21 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
   String tipoEscala = "";
   double alturaNavigationBar = 140.0;
   int valorRadioButton = 0;
+  int quantiLocaisDiponivel = 0;
+  int quantiLocaisDipoControle = 0;
   bool boolConfigEscala = false;
   bool boolTelaCarregar = false;
   bool boolNomeTabelaExiste = false;
+  bool boolErroPessoas = false;
 
   String querySQL = "";
   final TextEditingController _controllerNomeEscala =
       TextEditingController(text: "");
-  List<String> diasAgrupamento = [];
-  List<PessoasAgrupadas> pessoasAgrupadas = [];
+  List<String> diasSelecionadosAgrupamento = [];
+  List<String> locaisSorteio = [];
+  List<String> locaisSorteioAgrupamento = [];
+  List<int> listaNumeroAuxiliarRepeticao = [];
+  List<PessoasAgrupadas> pessoasSelecionadasAgrupamento = [];
   List<CheckBoxModel> itensListaCheckPessoas = [];
   List<CheckBoxModel> itensListaCheckDias = [];
 
@@ -69,8 +75,12 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
   @override
   void initState() {
     super.initState();
-    widget.listaLocal.add(Constantes.localUniforme);
-    widget.listaLocal.add(Constantes.localServirCeia);
+    for (var element in widget.listaLocal) {
+      locaisSorteio.add(element.toString());
+    }
+    locaisSorteio.add(Constantes.localUniforme);
+    locaisSorteio.add(Constantes.localServirCeia);
+
     if (widget.genero) {
       tipoEscala = Textos.btnCooperadoras;
     } else {
@@ -85,7 +95,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
         .toList();
     // formando string que contem a query sql
     // utilizada para criar a tabela no banco de dados
-    widget.listaLocal.map(
+    locaisSorteio.map(
       (item) {
         querySQL = "$querySQL${item.replaceAll(" ", "_")} TEXT NOT NULL,";
       },
@@ -93,33 +103,44 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
     // subtraindo o ultimo index da string pois nao e necessario
     querySQL = querySQL.substring(0, querySQL.length - 1);
     chamarRecuperarSharePreferences();
+    pegarLocaisSorteioAgrupamento();
+  }
+
+  // pegar locais para agrupamento de pessoas
+  pegarLocaisSorteioAgrupamento() {
+    for (var elemento in locaisSorteio) {
+      if (elemento != Constantes.localData &&
+          elemento != Constantes.localHoraTroca &&
+          elemento != Constantes.localUniforme &&
+          elemento != Constantes.localServirCeia) {
+        locaisSorteioAgrupamento.add(elemento);
+      }
+    }
   }
 
   // metodo para pegar o valor selecionado no check box
   pegarItensPessoasAgrupadas() async {
-    Random random = Random();
-    // valor minimo de 3 pois corresponde apartir do index de local trabalho
-    // que e adicionado dinamicamente pelo usuario
-    var minimo = 3;
-    // valor maximo pegando o tamanho da lista removendo os dois ultimos index
-    // pois os mesmos nao entrar no sorteio
-    var maximo = widget.listaLocal.length - 2;
-    for (var element in itensListaCheckPessoas) {
-      if (element.checked == true) {
-        // instanciando duas variaveis para sortear numeros entre o valor minimo e maximo
-        int numeroRandomico = minimo + random.nextInt(maximo - minimo);
-        int numeroRandomico2 = minimo + random.nextInt(maximo - minimo);
-        if (numeroRandomico == numeroRandomico2) {
-          //sorteando novo numero caso os dois numeros sorteados sejam iguais
-          numeroRandomico = minimo + random.nextInt(maximo - minimo);
-        }
-        // removendo elementos da lista
-        pessoasAgrupadas.removeWhere((e) => e.nome == element.texto);
-        // adicionando elementos usando a classe modelo
-        pessoasAgrupadas.add(PessoasAgrupadas(
-            nome: element.texto,
-            localTrabalho: widget.listaLocal.elementAt(numeroRandomico)));
+    for (var elemento in itensListaCheckPessoas) {
+      if (elemento.checked == true) {
+        sortearLocalAgrupado(elemento);
+        pessoasSelecionadasAgrupamento.add(PessoasAgrupadas(
+            nome: elemento.texto,
+            localTrabalho:
+                locaisSorteioAgrupamento.elementAt(elemento.idItem)));
       }
+    }
+  }
+
+  // metodo para sortear o locais para as pessoas agrupadas
+  sortearLocalAgrupado(CheckBoxModel checkBoxModel) {
+    int numeroRandomico = random.nextInt(locaisSorteioAgrupamento.length);
+    //caso a lista nao contenha o numero randomico entrar no if
+    if (!listaNumeroAuxiliarRepeticao.contains(numeroRandomico)) {
+      listaNumeroAuxiliarRepeticao.add(numeroRandomico);
+      checkBoxModel.idItem = numeroRandomico;
+      return checkBoxModel;
+    } else {
+      sortearLocalAgrupado(checkBoxModel);
     }
   }
 
@@ -127,7 +148,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
   pegarItensDiasAgrupamento() {
     for (var element in itensListaCheckDias) {
       if (element.checked == true) {
-        diasAgrupamento.add(element.texto);
+        diasSelecionadosAgrupamento.add(element.texto);
       }
     }
   }
@@ -157,14 +178,9 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
 
   // metodo para inserir dados na tabela criada
   inserir() async {
-    if (boolConfigEscala) {
-      pegarItensPessoasAgrupadas();
-      pegarItensDiasAgrupamento();
-    }
-
     for (int i = 0; i < widget.listaPeriodo.length; i++) {
       Map<String, dynamic> linha = {};
-      for (var element in widget.listaLocal) {
+      for (var element in locaisSorteio) {
         // sorteando numero baseado no tamanho da lista
         int numeroRandomico = random.nextInt(widget.listaPessoas.length);
         // sobreescrevendo index do mapa
@@ -194,9 +210,12 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
       // verificando se a variavel e verdadeira
       if (boolConfigEscala) {
         // pegando o index da lista de dias que devem conter as pessoas agrupadas
-        for (int index = 0; index < diasAgrupamento.length; index++) {
-          if (linha["Data"] == diasAgrupamento.elementAt(index)) {
-            for (var element in pessoasAgrupadas) {
+        for (int index = 0;
+            index < diasSelecionadosAgrupamento.length;
+            index++) {
+          //print("A${linha["Data"]}");
+          if (linha["Data"] == diasSelecionadosAgrupamento.elementAt(index)) {
+            for (var element in pessoasSelecionadasAgrupamento) {
               //passando para o mapa um novo valor baseado no tipo de local de trabalho
               // que contem na lista de pessoas agrupadas
               linha[element.localTrabalho.replaceAll(" ", "_")] = element.nome;
@@ -204,7 +223,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
           }
         }
       }
-      // chamando metodo
+      //chamando metodo
       bancoDados.inserir(linha, pegaNomeDigitado());
     }
     Timer(const Duration(seconds: 2), () {
@@ -220,11 +239,13 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
         case 0:
           setState(() {
             boolConfigEscala = false;
+            quantiLocaisDiponivel = 0;
           });
           break;
         case 1:
           setState(() {
             boolConfigEscala = true;
+            quantiLocaisDiponivel = locaisSorteioAgrupamento.length;
           });
           break;
       }
@@ -246,14 +267,37 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(Textos.erroGerarEscalaTabelaExistente)));
       } else {
-        boolTelaCarregar = true;
-        chamarCriarTabela();
-        Timer(const Duration(seconds: 2), () {
-          inserir();
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(Textos.sucessoAddBanco)));
-        });
+        // verificando se a variavel e verdadeira e se a variave NAO e menor que 0
+        if (boolConfigEscala && !(quantiLocaisDiponivel < 0)) {
+          pegarItensPessoasAgrupadas();
+          pegarItensDiasAgrupamento();
+          // verificando se a variavel e verdadeira e se as listas nao estao vazias
+          if (boolConfigEscala &&
+              (diasSelecionadosAgrupamento.isEmpty ||
+                  pessoasSelecionadasAgrupamento.isEmpty)) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(Textos.erroGerarEscalaSemSelecaoAgrupa)));
+          } else {
+            chamarInserir();
+          }
+        } else if (!boolConfigEscala) {
+          chamarInserir();
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(Textos.erroGerarEscalaQuantiPessoas)));
+        }
       }
+    });
+  }
+
+  // metodo para chamar inserir e criar tabela
+  chamarInserir() {
+    boolTelaCarregar = true;
+    chamarCriarTabela();
+    Timer(const Duration(seconds: 2), () {
+      inserir();
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(Textos.sucessoAddBanco)));
     });
   }
 
@@ -261,6 +305,27 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
   chamarCriarTabela() async {
     await bancoDados.criarTabela(querySQL, pegaNomeDigitado());
   }
+
+  Widget checkBoxPersonalizado(CheckBoxModel checkBoxModel) => CheckboxListTile(
+        activeColor: PaletaCores.corAzul,
+        checkColor: PaletaCores.corAdtlLetras,
+        title: Text(checkBoxModel.texto,
+            style: const TextStyle(
+                fontSize: Constantes.tamanhoLetraDescritivas,
+                fontWeight: FontWeight.bold)),
+        value: checkBoxModel.checked,
+        side: const BorderSide(width: 2, color: Colors.black),
+        onChanged: (value) {
+          setState(() {
+            checkBoxModel.checked = value!;
+            if (value) {
+              quantiLocaisDiponivel = quantiLocaisDiponivel - 1;
+            } else {
+              quantiLocaisDiponivel = quantiLocaisDiponivel + 1;
+            }
+          });
+        },
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -425,97 +490,108 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
                                                   ],
                                                 ),
                                                 Visibility(
-                                                  visible: boolConfigEscala,
-                                                  child: Wrap(
-                                                    crossAxisAlignment:
-                                                        WrapCrossAlignment
-                                                            .center,
-                                                    children: [
-                                                      SizedBox(
-                                                        width:
-                                                            larguraTela * 0.5,
-                                                        child: Column(
+                                                    visible: boolConfigEscala,
+                                                    child: Column(
+                                                      children: [
+                                                        Text(
+                                                          "Quantidade de Locais Diponiveis: ${quantiLocaisDiponivel < 0 ? 0 : quantiLocaisDiponivel}",
+                                                          style: const TextStyle(
+                                                              fontSize: 18,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        Wrap(
+                                                          crossAxisAlignment:
+                                                              WrapCrossAlignment
+                                                                  .center,
                                                           children: [
                                                             SizedBox(
-                                                              height: 50,
-                                                              child: Text(
-                                                                Textos
-                                                                    .selecaoNomePessoas,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        Constantes
-                                                                            .tamanhoLetraDescritivas,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    color: Colors
-                                                                        .black),
+                                                              width:
+                                                                  larguraTela *
+                                                                      0.5,
+                                                              child: Column(
+                                                                children: [
+                                                                  SizedBox(
+                                                                    height: 50,
+                                                                    child: Text(
+                                                                      Textos
+                                                                          .selecaoNomePessoas,
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      style: const TextStyle(
+                                                                          fontSize: Constantes
+                                                                              .tamanhoLetraDescritivas,
+                                                                          fontWeight: FontWeight
+                                                                              .bold,
+                                                                          color:
+                                                                              Colors.black),
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          alturaTela *
+                                                                              0.3,
+                                                                      child:
+                                                                          ListView(
+                                                                        children: [
+                                                                          ...itensListaCheckPessoas
+                                                                              .map((e) => checkBoxPersonalizado(
+                                                                                    e,
+                                                                                  ))
+                                                                              .toList()
+                                                                        ],
+                                                                      )),
+                                                                ],
                                                               ),
                                                             ),
                                                             SizedBox(
-                                                                height:
-                                                                    alturaTela *
-                                                                        0.3,
-                                                                child: ListView(
-                                                                  children: [
-                                                                    ...itensListaCheckPessoas
-                                                                        .map((e) =>
-                                                                            CheckboxWidget(
-                                                                              item: e,
-                                                                            ))
-                                                                        .toList()
-                                                                  ],
-                                                                )),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        width:
-                                                            larguraTela * 0.5,
-                                                        child: Column(
-                                                          children: [
-                                                            SizedBox(
-                                                              height: 50,
-                                                              child: Text(
-                                                                Textos
-                                                                    .selecaoNomeDiasSemana,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .center,
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        Constantes
-                                                                            .tamanhoLetraDescritivas,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    color: Colors
-                                                                        .black),
+                                                              width:
+                                                                  larguraTela *
+                                                                      0.5,
+                                                              child: Column(
+                                                                children: [
+                                                                  SizedBox(
+                                                                    height: 50,
+                                                                    child: Text(
+                                                                      Textos
+                                                                          .selecaoNomeDiasSemana,
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .center,
+                                                                      style: const TextStyle(
+                                                                          fontSize: Constantes
+                                                                              .tamanhoLetraDescritivas,
+                                                                          fontWeight: FontWeight
+                                                                              .bold,
+                                                                          color:
+                                                                              Colors.black),
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                      height:
+                                                                          alturaTela *
+                                                                              0.3,
+                                                                      child:
+                                                                          ListView(
+                                                                        children: [
+                                                                          ...itensListaCheckDias
+                                                                              .map((e) => CheckboxWidget(
+                                                                                    item: e,
+                                                                                  ))
+                                                                              .toList()
+                                                                        ],
+                                                                      )),
+                                                                ],
                                                               ),
-                                                            ),
-                                                            SizedBox(
-                                                                height:
-                                                                    alturaTela *
-                                                                        0.3,
-                                                                child: ListView(
-                                                                  children: [
-                                                                    ...itensListaCheckDias
-                                                                        .map((e) =>
-                                                                            CheckboxWidget(
-                                                                              item: e,
-                                                                            ))
-                                                                        .toList()
-                                                                  ],
-                                                                )),
+                                                            )
                                                           ],
                                                         ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                )
+                                                      ],
+                                                    ))
                                               ],
                                             ),
                                           )))
