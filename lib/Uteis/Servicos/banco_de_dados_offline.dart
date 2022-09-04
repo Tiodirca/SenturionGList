@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import '../constantes.dart';
 
-class BancoDeDados {
+class BancoDeDadosLocal {
   static const bancoDadosNome = Constantes.bancoNomeBanco;
   static const bancoDadosVersao = 1;
   static const tabelaPessoa = Constantes.bancoTabelaPessoa;
@@ -17,9 +17,9 @@ class BancoDeDados {
   static const columnLocal = Constantes.columnLocal;
 
   // torna a clase singleton
-  BancoDeDados._privateConstructor();
+  BancoDeDadosLocal._privateConstructor();
 
-  static final BancoDeDados instance = BancoDeDados._privateConstructor();
+  static final BancoDeDadosLocal instance = BancoDeDadosLocal._privateConstructor();
 
   static Database? _database;
 

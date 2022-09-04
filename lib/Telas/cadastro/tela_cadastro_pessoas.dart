@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:senturionglist/Modelo/check_box_modelo.dart';
 import 'package:senturionglist/Modelo/pessoa.dart';
-import 'package:senturionglist/Uteis/Servicos/banco_de_dados.dart';
+import 'package:senturionglist/Uteis/Servicos/banco_de_dados_offline.dart';
 import 'package:senturionglist/Uteis/Servicos/consultas.dart';
 import 'package:senturionglist/Uteis/constantes.dart';
 import 'package:senturionglist/Uteis/estilo.dart';
@@ -37,7 +37,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
   final _chaveFormulario = GlobalKey<FormState>();
 
   // referencia classe para gerenciar o banco de dados
-  final bancoDados = BancoDeDados.instance;
+  final bancoDados = BancoDeDadosLocal.instance;
 
   @override
   void initState() {
@@ -64,8 +64,8 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
   inserirDados() async {
     // linha para incluir os dados
     Map<String, dynamic> linha = {
-      BancoDeDados.columnPessoaNome: pegarTextoDigitado(),
-      BancoDeDados.columnPessoaGenero: valorGenero
+      BancoDeDadosLocal.columnPessoaNome: pegarTextoDigitado(),
+      BancoDeDadosLocal.columnPessoaGenero: valorGenero
     };
     int id = await bancoDados.inserir(linha, Constantes.bancoTabelaPessoa);
     if (id.toString().isNotEmpty) {

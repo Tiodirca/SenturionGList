@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:senturionglist/Uteis/paleta_cores.dart';
-import 'Uteis/ScrollBehaviorPersonalizado.dart';
+import 'Uteis/scroll_behavior_personalizado.dart';
 import 'Uteis/constantes.dart';
 import 'Uteis/rotas.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

@@ -152,6 +152,8 @@ class Textos {
   static String sucessoAtualizarItem =
       "Sucesso ao atualizar dado na base de dados";
   static String sucessoAtualizarHorario = "Horário atualizado com sucesso";
+  static String sucessoRestaurarHorarioTroca =
+      "Horário restaurado aos valores padrões";
 
   // DIAS DA SEMANA
   static String diaSegunda = "segunda-feira";

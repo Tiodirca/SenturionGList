@@ -6,7 +6,7 @@ import '../../Modelo/check_box_modelo.dart';
 import '../../Uteis/estilo.dart';
 import '../../Uteis/constantes.dart';
 import '../../Uteis/paleta_cores.dart';
-import '../../Uteis/Servicos/banco_de_dados.dart';
+import '../../Uteis/Servicos/banco_de_dados_offline.dart';
 import '../../Uteis/Servicos/consultas.dart';
 import '../../Uteis/textos.dart';
 import '../../Widget/barra_navegacao.dart';
@@ -41,7 +41,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
   final _chaveFormulario = GlobalKey<FormState>();
 
   // referencia classe para gerenciar o banco de dados
-  final bancoDados = BancoDeDados.instance;
+  final bancoDados = BancoDeDadosLocal.instance;
 
   @override
   void initState() {
@@ -75,7 +75,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
   inserirDados() async {
     // linha para incluir os dados
     Map<String, dynamic> linha = {
-      BancoDeDados.columnLocal:
+      BancoDeDadosLocal.columnLocal:
           RemoverAcentos.removerAcentos(pegarTextoDigitado()),
     };
     int id =

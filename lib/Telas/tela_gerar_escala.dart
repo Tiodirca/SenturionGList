@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:senturionglist/Modelo/pessoa_agrupada.dart';
-import 'package:senturionglist/Uteis/Servicos/banco_de_dados.dart';
+import 'package:senturionglist/Uteis/Servicos/banco_de_dados_offline.dart';
 import 'package:senturionglist/Uteis/Servicos/recuperar_valor_share_preferences.dart';
 import 'package:senturionglist/Uteis/remover_acentos.dart';
 import 'package:senturionglist/Widget/check_box_widget.dart';
@@ -39,7 +39,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
   Estilo estilo = Estilo();
 
   // referencia classe para gerenciar o banco de dados
-  final bancoDados = BancoDeDados.instance;
+  final bancoDados = BancoDeDadosLocal.instance;
   String tipoEscala = "";
   double alturaNavigationBar = 140.0;
   int valorRadioButton = 0;
@@ -104,6 +104,8 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
     querySQL = querySQL.substring(0, querySQL.length - 1);
     chamarRecuperarSharePreferences();
     pegarLocaisSorteioAgrupamento();
+
+    print(querySQL);
   }
 
   // pegar locais para agrupamento de pessoas

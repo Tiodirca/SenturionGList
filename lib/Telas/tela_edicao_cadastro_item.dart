@@ -4,7 +4,7 @@ import 'package:senturionglist/Uteis/Servicos/recuperar_valor_share_preferences.
 
 import '../Uteis/constantes.dart';
 import '../Uteis/paleta_cores.dart';
-import '../Uteis/Servicos/banco_de_dados.dart';
+import '../Uteis/Servicos/banco_de_dados_offline.dart';
 import '../Uteis/textos.dart';
 import 'package:intl/intl.dart';
 import '../Widget/barra_navegacao.dart';
@@ -40,7 +40,7 @@ class _TelaEdicaoCadastroItemState extends State<TelaEdicaoCadastroItem> {
   final _chaveFormulario = GlobalKey<FormState>();
 
   // referencia classe para gerenciar o banco de dados
-  final bancoDados = BancoDeDados.instance;
+  final bancoDados = BancoDeDadosLocal.instance;
 
   @override
   void initState() {

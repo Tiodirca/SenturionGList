@@ -46,6 +46,7 @@ dependencies:
   open_file: ^3.2.1
   # necessario para gerar icone
   flutter_launcher_icons: ^0.10.0
+  mysql1: ^0.20.0
 
 flutter_icons:
   android: "launcher_icon"

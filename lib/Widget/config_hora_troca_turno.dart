@@ -61,6 +61,21 @@ class _ConfigHoraTrocaTurnoState extends State<ConfigHoraTrocaTurno> {
         .showSnackBar(SnackBar(content: Text(Textos.sucessoAtualizarHorario)));
   }
 
+  gravarDadosPadrao() async {
+    //metodo para gravar informacoes padroes no share preferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(Constantes.primeiroHorarioSemana,
+        Constantes.horarioPrimeiroSemanaPadrao);
+    prefs.setString(
+        Constantes.segundoHorarioSemana, Constantes.horarioSegundoSemanaPadrao);
+    prefs.setString(Constantes.primeiroHorarioFinalSemana,
+        Constantes.horarioPrimeiroFinalSemanaPadrao);
+    prefs.setString(Constantes.segundoHorarioFinalSemana,
+        Constantes.horarioSegundoFinalSemanaPadrao);
+    // chamando metodo para atualizar valores
+    recuperarValores();
+  }
+
   Widget selecaoHorario(double larguraTela, String label,
           TextEditingController horarioGravado) =>
       Container(
@@ -158,7 +173,23 @@ class _ConfigHoraTrocaTurnoState extends State<ConfigHoraTrocaTurno> {
                         Textos.horarioInicialFinalSemana,
                         primeiroHorarioFinalSemana),
                     selecaoHorario(larguraTela, Textos.horarioFinalFinalSemana,
-                        segundoHorarioFinalSemana)
+                        segundoHorarioFinalSemana),
+                    SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: FloatingActionButton(
+                        backgroundColor: PaletaCores.corAdtlLetras,
+                        onPressed: () {
+                          gravarDadosPadrao();
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(SnackBar(content: Text(Textos.sucessoRestaurarHorarioTroca)));
+                        },
+                        child: (const Icon(
+                          Icons.refresh,
+                          size: 30,
+                        )),
+                      ),
+                    )
                   ],
                 ),
               )),

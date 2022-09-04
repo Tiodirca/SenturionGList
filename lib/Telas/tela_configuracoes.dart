@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:senturionglist/Uteis/Servicos/banco_dados_online.dart';
 import 'package:senturionglist/Widget/config_hora_troca_turno.dart';
 
 import '../Uteis/constantes.dart';
@@ -16,6 +17,27 @@ class TelaConfiguracoes extends StatefulWidget {
 }
 
 class _TelaConfiguracoesState extends State<TelaConfiguracoes> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    criarTabelaOnline();
+  }
+
+  criarTabelaOnline() async {
+    String query =
+        "Data TEXT NOT NULL,Horario_de_Troca TEXT NOT NULL";
+    String nomeTabela = "agosto3";
+    bool retorno = await BancoDadosOnline.criarTabelaOnline(query, nomeTabela);
+    if (retorno) {
+      print("funcionou");
+    } else {
+      print("Erro");
+    }
+
+    BancoDadosOnline.inserirDadosOnline(nomeTabela, query);
+  }
+
   Estilo estilo = Estilo();
   bool boolAtivarConfigHoraTroca = false;
 
@@ -67,7 +89,9 @@ class _TelaConfiguracoesState extends State<TelaConfiguracoes> {
                                       textAlign: TextAlign.center,
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: Constantes.tamanhoLetraDescritivas, color: Colors.white),
+                                          fontSize: Constantes
+                                              .tamanhoLetraDescritivas,
+                                          color: Colors.white),
                                     ),
                                   ),
                                   SizedBox(

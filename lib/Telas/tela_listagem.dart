@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:senturionglist/Uteis/Servicos/banco_de_dados.dart';
+import 'package:senturionglist/Uteis/Servicos/banco_de_dados_offline.dart';
 import 'package:senturionglist/Widget/pdf_nome_observacao.dart';
 
 import '../Uteis/Servicos/consultas.dart';
@@ -29,7 +29,7 @@ class _TelaListagemState extends State<TelaListagem> {
   bool boolConfigGerarPDF = false;
 
   // referencia classe para gerenciar o banco de dados
-  final bancoDados = BancoDeDados.instance;
+  final bancoDados = BancoDeDadosLocal.instance;
 
   @override
   void initState() {

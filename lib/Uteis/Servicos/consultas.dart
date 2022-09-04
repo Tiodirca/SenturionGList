@@ -2,11 +2,11 @@ import 'package:senturionglist/Modelo/local_trabalho.dart';
 
 import '../../Modelo/pessoa.dart';
 import '../constantes.dart';
-import 'banco_de_dados.dart';
+import 'banco_de_dados_offline.dart';
 
 class Consulta {
   // referencia classe para gerenciar o banco de dados
-  static BancoDeDados bancoDados = BancoDeDados.instance;
+  static BancoDeDadosLocal bancoDados = BancoDeDadosLocal.instance;
 
   //metodo para realizar a consulta no banco de dados
   static Future<List<Pessoa>> consultarBancoPessoas(String tabela) async {

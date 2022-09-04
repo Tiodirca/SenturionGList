@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../Uteis/Servicos/banco_de_dados.dart';
+import '../../Uteis/Servicos/banco_de_dados_offline.dart';
 import '../../Uteis/constantes.dart';
 import '../../Uteis/estilo.dart';
 import '../../Uteis/textos.dart';
@@ -25,7 +25,7 @@ class _TelaSelecaoEscalaState extends State<TelaSelecaoEscala> {
   late List<String> tabelas;
 
   // referencia classe para gerenciar o banco de dados
-  final bancoDados = BancoDeDados.instance;
+  final bancoDados = BancoDeDadosLocal.instance;
 
   @override
   void initState() {
