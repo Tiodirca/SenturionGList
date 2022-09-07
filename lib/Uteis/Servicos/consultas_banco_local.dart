@@ -4,7 +4,7 @@ import '../../Modelo/pessoa.dart';
 import '../constantes.dart';
 import 'banco_de_dados_offline.dart';
 
-class Consulta {
+class ConsultasBancoLocal {
   // referencia classe para gerenciar o banco de dados
   static BancoDeDadosLocal bancoDados = BancoDeDadosLocal.instance;
 

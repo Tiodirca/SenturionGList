@@ -64,12 +64,6 @@ class BancoDeDadosLocal {
           ''');
   }
 
-  Future<List<Map<dynamic, dynamic>>> consultarPorID(
-      String tabela, int idDado) async {
-    Database? db = await instance.database;
-    return await db!.query("$tabela WHERE id = $idDado");
-  }
-
   // ----------- METODOS REFERENTE AS TABELAS
 
   // metodo para criar tabela de listagem de forma dinamica
@@ -104,6 +98,12 @@ class BancoDeDadosLocal {
   Future<List<Map<String, dynamic>>> consultarLinhas(String tabela) async {
     Database? db = await instance.database;
     return await db!.query(tabela);
+  }
+
+  Future<List<Map<dynamic, dynamic>>> consultarPorID(
+      String tabela, int idDado) async {
+    Database? db = await instance.database;
+    return await db!.query("$tabela WHERE id = $idDado");
   }
 
   // metodo para atualizar os dados

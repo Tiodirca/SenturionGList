@@ -4,13 +4,28 @@ class BancoDadosOnline {
   static var criarConexaoBanco = ConnectionSettings(
       host: 'localhost', port: 3306, user: 'root', db: 'testedb');
 
+  static Future<List<String>> consultarTabelas() async {
+    List<String> lista = [];
+    var conexao = await MySqlConnection.connect(criarConexaoBanco);
+    var resultado = await conexao.query('show tables');
+
+    for (var linha in resultado) {
+      lista.add(linha.values.toString());
+    }
+    conexao.close();
+    return lista;
+  }
+
+
+  // _-------------------- METODOS
+  // future para criar tabelas no banco de dados online
   static Future<bool> criarTabelaOnline(
       String queryCriarTabela, String nomeTabela) async {
     // abrindo conexao
     var conexao = await MySqlConnection.connect(criarConexaoBanco);
     try {
       await conexao.query(
-          'CREATE TABLE IF NOT EXIST $nomeTabela (id int NOT NULL AUTO_INCREMENT PRIMARY KEY, $queryCriarTabela)');
+          'CREATE TABLE IF NOT EXISTS $nomeTabela (id int NOT NULL AUTO_INCREMENT PRIMARY KEY, $queryCriarTabela)');
       await conexao.close();
       return true;
     } catch (e) {
@@ -18,38 +33,46 @@ class BancoDadosOnline {
       await conexao.close();
       return false;
     }
-    // // Insert some data
-    // var result = await conn.query(
-    //     'insert into users (name, email, age) values (?, ?, ?)',
-    //     ['Bob', 'bob@bob.com', 25]);
-    // print('Inserted row id=${result.insertId}');
-    //
-    // // Query the database using a parameterized query
-    // var results = await conn.query(
-    //     'select name, email, age from users where id = ?', [result.insertId]);
-    // for (var row in results) {
-    //   print('Name: ${row[0]}, email: ${row[1]} age: ${row[2]}');
-    // }
-    //
-    // // Update some data
-    // await conn.query('update users set age=? where name=?', [26, 'Bob']);
-    //
-    // // Query again database using a parameterized query
-    // var results2 = await conn.query(
-    //     'select name, email, age from users where id = ?', [result.insertId]);
-    // for (var row in results2) {
-    //   print('Name: ${row[0]}, email: ${row[1]} age: ${row[2]}');
-    // }
   }
 
-  static Future inserirDadosOnline(
-      String tabela, String query) async {
+  // future para inserir dados no banco de dados online
+  static Future<void> inserirDadosOnline(
+      String tabela, String query, List<String> valores) async {
+    // pegando as colunas da tabela
+    String colunasTabela = query.replaceAll("TEXT NOT NULL", "");
+    int tamanhoQuantiValores = valores.length; // pegando a quantidade de
+    // valores a serem inseridos
+    String valoresParametro = "";
+    for (int i = 0; i < tamanhoQuantiValores; i++) {
+      valoresParametro = "$valoresParametro ?,";
+    }
     // abrindo conexao
     var conexao = await MySqlConnection.connect(criarConexaoBanco);
-    // Insert some data
-    var result = await conexao.query(
-        'insert into $tabela (Data, Horario_de_Troca) values (?, ?)',
-        ['fdfsf', '18>4543']);
-    print('Inserted row id=${result.insertId}');
+    // inserindo dados na tabela
+    var resultado = await conexao.query(
+        'INSERT INTO $tabela ($colunasTabela) VALUES (${valoresParametro.substring(0, valoresParametro.length - 1)})',
+        valores);
+    print('Linha Inserida =${resultado.insertId}');
+
+    conexao.close();
+  }
+
+  // future para consultar todos os valores presente na tabela no banco de dados online
+  static Future<List<Map<String, dynamic>>> consultarTodosValores(
+      String tabela) async {
+    List<Map<String, dynamic>> lista = [];
+    // // abrindo conexao
+    var conexao = await MySqlConnection.connect(criarConexaoBanco);
+    var resultado = await conexao.query('SELECT * FROM $tabela');
+
+    // pegando cada linha do resultado e adicionando em uma  lista
+    // para ser retornado
+    for (var linha in resultado) {
+      linha.fields.removeWhere((key, value) => key == 'id');
+      lista.add(linha.fields);
+    }
+
+    conexao.close();
+    return lista;
   }
 }

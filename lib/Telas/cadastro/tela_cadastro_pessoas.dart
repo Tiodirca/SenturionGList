@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:senturionglist/Modelo/check_box_modelo.dart';
 import 'package:senturionglist/Modelo/pessoa.dart';
 import 'package:senturionglist/Uteis/Servicos/banco_de_dados_offline.dart';
-import 'package:senturionglist/Uteis/Servicos/consultas.dart';
+import 'package:senturionglist/Uteis/Servicos/consultas_banco_local.dart';
 import 'package:senturionglist/Uteis/constantes.dart';
 import 'package:senturionglist/Uteis/estilo.dart';
 import 'package:senturionglist/Uteis/paleta_cores.dart';
@@ -81,7 +81,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroPessoas> {
     itensCheckBox.clear();
     listaPessoas.clear();
     // chamando metodo responsavel por pegar os itens no banco de dados
-    await Consulta.consultarBancoPessoas(Constantes.bancoTabelaPessoa)
+    await ConsultasBancoLocal.consultarBancoPessoas(Constantes.bancoTabelaPessoa)
         .then((value) {
       setState(() {
         listaPessoas = value;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:senturionglist/Uteis/Servicos/banco_de_dados_offline.dart';
 import 'package:senturionglist/Widget/pdf_nome_observacao.dart';
 
-import '../Uteis/Servicos/consultas.dart';
+import '../Uteis/Servicos/consultas_banco_local.dart';
 import '../Uteis/constantes.dart';
 import '../Uteis/estilo.dart';
 import '../Uteis/paleta_cores.dart';
@@ -39,7 +39,8 @@ class _TelaListagemState extends State<TelaListagem> {
 
   // metodo responsavel por chamar metodo para fazer consulta ao banco de dados
   consultarDados() async {
-    await Consulta.consultarTabelaSelecionada(widget.nomeTabela).then((value) {
+    await ConsultasBancoLocal.consultarTabelaSelecionada(widget.nomeTabela)
+        .then((value) {
       setState(() {
         itensBanco = value;
       });

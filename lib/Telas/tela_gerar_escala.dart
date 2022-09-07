@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:senturionglist/Modelo/pessoa_agrupada.dart';
+import 'package:senturionglist/Uteis/Servicos/banco_dados_online.dart';
 import 'package:senturionglist/Uteis/Servicos/banco_de_dados_offline.dart';
 import 'package:senturionglist/Uteis/Servicos/recuperar_valor_share_preferences.dart';
 import 'package:senturionglist/Uteis/remover_acentos.dart';
@@ -104,8 +105,6 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
     querySQL = querySQL.substring(0, querySQL.length - 1);
     chamarRecuperarSharePreferences();
     pegarLocaisSorteioAgrupamento();
-
-    print(querySQL);
   }
 
   // pegar locais para agrupamento de pessoas
@@ -182,6 +181,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
   inserir() async {
     for (int i = 0; i < widget.listaPeriodo.length; i++) {
       Map<String, dynamic> linha = {};
+      List<String> valoresInserirBancoOnline = [];
       for (var element in locaisSorteio) {
         // sorteando numero baseado no tamanho da lista
         int numeroRandomico = random.nextInt(widget.listaPessoas.length);
@@ -225,12 +225,31 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
           }
         }
       }
-      //chamando metodo
+      // pegando somente os valores do map e adicionando uma lista
+      linha.forEach((key, value) {
+        valoresInserirBancoOnline.add(value.toString());
+      });
+
+      //chamando metodos de insersao nos banco
+      BancoDadosOnline.inserirDadosOnline(
+          pegaNomeDigitado(), querySQL, valoresInserirBancoOnline);
       bancoDados.inserir(linha, pegaNomeDigitado());
     }
     Timer(const Duration(seconds: 2), () {
       Navigator.pushReplacementNamed(context, Constantes.rotaTelaSelecaoEscala);
     });
+  }
+
+  // metodo para chamar a criacao de tabela no banco de dados online
+  criarTabelaBancoOnline() async {
+    bool retorno =
+        await BancoDadosOnline.criarTabelaOnline(querySQL, pegaNomeDigitado());
+    if (retorno) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(Textos.sucessoCriarTabelaOnline)));
+    } else {
+      //print("Erro");
+    }
   }
 
 //metodo para mudar o estado do radio button
@@ -296,6 +315,7 @@ class _TelaGerarEscalaState extends State<TelaGerarEscala> {
   chamarInserir() {
     boolTelaCarregar = true;
     chamarCriarTabela();
+    criarTabelaBancoOnline();
     Timer(const Duration(seconds: 2), () {
       inserir();
       ScaffoldMessenger.of(context)

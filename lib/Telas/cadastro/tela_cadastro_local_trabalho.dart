@@ -7,7 +7,7 @@ import '../../Uteis/estilo.dart';
 import '../../Uteis/constantes.dart';
 import '../../Uteis/paleta_cores.dart';
 import '../../Uteis/Servicos/banco_de_dados_offline.dart';
-import '../../Uteis/Servicos/consultas.dart';
+import '../../Uteis/Servicos/consultas_banco_local.dart';
 import '../../Uteis/textos.dart';
 import '../../Widget/barra_navegacao.dart';
 import '../../Widget/fundo_tela_widget.dart';
@@ -95,7 +95,7 @@ class _TelaCadastroPessoasState extends State<TelaCadastroLocalTrabalho> {
     itensCheckBox.clear();
     localTrabalho.clear();
     // chamando metodo responsavel por pegar os itens no banco de dados
-    await Consulta.consultarBancoLocalTrabalho(
+    await ConsultasBancoLocal.consultarBancoLocalTrabalho(
             Constantes.bancoTabelaLocalTrabalho)
         .then((value) {
       setState(() {

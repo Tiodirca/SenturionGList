@@ -154,6 +154,7 @@ class Textos {
   static String sucessoAtualizarHorario = "Horário atualizado com sucesso";
   static String sucessoRestaurarHorarioTroca =
       "Horário restaurado aos valores padrões";
+  static String sucessoCriarTabelaOnline = "Tabela na Base de dados remota";
 
   // DIAS DA SEMANA
   static String diaSegunda = "segunda-feira";
